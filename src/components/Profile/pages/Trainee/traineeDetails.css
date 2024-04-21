@@ -1,0 +1,142 @@
+.content-left h5,
+.content-right p{
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+.content-left h5,
+.viewPlan p,
+.viewInbody p,
+.viewSubscibe p{
+    color: var( --blue1-color);
+}
+.content-left img{
+   border-radius: 50%;
+   border: 1px solid var(--blue1-color);
+}
+.content-right p{
+    color: var( --blue2-color);
+}
+.content-right .date{
+    padding: 2px 10px;
+   border-radius: 18px;
+   border: 1px solid var(--form-white-color);
+   background-color: var( --main-white-color);
+}
+#trainee-data{
+    border-bottom: 3px solid var(--bright-yellow-color);
+    border-radius: 4px;
+}
+
+.expand-plan-btn {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border: 1px solid var(--form-white-color);
+    background-color: var(--blue1-color);
+    border-radius: 50% !important;
+    z-index: 2;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+}
+
+body.expand .expand-plan-btn{
+    background-color: var(--bright-yellow-color);
+
+}
+.expand-plan-btn svg{
+    transform: rotate(-360deg);
+    stroke: var(--main-white-color);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+    
+body.expand .expand-plan-btn svg{
+    transform: rotate(90deg);
+}
+/* expan inBody */
+.expand-inBody-btn {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border: 1px solid var(--form-white-color);
+    background-color: var(--blue1-color);
+    border-radius: 50% !important;
+    z-index: 2;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+}
+
+body.expandInbody .expand-inBody-btn{
+    background-color: var(--bright-yellow-color);
+
+}
+.expand-inBody-btn svg{
+    transform: rotate(-360deg);
+    stroke: var(--main-white-color);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+    
+body.expandInbody .expand-inBody-btn svg{
+    transform: rotate(90deg);
+}
+.viewInbody,
+.viewSubscibe,
+.viewPlan{
+    border-bottom: 2px solid var( --gray1-color);
+}
+.viewInbody p,
+.viewSubscibe p,
+.viewPlan p{
+    font-size: 22px;
+    font-weight: bold;
+
+}
+/* view subscribe */
+.expand-viewSubscibe-btn {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border: 1px solid var(--form-white-color);
+    background-color: var(--blue1-color);
+    border-radius: 50% !important;
+    z-index: 2;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+}
+
+body.expandviewSubscibe .expand-viewSubscibe-btn{
+    background-color: var(--bright-yellow-color);
+
+}
+.expand-viewSubscibe-btn svg{
+    transform: rotate(-360deg);
+    stroke: var(--main-white-color);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+    
+body.expandviewSubscibe .expand-viewSubscibe-btn svg{
+    transform: rotate(90deg);
+}
+/* .viewSubscibe{
+    cursor: poiter;
+} */
+/* .viewSubscibe p{
+    font-size: 22px;
+    font-weight: bold;
+
+}  */
+
+
+
+
+
+
+
+
+

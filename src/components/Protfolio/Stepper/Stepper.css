@@ -1,0 +1,101 @@
+#btn-backStepper{
+    background-color: var(--blue1-color);
+    padding: 10px 40px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    letter-spacing: 0.5px;
+    color: var(--bright-yellow-color);
+    transition: 0.2s ease-in-out;
+}
+#btn-backStepper:hover{
+    color:white;
+    opacity: .8;
+}
+#btn-backStepper.disabeld{
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+#btn-nextStepper{
+    background-color: var(--bright-yellow-color);
+    padding: 10px 40px;
+
+    margin-top: 20px;
+    position: relative;
+    left: 205px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    letter-spacing: 0.5px;
+    color: var(--main-white-color);
+    transition: 0.2s ease-in-out;
+}
+#btn-nextStepper:hover{
+    color:black;
+    opacity: .8;
+
+}
+
+/* numbers */
+#numbers{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    border: 2px solid var(--place-holder-color);
+    transition: .2s ease-in-out;
+    animation-duration: 500;
+    
+}
+#numbers.completed{
+    border: 2px solid var(--bright-yellow-color);
+    font-weight: bold;
+    font-size: 20px;
+    background-color: var(--bright-yellow-color);
+}
+#description{
+    position: absolute;
+    top: 0;
+    text-align: center;
+    margin-top: 50px;
+    /* width: 32px; */
+    text-transform: capitalize;
+    color: gray;
+}
+#description.highlighted{
+    color: rgb(34, 34, 34);
+}
+#line-step{
+    flex: auto;
+    border-top: 4px solid var(--place-holder-color);
+    transition: 0.2s ease-in-out;
+}
+#line-step.completed{
+    border-top: 4px solid var(--bright-yellow-color);
+}
+
+/* steeper close */
+#ctn-close{
+    background-color: var(--bright-yellow-color);
+    padding: 10px 40px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    letter-spacing: 0.5px;
+    color: var(--main-white-color);
+    transition: 0.2s ease-in-out;
+}
+#cong{
+    font-weight: bold;
+    font-size: 32px;
+    padding: 12px 0;
+}

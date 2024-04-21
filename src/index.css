@@ -1,0 +1,39 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  --main-white-color:#FFFFFF;
+  --bright-yellow-color:#FFC300;
+  --darker-yellow-color:#FFC300;
+  --blue3-color:#000814;
+  --blue2-color:#001D3D;
+  --blue1-color:#003566;
+  --gray1-color:#C9C9C9;
+  --gray2-color:#8D8D8D;
+  --place-holder-color:#ADADAD;
+  --black-color:#000000;
+  --section-padding:100px
+}
+
+li{
+  list-style: none;
+}
+
+a{
+  text-decoration: none !important;
+}
+body {
+  margin: 0;
+  font-family: 'Roboto';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+

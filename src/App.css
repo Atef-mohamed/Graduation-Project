@@ -1,0 +1,111 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --main-white-color:#FFFFFF;
+    --form-white-color:#EFF0F6;
+    --bright-yellow-color:#FFC300;
+    --darker-yellow-color:#FFC300;
+    --blue3-color:#000814;
+    --blue2-color:#001D3D;
+    --blue1-color:#003566;
+    --label-profile-color:#170F49;
+    --holder-profile-color:#6F6C90;
+    --gray1-color:#C9C9C9;
+    --gray2-color:#8D8D8D;
+    --gray3-color:#D9DBE9;
+    --pagination-page-color:#F5F5F5;
+    --pagination-page-text-color:#404B52;
+    --place-holder-color:#ADADAD;
+    --black-color:#000000;
+    --error-color:#8C0202;
+    --right-input-color:#048010;
+    --section-padding:100px;
+
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none !important;
+}
+.loader {
+    width: 60px;
+    aspect-ratio: 2;
+    --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
+    background: 
+      var(--_g) 0%   50%,
+      var(--_g) 50%  50%,
+      var(--_g) 100% 50%;
+    background-size: calc(100%/3) 50%;
+    animation: l3 1s infinite linear;
+}
+  @keyframes l3 {
+      20%{background-position:0%   0%, 50%  50%,100%  50%}
+      40%{background-position:0% 100%, 50%   0%,100%  50%}
+      60%{background-position:0%  50%, 50% 100%,100%   0%}
+      80%{background-position:0%  50%, 50%  50%,100% 100%}
+  }
+
+
+/* sidebar in profile */
+
+.containerr{
+    display:flex;
+}
+main{
+    width: 100%;
+    padding: 20px;
+}
+.sidebar{
+    color: #fff;
+    height: 100vh;
+    width: 215px !important;
+    transition: all 0.5s;
+}
+.top_section{
+    display: flex;
+    align-items:center;
+    padding:25px 15px;
+    
+}
+.logo{
+    font-size: 30px;
+}
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 50px;
+}
+.link{
+    display: flex;
+    color: var( --blue2-color);
+    padding: 7px 10px;
+    gap: 20px;
+    justify-content: center;
+    transition: all 0.5s;
+}
+.link:hover{
+    background: var(--blue2-color);
+    color: var(--main-white-color);
+    transition: all 0.5s;
+    border-radius: 18px;
+}
+.active{
+    background: var(--blue2-color);
+    color: #ffffff !important;
+    border-radius: 18px;
+
+}
+
+.icon, .link_text{
+    font-size: 20px;
+}
+.icon:hover {
+    color: wheat;
+}

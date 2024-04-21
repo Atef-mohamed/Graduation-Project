@@ -1,0 +1,63 @@
+.otpInput{
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    text-align: center;
+    font-size: 1.2rem;
+    background-color: var(--main-white-color) !important;
+    border-radius: 12px;
+    padding: 5px;
+    font-weight: bold;
+    outline: none;
+    border: 2px solid transparent;
+}
+.buttons-otp{
+    display: flex;
+    gap: 14px;
+    margin-top: 80px;
+}
+#btn-submit {
+    background-color: var( --bright-yellow-color);
+    color: var(--blue3-color);
+    padding: 4px 20px ;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+}
+
+#btn-back{
+  background-color: var(--main-white-color) ;
+  color: var(--blue3-color);
+  padding: 4px 35px ;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+
+}
+#resend{
+  color: var(--main-white-color) ;
+    text-decoration:underline;
+    cursor: pointer;
+}
+.error{
+    /* border-color: var(--error-color) !important; */
+
+    border: 2px solid var(--error-color) !important;
+}
+.right{
+    border: 2px solid var(--right-input-color) !important;
+}
+
+#loader-otp{
+  padding: 2px;
+    margin-bottom: -43px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}

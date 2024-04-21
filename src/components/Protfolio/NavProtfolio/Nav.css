@@ -1,0 +1,11 @@
+#nav-protfilio{
+    width: 100%;
+    background-color: var(--blue3-color);
+    display: flex;
+    justify-content: center;
+    padding: 12px ;
+}
+#nav-protfilio img{
+    width: 120px;
+   
+}
