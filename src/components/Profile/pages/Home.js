@@ -3,36 +3,43 @@ import { useDispatch, useSelector } from "react-redux";
 import "../css/Home.css";
 import avatar from "../../../assets/skill2.jpg";
 import Pagination from "./Pagination/Pagination";
-import { fetchProfileData, fetchTraineesList } from "../../../rtk/Protfolio";
+import { fetchProfileData } from "../../../rtk/Protfolio";
+import { fetchTraineesList } from "../../../rtk/TraineesSlice";
 import { NavLink, Outlet, Link, useNavigate } from "react-router-dom";
+import TraineesList from "./Pagination/TraineesList";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // const [searchQuery, setSearchQuery] = useState("");
   const { CoachProfileData } = useSelector((state) => state.Profile);
-  const { TraineesList } = useSelector((state) => state.Profile);
+  const { TraineesList: TraineeList, loading } = useSelector(
+    (state) => state.Trainees
+  );
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const token = localStorage.getItem("token");
   useEffect(() => {
     dispatch(fetchProfileData({ token }));
     dispatch(fetchTraineesList({ token }));
-    console.log(TraineesList);
   }, []);
-  const handelcard = () => {
-    navigation("/profile/home/trainee");
-  };
+  // const handelcard = () => {
+  //   navigation("/profile/home/trainee");
+  // };
   // // Function to handle changes in the search input
   // const handleSearchInputChange = (event) => {
   //   setSearchQuery(event.target.value);
   // };
-  const clientDataList = 30; //length of data
-  const client_prePage = 6; // each page contain 6 client
-  // const pages=Math.ceil(clientDataList.length/client_prePage);
-  const pages = 7; //number of pages
-  const startIndex = (currentPage - 1) * client_prePage;
-  const finishIndex = currentPage * client_prePage;
-  // const orderedClients=clientDataList.slice(startIndex,finishIndex);
+  const sortedTraineesLists = TraineeList?.msg ?? [];
+  const trainees_prePage = 6; // each page contain 6 client
+  const pages = Math.ceil(TraineeList?.msg.length / trainees_prePage);
+  // const pages = 30;
+  const startIndex = (currentPage - 1) * trainees_prePage;
+  const finishIndex = currentPage * trainees_prePage;
+  // return trainees 6 for each page 1=>6
+  const orderedTraineesLists = sortedTraineesLists.slice(
+    startIndex,
+    finishIndex
+  );
   return (
     <>
       <div className="container d-flex justify-content-between">
@@ -64,31 +71,14 @@ const Home = () => {
       <div className="container client-card-pagination">
         <h4 className="client-title">All Clients</h4>
         <div className="client-cards ">
-          <div className="card-client" onClick={handelcard}>
-            <img src={avatar} alt="Profile Photo" />
-            <h3 className="client-name">Atef Mohamed</h3>
-            {/* <Link to="/profile/home/trainee"  className="btn btn-dark">Show</Link> */}
-          </div>
-          <div className="card-client">
-            <img src={avatar} alt="Profile Photo" />
-            <h3 className="client-name">Atef Mohamed</h3>
-          </div>
-          <div className="card-client">
-            <img src={avatar} alt="Profile Photo" />
-            <h3 className="client-name">Atef Mohamed</h3>
-          </div>
-          <div className="card-client">
-            <img src={avatar} alt="Profile Photo" />
-            <h3 className="client-name">Atef Mohamed</h3>
-          </div>
-          <div className="card-client">
-            <img src={avatar} alt="Profile Photo" />
-            <h3 className="client-name">Atef Mohamed</h3>
-          </div>
-          <div className="card-client">
-            <img src={avatar} alt="Profile Photo" />
-            <h3 className="client-name">Atef Mohamed</h3>
-          </div>
+          {loading === true ? (
+            <div className="loader d-flex flex-column"></div>
+          ) : (
+            ""
+          )}
+          <TraineesList Trainees={orderedTraineesLists} />
+
+          {/* <ClientList clietns={orderedClients}/> */}
           {/* Filter client cards based on search query */}
           {/* {clientData
             .filter((client) =>
@@ -101,7 +91,7 @@ const Home = () => {
               </div>
             ))} */}
         </div>
-        {/* <ClientList clietns={orderedClients}/> */}
+
         <Pagination
           pages={pages}
           currentPage={currentPage}

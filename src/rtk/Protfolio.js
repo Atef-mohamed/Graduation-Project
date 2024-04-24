@@ -57,15 +57,7 @@ export const fetchProfileData = createAsyncThunk(
     return res.data;
   }
 );
-// Show trainees
-export const fetchTraineesList = createAsyncThunk(
-  "profile/fetchTraineesList",
-  async (token) => {
-    const res = await axios.post(`${url.url}/coach/trainees`, token);
-    console.log(res.data);
-    return res.data;
-  }
-);
+
 
 export const userSlice = createSlice({
   name: "profile",
@@ -166,20 +158,7 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
-    // Trainees List
-    builder.addCase(fetchTraineesList.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchTraineesList.fulfilled, (state, action) => {
-      state.TraineesList = action.payload;
-      state.loading = false;
-      state.success = true;
-    });
-    builder.addCase(fetchTraineesList.rejected, (state, action) => {
-      state.loading = false;
-      state.success = false;
-      state.error = action.error.message;
-    });
+ 
   },
 });
 export const {} = userSlice.actions;

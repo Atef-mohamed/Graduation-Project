@@ -11,6 +11,8 @@
     color: var( --blue1-color);
 }
 .content-left img{
+    height: 100px;
+    width: 100px;
    border-radius: 50%;
    border: 1px solid var(--blue1-color);
 }

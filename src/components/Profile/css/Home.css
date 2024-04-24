@@ -97,8 +97,9 @@ white-space: nowrap;
 
 .card-client img {
     width: 100px;
+    height: 100px !important;
     height: auto;
-    border-radius: 50%;
+    border-radius: 50% !important;
     margin-bottom: 20px;
     border: 2px solid var(--bright-yellow-color);
 }

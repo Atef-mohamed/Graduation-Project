@@ -10,15 +10,59 @@ import { NavLink, Outlet } from "react-router-dom";
 import Footer from "../footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfileData } from "../../rtk/Protfolio";
-// import { GoHomeFill } from "react-icons/go";
+import Pusher from "pusher-js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Profile = () => {
   const { CoachProfileData } = useSelector((state) => state.Profile);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   // dispatch(fetchProfileData({ token }));
+  // }, []);
   useEffect(() => {
-    dispatch(fetchProfileData({ token }));
-    // console.log(CoachProfileData?.msg?.personal_img);
-  }, []);
+    // dispatch(fetchProfileData({ token }));
+
+    Pusher.logToConsole = true;
+    const pusher = new Pusher("f2ab4244dfa2cd3140ce", {
+      cluster: "eu",
+    });
+
+    const channel = pusher.subscribe("notify");
+    const notifyCallback = (data) => {
+      toast.info(`Title: ${data.title}, Message: ${data.msg}`, {
+        autoClose: 9000,
+        style: {
+          backgroundColor: "#FFC300",
+          color: "#000814",
+        },
+      });
+    };
+
+    channel.bind(`${CoachProfileData?.msg.id}notify`, notifyCallback);
+
+    return () => {
+      channel.unbind(`${CoachProfileData?.msg.id}notify`, notifyCallback);
+    };
+  }, [CoachProfileData, dispatch, token]);
+  // _________________________________________________________
+  // Notifcation
+  // Pusher.logToConsole = true;
+  // var pusher = new Pusher("f2ab4244dfa2cd3140ce", {
+  //   cluster: "eu",
+  // });
+
+  // // let coach_id = 2;
+  // var channel = pusher.subscribe("notify");
+  // channel.bind(`${CoachProfileData?.msg.id}notify`, function (data) {
+  //   toast.info(`Title: ${data.title}, Message: ${data.msg}`, {
+  //     autoClose: false,
+  //   });
+  // });
+  // pusher.unsubscribe("notify");
+
+  // ___________________________________________________________________________
   const [collapsed, setCollapsed] = useState(false);
   const menuItem = [
     {
@@ -142,6 +186,7 @@ const Profile = () => {
         </main>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

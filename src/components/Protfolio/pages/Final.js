@@ -32,7 +32,7 @@ const Final = () => {
         </div>
         <div className="text-lg ">Your Account has been Created</div>
         <a className="mt-5" href="/">
-          <Link to="/profile" id="ctn-close">To Profile</Link>
+          <Link to="/profile/home" id="ctn-close">To Profile</Link>
         </a>
       </div>
     </div>

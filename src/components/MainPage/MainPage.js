@@ -11,6 +11,7 @@ import FacebookIcon from "../../assets/Facebook.svg";
 import InstagramIcon from "../../assets/Instagram Circle.svg";
 import XIcon from "../../assets/TwitterX.svg";
 import logoIcon from "../../assets/Asset 6xxxhdpi 3.png";
+import Pusher from "pusher-js";
 const MainPage = () => {
   const btnBackToTop = useRef(null);
   window.onscroll = () => {
@@ -28,6 +29,18 @@ const MainPage = () => {
       behavior: "smooth",
     });
   };
+  // // Notifcation
+  // Pusher.logToConsole = true;
+  // var pusher = new Pusher("f2ab4244dfa2cd3140ce", {
+  //   cluster: "eu",
+  // });
+
+  // let coach_id = 2;
+
+  // var channel = pusher.subscribe("notify");
+  // channel.bind(`${coach_id}notify`, function (data) {
+  //   alert("the title is => " + data.title + "  the msg is " + data.msg);
+  // });
   return (
     <>
       <NavBar />
@@ -178,11 +191,11 @@ const MainPage = () => {
           <p className="copyRight  col-sm-12 col-md-4">
             &copy;2024
             <span> 5A </span>
-             All Right Reserved
+            All Right Reserved
           </p>
           <div className="social-icon col-sm-12 col-md-4">
-            <a href="#/" >
-              <img src={FacebookIcon} alt="" id="facebook"/>
+            <a href="#/">
+              <img src={FacebookIcon} alt="" id="facebook" />
             </a>
             <a href="#/">
               <img src={InstagramIcon} alt="" />
@@ -191,7 +204,6 @@ const MainPage = () => {
               <img src={XIcon} alt="" />
             </a>
           </div>
-          
         </div>
       </div>
       <button

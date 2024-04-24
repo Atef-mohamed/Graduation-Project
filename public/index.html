@@ -42,5 +42,27 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script> -->
+    <!-- <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+  
+    
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+  
+      var pusher = new Pusher('f2ab4244dfa2cd3140ce', {
+        cluster: 'eu'
+      });
+  
+      let coach_id = 2
+  
+      var channel = pusher.subscribe('notify');
+      channel.bind(`${coach_id}notify`, function(data) {
+          alert("the title is => " + data.title + "  the msg is " + data.msg);
+      });
+  
+  
+    </script> -->
+  
   </body>
 </html>

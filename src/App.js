@@ -16,6 +16,7 @@ import TraineeDetails from "./components/Profile/pages/Trainee/TraineeDetails";
 import ViewPlan from "./components/Profile/pages/Trainee/ViewPlan";
 import ViewInbody from "./components/Profile/pages/Trainee/ViewInbody";
 import ViewSubscibe from "./components/Profile/pages/Trainee/ViewSubscibe";
+
 function App() {
   return (
     <div className="App">
@@ -34,10 +35,10 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="requests" element={<Requstes />} />
           <Route path="myProtfolio" element={<MyProtfoilo />} />
-          <Route path="home/trainee" element={<TraineeDetails />}>
+          <Route path="home/trainee/:id" element={<TraineeDetails />}>
             <Route path="viewPlan" element={<ViewPlan />} />
             <Route path="viewInbody" element={<ViewInbody />} />
-            <Route path="viewSubscibe" element={<ViewSubscibe />} />
+            <Route path="viewReport" element={<ViewSubscibe />} />
           </Route>
         </Route>
       </Routes>
