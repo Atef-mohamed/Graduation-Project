@@ -18,9 +18,9 @@ const Profile = () => {
   const { CoachProfileData } = useSelector((state) => state.Profile);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  // useEffect(() => {
-  //   // dispatch(fetchProfileData({ token }));
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchProfileData({ token }));
+  }, []);
   useEffect(() => {
     // dispatch(fetchProfileData({ token }));
 
@@ -33,10 +33,10 @@ const Profile = () => {
     const notifyCallback = (data) => {
       toast.info(`Title: ${data.title}, Message: ${data.msg}`, {
         autoClose: 9000,
-        style: {
-          backgroundColor: "#FFC300",
-          color: "#000814",
-        },
+        // style: {
+        //   backgroundColor: "#FFC300",
+        //   color: "#000814",
+        // },
       });
     };
 

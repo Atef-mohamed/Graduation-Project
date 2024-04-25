@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
-import "./traineeDetails.css";
+import "../css/traineeDetails.css";
 import backTo from "../../../../assets/BackTo.svg";
 import av from "../../../../assets/skill2.jpg";
 import startdate from "../../../../assets/startDate.svg";
@@ -20,7 +20,7 @@ const TraineeDetails = () => {
   const token = localStorage.getItem("token");
 
   const [trainee, setTrainee] = useState();
-  console.log(trainee && trainee.msg.id);
+  // console.log(trainee && trainee.msg.id);
 
   useEffect(() => {
     const fetchData = async () => {

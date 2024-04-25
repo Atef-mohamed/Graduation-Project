@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MainPage from "./components/MainPage/MainPage";
 import SignIn from "./components/SignIn/SignIn";
@@ -16,6 +16,10 @@ import TraineeDetails from "./components/Profile/pages/Trainee/TraineeDetails";
 import ViewPlan from "./components/Profile/pages/Trainee/ViewPlan";
 import ViewInbody from "./components/Profile/pages/Trainee/ViewInbody";
 import ViewSubscibe from "./components/Profile/pages/Trainee/ViewSubscibe";
+import CurrentMonth from "./components/Profile/pages/Trainee/CurrentMonth";
+import NextMonth from "./components/Profile/pages/Trainee/NextMonth";
+import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
+import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
 
 function App() {
   return (
@@ -36,7 +40,21 @@ function App() {
           <Route path="requests" element={<Requstes />} />
           <Route path="myProtfolio" element={<MyProtfoilo />} />
           <Route path="home/trainee/:id" element={<TraineeDetails />}>
-            <Route path="viewPlan" element={<ViewPlan />} />
+            <Route path="viewPlan" element={<ViewPlan />}>
+              {/* <Route index element={<CurrentMonth />} /> */}
+              <Route path="" element={<Navigate to="currentMonth" />} />
+              <Route path="currentMonth" element={<CurrentMonth />} />
+              <Route path="currentMonth/addPlans" element={<AddPlans />} >
+                <Route path="satPlan" element={<AddPlan/>}/>
+                <Route path="sunPlan" element={<AddPlan/>}/>
+                <Route path="monPlan" element={<AddPlan/>}/>
+                <Route path="tuePlan" element={<AddPlan/>}/>
+                <Route path="wedPlan" element={<AddPlan/>}/>
+                <Route path="thuPlan" element={<AddPlan/>}/>
+                <Route path="friPlan" element={<AddPlan/>}/>
+              </Route>
+              <Route path="nextMonth" element={<NextMonth />} />
+            </Route>
             <Route path="viewInbody" element={<ViewInbody />} />
             <Route path="viewReport" element={<ViewSubscibe />} />
           </Route>

@@ -16,15 +16,12 @@ const Home = () => {
     (state) => state.Trainees
   );
   const dispatch = useDispatch();
-  const navigation = useNavigate();
   const token = localStorage.getItem("token");
   useEffect(() => {
     dispatch(fetchProfileData({ token }));
-    dispatch(fetchTraineesList({ token }));
+    // dispatch(fetchTraineesList({ token }));
   }, []);
-  // const handelcard = () => {
-  //   navigation("/profile/home/trainee");
-  // };
+ 
   // // Function to handle changes in the search input
   // const handleSearchInputChange = (event) => {
   //   setSearchQuery(event.target.value);

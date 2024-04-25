@@ -11,6 +11,7 @@ const Protfolio = ({ onNextStep }) => {
   const [showAddProtfolio, setShowAddProtfolio] = useState(false);
   const [showCardProtfolio, setShowCardProtfolio] = useState(false);
   const navigate = useNavigate();
+  
   const handleShowAddProtfolio = () => {
     setShowAddProtfolio(true);
     setShowCardProtfolio(false);

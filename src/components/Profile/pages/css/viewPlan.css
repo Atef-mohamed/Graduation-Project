@@ -1,0 +1,15 @@
+.activeMonth{
+    color: var(--bright-yellow-color) !important;
+    border-bottom:  3px solid var(--bright-yellow-color) !important;
+}
+.deActivate{
+    color: var(--blue3-color) ;
+    border-bottom:  3px solid var(--blue3-color) !important;
+}
+.linkMonth{
+    font-weight: bold;
+    font-size: 17px;
+    letter-spacing: 1.2px;
+    width: 300px;
+    text-align: center;
+}

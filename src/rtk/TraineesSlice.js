@@ -11,20 +11,21 @@ export const fetchTraineesList = createAsyncThunk(
     return res.data;
   }
 );
-// Show one trainee
-// export const fetchTrainee = createAsyncThunk(
-//   "Trainees/fetchTrainee",
-//   async (token) => {
-//     const res = await axios.post(`${url.url}/coach/trainees$`, token);
-//     // console.log(res.data.msg.length);
-//     return res.data;
-//   }
-// );
+// Show sports
+export const fetchGifList = createAsyncThunk(
+  "Trainees/fetchGifList",
+  async (token) => {
+    const res = await axios.post(`${url.url}/sports`, token);
+    console.log(res.data);
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "Trainees",
   initialState: {
     TraineesList: null,
+    GifLists: null,
     loading: false,
     success: false,
     error: null,
@@ -41,6 +42,20 @@ export const userSlice = createSlice({
       state.success = true;
     });
     builder.addCase(fetchTraineesList.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    // Gif List
+    builder.addCase(fetchGifList.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchGifList.fulfilled, (state, action) => {
+      state.GifLists = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(fetchGifList.rejected, (state, action) => {
       state.loading = false;
       state.success = false;
       state.error = action.error.message;

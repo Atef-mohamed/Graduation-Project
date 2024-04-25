@@ -8,7 +8,6 @@
     --main-white-color:#FFFFFF;
     --form-white-color:#EFF0F6;
     --bright-yellow-color:#FFC300;
-    --darker-yellow-color:#FFC300;
     --blue3-color:#000814;
     --blue2-color:#001D3D;
     --blue1-color:#003566;
@@ -24,6 +23,8 @@
     --error-color:#8C0202;
     --right-input-color:#048010;
     --section-padding:100px;
+    --main-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
 
 }
 
@@ -97,7 +98,7 @@ main{
     border-radius: 18px;
 }
 .active{
-    background: var(--blue2-color);
+    background: var(--blue2-color) ;
     color: #ffffff !important;
     border-radius: 18px;
 
