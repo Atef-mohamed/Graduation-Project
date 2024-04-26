@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import "../../css/addPlans.css";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
+import ExersizeForm from "./ExersizeForm";
+import AddPlan from "./AddPlan";
 
 const AddPlans = () => {
   const [showChooseDay, setShowChooseDay] = useState(true);
-  const location = useLocation();
+  const [day, setDay] = useState("");
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (day) => {
+    setDay(day);
     setShowChooseDay(false);
   };
 
-//   const navDayStyle = ({ isActive }) => {
-//     return {
-//       color: isActive ? "red" : "blue",
-//       bacgoundColor: isActive ? "black" : "",
-//     };
-//   };
+  //   const navDayStyle = ({ isActive }) => {
+  //     return {
+  //       color: isActive ? "red" : "blue",
+  //       bacgoundColor: isActive ? "black" : "",
+  //     };
+  //   };
 
   return (
     <>
@@ -25,49 +34,49 @@ const AddPlans = () => {
             to="satPlan"
             // style={{navDayStyle}}
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("saturday")}
           >
             Saturday
           </NavLink>
           <NavLink
             to="sunPlan"
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("sunday")}
           >
             Sunday
           </NavLink>
           <NavLink
             to="monPlan"
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("monday")}
           >
             Monday
           </NavLink>
           <NavLink
             to="tuePlan"
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("tuesday")}
           >
             Tuesday
           </NavLink>
           <NavLink
             to="wedPlan"
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("wednesday")}
           >
             Wednesday
           </NavLink>
           <NavLink
             to="thuPlan"
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("thurday")}
           >
             Thursday
           </NavLink>
           <NavLink
             to="friPlan"
             className="link-sidePlans"
-            onClick={handleLinkClick}
+            onClick={() => handleLinkClick("friday")}
           >
             Friday
           </NavLink>
@@ -77,8 +86,10 @@ const AddPlans = () => {
         {!showChooseDay && (
           <div className="outLet">
             <Outlet />
+            {/* <AddPlan day={day} /> */}
           </div>
         )}
+        <ExersizeForm day={day} />
       </div>
     </>
   );

@@ -1,6 +1,62 @@
+#gifs-container{
+    margin-top: 20px;
+    position: relative;
+
+}
+
+#form-name label{
+    color: var(--blue1-color);
+    font-weight: 500;
+}
+#input-nameOftraining{
+ width: 40%;
+ border-radius: 15px;
+ outline: none;
+ border: none;
+ border: 2px solid var(--bright-yellow-color);
+ padding: 7px ;
+ font-weight: bold;
+}
+#please{
+    font-weight: bold;
+    color: var( --error-color);
+    margin: 10px 30px;
+}
+.red-lines {
+    font-weight: bold;
+    color: var(--bright-yellow-color);
+    text-align: left;
+    margin-left: 30px;
+    position: relative; 
+}
+
+.red-lines::before,
+.red-lines::after {
+    content: "";
+    position: absolute; 
+    top: 50%; 
+    height: 4px; 
+    background-color: var(--blue2-color);
+    border-radius: 4px;
+    
+}
+
+.red-lines::before {
+    left: -50px; 
+    width: 5%;
+    transform: translateY(-50%);
+}
+
+.red-lines::after {
+    right: 0; 
+    transform: translateY(-50%);
+    width: 83%;
+}
 .gif-cards{
     display: flex;
     flex-wrap: wrap;
+    /* kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkggggggggggggggggggggggggggggggggggggggggggggg */
+    flex-direction: column;
     gap: 20px;
     /* column-gap: 25px; */
     justify-content: center;
@@ -32,7 +88,19 @@
     width: 150px;
     height: 160px !important;
     height: auto;
+    border-radius: 20px;
     /* border-radius: 50% !important; */
     margin-bottom: 20px;
     border: 2px solid var(--bright-yellow-color);
 }
+
+
+/* #exerSize-form{
+    background-color: var(--bright-yellow-color) !important;
+    position: absolute;
+    top: 75%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: calc(100vh - 150px);
+} */
