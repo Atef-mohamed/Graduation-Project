@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/choosenGif.css";
 import deleteBtn from "../../../../../assets/delete.svg";
 import editBtn from "../../../../../assets/edit.svg";
@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   AddPlans,
+  fetchPlansData,
   removeAllPlans,
   removeExersize,
 } from "../../../../../rtk/TraineesSlice";
 import Swal from "sweetalert2";
-import { useLoaderData, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Pagination from "../../Pagination/Pagination";
 
 const ChoosenGif = ({ exercise }) => {
@@ -20,12 +21,14 @@ const ChoosenGif = ({ exercise }) => {
     exercises,
     day,
     trainingName: plan_name,
+    plansData,
   } = useSelector((state) => state.Trainees);
+  const coach_id = 6;
   const trainee_id = location.pathname.split("/")[4];
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
-  console.log(exercise);
-  console.log(exercises);
+  //   console.log(exercise);
+  //   console.log(exercises);
   const handleDelete = (index) => {
     // Dispatch an action to remove the exercise at the specified index
     Swal.fire({
@@ -33,46 +36,121 @@ const ChoosenGif = ({ exercise }) => {
       showCancelButton: true,
       confirmButtonText: "yes",
       denyButtonText: `No`,
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-deny-button",
+        denyButton: " swal-confirm-button",
+        popup: "swal-popup",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(removeExersize(index));
-        Swal.fire("Deleted!", "", "success");
+        Swal.fire({
+          title: "Deleted!",
+          icon: "success",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
       } else if (result.isDenied) {
-        Swal.fire("plan not Delete", "", "info");
+        Swal.fire({
+          title: "Plan not saved",
+          icon: "info",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            confirmButton: "swal-confirm-button",
+            popup: "swal-popup",
+          },
+        });
       }
     });
   };
+  useEffect(() => {
+    dispatch(fetchPlansData({ trainee_id, day, token }));
+    window.scrollTo(0, 400);
+    if (plansData && plansData.data === false) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${plansData.msg.plan_name[0]}`,
+      });
+    } else if (plansData && plansData.status === false) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${plansData.error_msg}`,
+      });
+    }
+  }, [plansData]);
   //   save all of plans and send it to api
   const handleSave = () => {
     Swal.fire({
-      title: "Are you sure to Save this plans?",
+      title: "Are you sure to Save this plan?",
       showDenyButton: true,
       confirmButtonText: "Yes",
-      denyButtonText: `No`,
+      denyButtonText: "No",
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-confirm-button",
+        denyButton: "swal-deny-button",
+        popup: "swal-popup",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(AddPlans({ plan_name, day, exercises, trainee_id, token }));
-        // Swal.fire("Saved!", "", "success");
+        dispatch(fetchPlansData({ coach_id, trainee_id, token }));
       } else if (result.isDenied) {
-        Swal.fire("plan not saved", "", "info");
+        Swal.fire({
+          title: "Plan not saved",
+          icon: "info",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            confirmButton: "swal-confirm-button",
+            popup: "swal-popup",
+          },
+        });
       }
     });
   };
   const handleCancel = () => {
     Swal.fire({
       title: "Are you sure to delete all plans ?",
-      showCancelButton: true,
+      showDenyButton: true,
       confirmButtonText: "yes",
       denyButtonText: `No`,
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-deny-button",
+        denyButton: " swal-confirm-button",
+        popup: "swal-popup",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(removeAllPlans());
-        Swal.fire("Deleted!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("plan not Delete", "", "info");
+        Swal.fire({
+          title: "Deleted!",
+          icon: "success",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
       }
     });
-  }; 
+  };
   const sortedPlanLists = exercises;
   const sports_prePage = 2; // each page contain 6 client
   const pages = Math.ceil(exercises?.length / sports_prePage);
@@ -146,11 +224,13 @@ const ChoosenGif = ({ exercise }) => {
           </div>
         ))}
       </div>
-      {exercises.length > 0 &&<Pagination
+      {exercises.length > 0 && (
+        <Pagination
           pages={pages}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-        />}
+        />
+      )}
       {exercises.length > 0 && (
         <div className="container d-flex justify-content-evenly align-items-end">
           <button id="btn-save-gif" onClick={handleSave}>

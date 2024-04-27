@@ -25,3 +25,41 @@
 .left-side{
     margin-bottom: 80px;
 }
+
+/* #active-plans{
+    border: 3px solid red;
+} */
+#btn-edit-all,
+#btn-delete-all{
+    background-color: var(--blue3-color) ;
+    padding: 7px 15px;
+    border-radius: 20px;
+}
+
+.swal-title {
+    color: var(--blue1-color) !important;
+}
+
+.swal-confirm-button {
+    background-color: var(--blue1-color) !important;
+    color: white;
+    /* border-color: var(--bright-yellow-color) !important; */
+    border-radius: 10px !important;
+    padding: 5px 25px !important;
+}
+
+.swal-deny-button {
+    background-color: white !important;
+    color: var(--blue1-color) !important;
+    /* border-color: greevar   n; */
+    font-weight: bold;
+    border: 1px solid var(--blue1-color) !important;
+    border-radius: 10px !important;
+    padding: 5px 25px !important;
+}
+
+.swal-popup {
+    border-radius: 7px;
+    border: 2px solid var(--bright-yellow-color);
+}
+  

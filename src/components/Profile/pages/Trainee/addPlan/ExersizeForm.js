@@ -13,6 +13,7 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
     day,
     trainingName: plan_name,
     exercises,
+    error,
   } = useSelector((state) => state.Trainees);
   console.log(exercises);
   //   const arr=[];
@@ -49,36 +50,90 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
       setValidated(true);
       //   dispatch(signUp({ fname, lname, phone }));
       Swal.fire({
-        title: "Are you sure you want to Save GIF?",
+        title: "Are you sure to Save Gif?",
         showDenyButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`,
+        denyButtonText: "No",
+        customClass: {
+          title: "swal-title",
+          confirmButton: "swal-confirm-button",
+          denyButton: "swal-deny-button",
+          popup: "swal-popup",
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(addExersize({ name, exercise, times, rest }));
-          dispatch(addexercise(exercise))
-          Swal.fire("Saved!", "", "success");
+          dispatch(addexercise(exercise));
+          Swal.fire({
+            title: "Saved!",
+            icon: "success",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1500,
+            customClass: {
+              title: "swal-title-green",
+              popup: "swal-popup",
+            },
+          });
           handelClearForm();
           handleCloseForm();
         } else if (result.isDenied) {
-          Swal.fire("plan not saved", "", "info");
+          Swal.fire({
+            title: "Gif not saved",
+            icon: "info",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1500,
+            customClass: {
+              title: "swal-title-green",
+              confirmButton: "swal-confirm-button",
+              popup: "swal-popup",
+            },
+          });
         }
       });
     }
   };
   const handleCancel = () => {
     Swal.fire({
-      title: "Are you sure you want to delete GIF?",
-      showCancelButton: true,
+      title: "Are you sure to delete this Gif ?",
+      showDenyButton: true,
       confirmButtonText: "yes",
       denyButtonText: `No`,
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-deny-button",
+        denyButton: " swal-confirm-button",
+        popup: "swal-popup",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "", "success");
+        Swal.fire({
+          title: "Deleted!",
+          icon: "success",
+          showConfirmButton: false,
+          showDenyButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
         handelClearForm();
         handleCloseForm();
       } else if (result.isDenied) {
-        Swal.fire("plan not Delete", "", "info");
+        Swal.fire({
+          title: "Plan not saved",
+          icon: "info",
+          showConfirmButton: false,
+          showDenyButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            confirmButton: "swal-confirm-button",
+            popup: "swal-popup",
+          },
+        });
       }
     });
   };

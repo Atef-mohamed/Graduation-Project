@@ -16,7 +16,7 @@ export const fetchGifList = createAsyncThunk(
   "Trainees/fetchGifList",
   async (token) => {
     const res = await axios.post(`${url.url}/sports`, token);
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   }
 );
@@ -25,7 +25,25 @@ export const AddPlans = createAsyncThunk(
   "Trainees/AddPlans",
   async (plansData) => {
     const res = await axios.post(`${url.url}/plan/create`, plansData);
-    console.log(res.data);
+    // console.log(res.data);
+    return res.data;
+  }
+);
+// Show Plans
+export const fetchPlansData = createAsyncThunk(
+  "Trainees/fetchPlansData",
+  async (data) => {
+    const res = await axios.post(`${url.url}/plan/show`, data);
+    console.log("show plans",res.data);
+    return res.data;
+  }
+);
+// Delete one exercise
+export const deleteExercise = createAsyncThunk(
+  "Trainees/deleteExercise",
+  async (data) => {
+    const res = await axios.post(`${url.url}/exercise/delete`, data);
+    console.log("delete exercise",res.data);
     return res.data;
   }
 );
@@ -36,6 +54,8 @@ export const userSlice = createSlice({
     TraineesList: null,
     GifLists: null,
     plansData:null,
+    showPlansData:null,
+    exerciseDeleted:null,
     day: "",
     trainingName: "",
     exercise:"",
@@ -104,6 +124,34 @@ export const userSlice = createSlice({
       state.success = true;
     });
     builder.addCase(AddPlans.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    // Show plans
+    builder.addCase(fetchPlansData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchPlansData.fulfilled, (state, action) => {
+      state.showPlansData = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(fetchPlansData.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    // delete exercise
+    builder.addCase(deleteExercise.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteExercise.fulfilled, (state, action) => {
+      state.exerciseDeleted = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(deleteExercise.rejected, (state, action) => {
       state.loading = false;
       state.success = false;
       state.error = action.error.message;

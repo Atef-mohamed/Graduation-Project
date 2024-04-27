@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/addPlan.css";
 import { useDispatch, useSelector } from "react-redux";
 import GifList from "./GifList";
 import Pagination from "../../Pagination/Pagination";
 import ExersizeForm from "./ExersizeForm";
-import { trainName } from "../../../../../rtk/TraineesSlice";
+import { fetchPlansData, trainName } from "../../../../../rtk/TraineesSlice";
 import ChoosenGif from "./ChoosenGif";
+import { useLocation } from "react-router-dom";
+import ActivePlans from "./ActivePlans";
 
 const AddPlan = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { GifLists, loading } = useSelector((state) => state.Trainees);
+  const { GifLists, loading, showPlansData, day } = useSelector(
+    (state) => state.Trainees
+  );
   const [trainingName, setTrainingName] = useState("");
   const dispatch = useDispatch();
+  const location = useLocation();
+  // const coach_id = 6;
+  const trainee_id = location.pathname.split("/")[4];
+  const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   dispatch(fetchPlansData({ trainee_id, day, token }));
+  //   console.log(showPlansData?.msg?.day);
+  // }, []);
   const handleTrainingNameChange = (event) => {
     setTrainingName(event.target.value);
   };
@@ -29,38 +41,50 @@ const AddPlan = () => {
   const orderedGifLists = sortedGifLists?.slice(startIndex, finishIndex);
   return (
     <>
-      <div className="container" id="gifs-container">
-        <p className="red-lines">Training name</p>
-        <div id="form-name" className="d-flex flex-column">
-          <label htmlFor="input-nameOftraining">Enter the training name</label>
-          <input
-            type="text"
-            id="input-nameOftraining"
-            onChange={handleTrainingNameChange}
-          />
-        </div>
-        <p id="please">
-          *Please choose the appropriate gif for today's exercise
-        </p>
-        <p className="red-lines">GIF for exercises</p>
-        <div className="gif-cards">
-          {/* {loading === true ? (
+      {showPlansData && showPlansData?.msg?.day !== day && (
+        <div className="container" id="gifs-container">
+          <p className="red-lines">Training name</p>
+          <div id="form-name" className="d-flex flex-column">
+            <label htmlFor="input-nameOftraining">
+              Enter the training name
+            </label>
+            <input
+              type="text"
+              id="input-nameOftraining"
+              onChange={handleTrainingNameChange}
+            />
+          </div>
+          <p id="please">
+            *Please choose the appropriate gif for today's exercise
+          </p>
+          <p className="red-lines">GIF for exercises</p>
+          <div className="gif-cards">
+            {/* {loading === true ? (
             <div className="loader d-flex flex-column"></div>
           ) : (
             ""
           )} */}
-          <GifList Sports={orderedGifLists} />
+            <GifList Sports={orderedGifLists} />
+          </div>
+          <Pagination
+            pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
-        <Pagination
-          pages={pages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
-      <div className="container" id="gif-choose">
-        <p className="red-linee">The GIF you choose</p>
-        <ChoosenGif />
-      </div>
+      )}
+      {showPlansData && showPlansData?.msg?.day !== day && (
+        <div className="container" id="gif-choose">
+          <p className="red-linee">The GIF you choose</p>
+          <ChoosenGif />
+        </div>
+      )}
+      {showPlansData && showPlansData?.msg?.day === day && (
+        <div className="container" id="gif-choose">
+          <p className="red-linee">{showPlansData?.msg?.name}</p>
+          <ActivePlans />
+        </div>
+      )}
     </>
   );
 };

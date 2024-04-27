@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchGifList } from "../../../../../rtk/TraineesSlice";
 import ExersizeForm from "./ExersizeForm";
 
-const GifList = ({ Sports}) => {
+const GifList = ({ Sports }) => {
   const [selectedGif, setSelectedGif] = useState(null);
   const [showExierSizeForm, setShowExierSizeForm] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +14,7 @@ const GifList = ({ Sports}) => {
 
   useEffect(() => {
     dispatch(fetchGifList({ token }));
-    console.log(Sports);
+    // console.log(Sports);
   }, [dispatch, token]);
 
   const handleGifClick = (gif) => {
@@ -22,7 +22,7 @@ const GifList = ({ Sports}) => {
     setShowExierSizeForm(true);
     setIsOpen(true);
   };
-  
+
   const handleCloseForm = () => {
     setIsOpen(false); // Close the ExersizeForm
   };
@@ -43,7 +43,11 @@ const GifList = ({ Sports}) => {
       ))}
       {showExierSizeForm && (
         <div id="exerSize-form">
-          <ExersizeForm selectedGif={selectedGif} isOpen={isOpen} handleCloseForm={handleCloseForm}/>
+          <ExersizeForm
+            selectedGif={selectedGif}
+            isOpen={isOpen}
+            handleCloseForm={handleCloseForm}
+          />
         </div>
       )}
     </>

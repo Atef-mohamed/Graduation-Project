@@ -2,17 +2,25 @@ import React, { useState } from "react";
 import "../../css/addPlans.css";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { activeDay, removeAllPlans } from "../../../../../rtk/TraineesSlice";
+import {
+  activeDay,
+  fetchPlansData,
+  removeAllPlans,
+} from "../../../../../rtk/TraineesSlice";
 
 const AddPlans = () => {
   const [showChooseDay, setShowChooseDay] = useState(true);
   const [day, setDay] = useState("");
   const dispatch = useDispatch();
+  const location = useLocation();
+  const trainee_id = location.pathname.split("/")[4];
+  const token = localStorage.getItem("token");
   const handleLinkClick = (day) => {
     setDay(day);
     setShowChooseDay(false);
     dispatch(activeDay(day));
     dispatch(removeAllPlans());
+    dispatch(fetchPlansData({ trainee_id, day, token }));
   };
 
   //   const navDayStyle = ({ isActive }) => {
