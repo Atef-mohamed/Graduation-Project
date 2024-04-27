@@ -20,17 +20,51 @@ export const fetchGifList = createAsyncThunk(
     return res.data;
   }
 );
+// add Plans
+export const AddPlans = createAsyncThunk(
+  "Trainees/AddPlans",
+  async (plansData) => {
+    const res = await axios.post(`${url.url}/plan/create`, plansData);
+    console.log(res.data);
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "Trainees",
   initialState: {
     TraineesList: null,
     GifLists: null,
+    plansData:null,
+    day: "",
+    trainingName: "",
+    exercise:"",
+    exercises: [],
     loading: false,
     success: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addexercise: (state, action) => {
+      state.exercise = action.payload;
+    },
+    activeDay: (state, action) => {
+      state.day = action.payload;
+    },
+    trainName: (state, action) => {
+      state.trainingName = action.payload;
+    },
+    addExersize: (state, action) => {
+      state.exercises.push(action.payload);
+    },
+    removeExersize: (state, action) => {
+      const index = action.payload;
+      state.exercises.pop(index);
+    },
+    removeAllPlans: (state) => {
+      state.exercises = [];
+    },
+  },
   extraReducers: (builder) => {
     // Trainees List
     builder.addCase(fetchTraineesList.pending, (state) => {
@@ -60,7 +94,28 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
+    // add plans
+    builder.addCase(AddPlans.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(AddPlans.fulfilled, (state, action) => {
+      state.plansData = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(AddPlans.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
   },
 });
-export const {} = userSlice.actions;
+export const {
+  activeDay,
+  trainName,
+  addExersize,
+  removeExersize,
+  removeAllPlans,
+  addexercise
+} = userSlice.actions;
 export default userSlice.reducer;

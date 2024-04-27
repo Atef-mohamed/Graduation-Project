@@ -22,6 +22,10 @@ const GifList = ({ Sports}) => {
     setShowExierSizeForm(true);
     setIsOpen(true);
   };
+  
+  const handleCloseForm = () => {
+    setIsOpen(false); // Close the ExersizeForm
+  };
 
   return (
     <>
@@ -39,7 +43,7 @@ const GifList = ({ Sports}) => {
       ))}
       {showExierSizeForm && (
         <div id="exerSize-form">
-          <ExersizeForm selectedGif={selectedGif} isOpen={isOpen}/>
+          <ExersizeForm selectedGif={selectedGif} isOpen={isOpen} handleCloseForm={handleCloseForm}/>
         </div>
       )}
     </>

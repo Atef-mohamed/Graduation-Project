@@ -69,7 +69,9 @@ const Home = () => {
         <h4 className="client-title">All Clients</h4>
         <div className="client-cards ">
           {loading === true ? (
-            <div className="loader d-flex flex-column"></div>
+            <div className="loader-container">
+              <div className="loader d-flex flex-column"></div>
+              </div>
           ) : (
             ""
           )}

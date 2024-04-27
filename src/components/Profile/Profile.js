@@ -31,12 +31,25 @@ const Profile = () => {
 
     const channel = pusher.subscribe("notify");
     const notifyCallback = (data) => {
-      toast.info(`Title: ${data.title}, Message: ${data.msg}`, {
+      toast.info(` ${data.title} 
+       ${data.msg}`, {
         autoClose: 9000,
         // style: {
         //   backgroundColor: "#FFC300",
         //   color: "#000814",
         // },
+        // Render toast with custom HTML elements
+        render: ({ closeToast }) => (
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              closeToast();
+            }}
+          >
+            <h1>{data.title}</h1>
+            <h5>{data.msg}</h5>
+          </div>
+        ),
       });
     };
 

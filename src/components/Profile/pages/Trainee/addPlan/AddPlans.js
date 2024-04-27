@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import "../../css/addPlans.css";
-import {
-  Link,
-  NavLink,
-  Outlet,
-  useLocation,
-  useParams,
-} from "react-router-dom";
-import ExersizeForm from "./ExersizeForm";
-import AddPlan from "./AddPlan";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { activeDay, removeAllPlans } from "../../../../../rtk/TraineesSlice";
 
 const AddPlans = () => {
   const [showChooseDay, setShowChooseDay] = useState(true);
   const [day, setDay] = useState("");
-
+  const dispatch = useDispatch();
   const handleLinkClick = (day) => {
     setDay(day);
     setShowChooseDay(false);
+    dispatch(activeDay(day));
+    dispatch(removeAllPlans());
   };
 
   //   const navDayStyle = ({ isActive }) => {
@@ -82,14 +78,11 @@ const AddPlans = () => {
           </NavLink>
         </div>
         {showChooseDay && <h4 id="choose">Please choose the day first</h4>}
-
         {!showChooseDay && (
           <div className="outLet">
             <Outlet />
-            {/* <AddPlan day={day} /> */}
           </div>
         )}
-        <ExersizeForm day={day} />
       </div>
     </>
   );

@@ -82,7 +82,7 @@
     width: 100% !important;
     font-weight: bold;
     padding: 3px 14px;
-    border-radius: 8px;
+    border-radius: 8px !important;
     outline: none;
     border: none;
 }

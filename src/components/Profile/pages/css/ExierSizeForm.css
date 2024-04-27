@@ -38,6 +38,7 @@
 }
 .input::placeholder {
     font-size: 9px;
+    color: var(--holder-profile-color);
 }
 .input{
     border-radius: 15px !important;

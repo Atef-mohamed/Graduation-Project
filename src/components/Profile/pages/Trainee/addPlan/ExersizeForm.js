@@ -1,154 +1,187 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../css/ExierSizeForm.css";
 import { Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { addExersize, addexercise } from "../../../../../rtk/TraineesSlice";
+import Swal from "sweetalert2";
+import ChoosenGif from "./ChoosenGif";
 
-const ExersizeForm = ({ selectedGif, isOpen, day, trainingName }) => {
-  console.log(trainingName);
-  console.log(isOpen);
-  console.log(selectedGif);
-  console.log(day);
-    const trainingname = trainingName;
-    console.log(trainingname)
+const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
+  const {
+    day,
+    trainingName: plan_name,
+    exercises,
+  } = useSelector((state) => state.Trainees);
+  console.log(exercises);
+  //   const arr=[];
+  //    if(exercises){
+  //     arr.push(exercises);
+  //    }
+  //   console.log(day);
+  //   console.log(plan_name);
+  //   console.log(isOpen);
+  //   console.log(exercise);
   const [validated, setValidated] = useState(false);
+  const [name, setExersizeName] = useState("");
+  const [times, setNumberOfRepeat] = useState(0);
+  const [rest, setBreakTime] = useState(0);
+  //   const [exercises, setExercises] = useState([]);
+  const location = useLocation();
+  const traineeId = location.pathname.split("/")[4];
+  const dispatch = useDispatch();
+  // console.log(traineeId);
+  const inp1 = useRef();
+  const inp2 = useRef();
+  const inp3 = useRef();
+  const handelClearForm = () => {
+    inp1.current.value = "";
+    inp2.current.value = "";
+    inp3.current.value = "";
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+    } else {
+      setValidated(true);
+      //   dispatch(signUp({ fname, lname, phone }));
+      Swal.fire({
+        title: "Are you sure you want to Save GIF?",
+        showDenyButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: `No`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(addExersize({ name, exercise, times, rest }));
+          dispatch(addexercise(exercise))
+          Swal.fire("Saved!", "", "success");
+          handelClearForm();
+          handleCloseForm();
+        } else if (result.isDenied) {
+          Swal.fire("plan not saved", "", "info");
+        }
+      });
+    }
+  };
+  const handleCancel = () => {
+    Swal.fire({
+      title: "Are you sure you want to delete GIF?",
+      showCancelButton: true,
+      confirmButtonText: "yes",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "", "success");
+        handelClearForm();
+        handleCloseForm();
+      } else if (result.isDenied) {
+        Swal.fire("plan not Delete", "", "info");
+      }
+    });
+  };
+  const handleExersizeNameChange = (e) => {
+    const input = e.target.value;
+    if (!input.match(/^[a-zA-Z\s]*$/)) {
+      e.target.setCustomValidity("Enter correct Name of training");
+    } else {
+      e.target.setCustomValidity("");
+    }
+    setExersizeName(input);
+  };
+  const handleNumberOfRepeatChange = (e) => {
+    const input = e.target.value;
+    if (!input.match(/^\d+$/)) {
+      e.target.setCustomValidity("Enter Number only");
+    } else {
+      e.target.setCustomValidity("");
+    }
+    setNumberOfRepeat(input);
+  };
+  const handleBreakTimeChange = (e) => {
+    const input = e.target.value;
+    if (!input.match(/^\d+$/)) {
+      e.target.setCustomValidity("Enter Number only");
+    } else {
+      e.target.setCustomValidity("");
+    }
+    setBreakTime(input);
+  };
 
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [phone, setPhone] = useState("");
-  //   useEffect(() => {
-  //     console.log(trainingname);
-  //     console.log(isOpen);
-  //     console.log(selectedGif);
-  //     console.log(day);
-  //   }, []);
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     const form = e.currentTarget;
-  //     if (form.checkValidity() === false) {
-  //       e.stopPropagation();
-  //     } else {
-  //       setValidated(true);
-  //       dispatch(signUp({ fname, lname, phone }));
-  //     }
-  //   };
-  //   const handlePhoneChange = (e) => {
-  //     const input = e.target.value;
-  //     if (!input.match(/^\d{11}$/)) {
-  //       e.target.setCustomValidity("Phone number must be 11 digit");
-  //     } else {
-  //       e.target.setCustomValidity("");
-  //     }
-  //     setPhone(input);
-  //   };
-  //   const handleFnameChange = (e) => {
-  //     const input = e.target.value;
-  //     if (!input.match(/^[a-zA-Z\s]*$/)) {
-  //       e.target.setCustomValidity("Enter validated Name");
-  //     } else {
-  //       e.target.setCustomValidity("");
-  //     }
-  //     setFname(input);
-  //   };
-
-  //   const handleLnameChange = (e) => {
-  //     const input = e.target.value;
-  //     if (!input.match(/^[a-zA-Z\s]*$/)) {
-  //       e.target.setCustomValidity("Enter validated Name");
-  //     } else {
-  //       e.target.setCustomValidity("");
-  //     }
-  //     setLname(input);
-  //   };
   return (
-    <div className={`exersize-form-container ${isOpen ? "open" : ""}`}>
-      <div className="exersize-form">
-        {/* <h1 className="text-center">Exercise Form</h1> */}
-        {selectedGif && (
-          <img
-            src={`https://above-elk-open.ngrok-free.app/api/img/${selectedGif}`}
-            alt="Selected GIF"
-            className="selected-gif"
-            style={{ width: "250px", height: "200px", borderRadius: "4px" }}
-          />
-        )}
-        <Form
-          validated={validated}
-          //   onSubmit={handleSubmit}
-          //   style={}
-          className="d-flex justify-content-center align-items-center flex-column gap-1"
-        >
-          <Row className="mb-1 mt-1">
-            <Form.Group as={Row} md="4" controlId="validationFirstName">
-              <label className="form-l">Name of exercise </label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter the name of exercise"
-                className="input"
-                // onChange={handleFnameChange}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mb-1">
-            <Form.Group as={Row} md="6" controlId="validationLastName">
-              <label className="form-l">
-                Number of repetitions in each set
-              </label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter the Number of repetitions in each set"
-                className="input"
-                // onChange={handleLnameChange}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mb-1">
-            <Form.Group as={Row} md="4" controlId="validationPhoneNumber">
-              <label className="form-l">Break time</label>
-              <Form.Control
-                required
-                type="text"
-                placeholder="Enter the Break time"
-                className="input"
-                pattern="[0-9]{11}"
-                // onChange={handlePhoneChange}
-              />
-            </Form.Group>
-          </Row>
-          <div className="mt-2 mb-3 d-flex gap-4">
-            <button type="submit" id="btn-save-gif">
-              Save Gif
-            </button>
-            <button id="cancel">Cancel</button>
-          </div>
-          {/* {loading === true ? (
-                    <h3 className="loader" id="loader-up"></h3>
-                  ) : (
-                    <button className="button-submit" type="submit">
-                      Sign up
-                    </button>
-                  )}
-                  {userSignUpData && userSignUpData.data === true ? (
-                    <h3 className="text-primary txt-res">
-                      User Logged Succesffuly
-                    </h3>
-                  ) : (
-                    <></>
-                  )}
-                  {userSignUpData && userSignUpData.data === false ? (
-                    <h3 className="text-danger txt-res">
-                      {userSignUpData.msg}
-                    </h3>
-                  ) : (
-                    <></>
-                  )}
-                  {error ? (
-                    <h4 className="text-danger txt-res">Network error</h4>
-                  ) : null} */}
-        </Form>
+    <>
+      <div className={`exersize-form-container ${isOpen ? "open" : ""}`}>
+        <div className="exersize-form">
+          {exercise && (
+            <img
+              src={`https://above-elk-open.ngrok-free.app/api/img/${exercise}`}
+              alt="Selected GIF"
+              className="selected-gif"
+              style={{ width: "250px", height: "200px", borderRadius: "4px" }}
+            />
+          )}
+          <Form
+            validated={validated}
+            onSubmit={handleSubmit}
+            className="d-flex justify-content-center align-items-center flex-column gap-1 ms-3"
+          >
+            <Row className="mb-1 mt-1">
+              <Form.Group as={Row} md="4" controlId="validationFirstName">
+                <label className="form-l">Name of exercise </label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Enter the name of exercise"
+                  className="input"
+                  onChange={handleExersizeNameChange}
+                  ref={inp1}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-1">
+              <Form.Group as={Row} md="6" controlId="validationLastName">
+                <label className="form-l">
+                  Number of repetitions in each set
+                </label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Enter the Number of repetitions in each set"
+                  className="input"
+                  ref={inp2}
+                  onChange={handleNumberOfRepeatChange}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-1">
+              <Form.Group as={Row} md="4" controlId="validationPhoneNumber">
+                <label className="form-l">Break time</label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Enter the Break time"
+                  className="input"
+                  // pattern="[0-9]{11}"
+                  ref={inp3}
+                  onChange={handleBreakTimeChange}
+                />
+              </Form.Group>
+            </Row>
+            <div className="mt-4 mb-3 d-flex gap-4">
+              <button type="submit" id="btn-save-gif">
+                Save Gif
+              </button>
+              <button id="cancel" onClick={handleCancel}>
+                Cancel
+              </button>
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+      {/* <ChoosenGif exercise={exercise} /> */}
+    </>
   );
 };
 
