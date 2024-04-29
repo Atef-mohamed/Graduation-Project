@@ -11,7 +11,7 @@ import ActivePlans from "./ActivePlans";
 
 const AddPlan = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { GifLists, loading, showPlansData, day } = useSelector(
+  const { GifLists, loading, showPlansData, day, error } = useSelector(
     (state) => state.Trainees
   );
   const [trainingName, setTrainingName] = useState("");
@@ -41,49 +41,64 @@ const AddPlan = () => {
   const orderedGifLists = sortedGifLists?.slice(startIndex, finishIndex);
   return (
     <>
-      {showPlansData && showPlansData?.msg?.day !== day && (
-        <div className="container" id="gifs-container">
-          <p className="red-lines">Training name</p>
-          <div id="form-name" className="d-flex flex-column">
-            <label htmlFor="input-nameOftraining">
-              Enter the training name
-            </label>
-            <input
-              type="text"
-              id="input-nameOftraining"
-              onChange={handleTrainingNameChange}
-            />
+      {loading === true ? (
+        <div className="loader-overlay">
+          <div className="loader-container">
+            <div className="loader"></div>
           </div>
-          <p id="please">
-            *Please choose the appropriate gif for today's exercise
-          </p>
-          <p className="red-lines">GIF for exercises</p>
-          <div className="gif-cards">
-            {/* {loading === true ? (
+        </div>
+      ) : (
+        ""
+      )}
+      {error === true ? (
+        <h4 className="text-danger txt-res text-center">{error}</h4>
+      ) : (
+        <>
+          {showPlansData && !showPlansData?.msg?.exercises?.length > 0 && (
+            <div className="container" id="gifs-container">
+              <p className="red-lines">Training name</p>
+              <div id="form-name" className="d-flex flex-column">
+                <label htmlFor="input-nameOftraining">
+                  Enter the training name
+                </label>
+                <input
+                  type="text"
+                  id="input-nameOftraining"
+                  onChange={handleTrainingNameChange}
+                />
+              </div>
+              <p id="please">
+                *Please choose the appropriate gif for today's exercise
+              </p>
+              <p className="red-lines">GIF for exercises</p>
+              <div className="gif-cards">
+                {/* {loading === true ? (
             <div className="loader d-flex flex-column"></div>
           ) : (
             ""
           )} */}
-            <GifList Sports={orderedGifLists} />
-          </div>
-          <Pagination
-            pages={pages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
-      )}
-      {showPlansData && showPlansData?.msg?.day !== day && (
-        <div className="container" id="gif-choose">
-          <p className="red-linee">The GIF you choose</p>
-          <ChoosenGif />
-        </div>
-      )}
-      {showPlansData && showPlansData?.msg?.day === day && (
-        <div className="container" id="gif-choose">
-          <p className="red-linee">{showPlansData?.msg?.name}</p>
-          <ActivePlans />
-        </div>
+                <GifList Sports={orderedGifLists} />
+              </div>
+              <Pagination
+                pages={pages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </div>
+          )}
+          {showPlansData && !showPlansData?.msg?.exercises?.length > 0 && (
+            <div className="container" id="gif-choose">
+              <p className="red-linee">The GIF you choose</p>
+              <ChoosenGif />
+            </div>
+          )}
+          {showPlansData && showPlansData?.msg?.exercises?.length > 0 && (
+            <div className="container" id="gif-choose">
+              <p className="red-linee">{showPlansData?.msg?.name}</p>
+              <ActivePlans />
+            </div>
+          )}
+        </>
       )}
     </>
   );

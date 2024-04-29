@@ -206,7 +206,7 @@ const AddProtfolio = ({ onSave }) => {
             ) : // </h2>
             null}
 
-            {error && <h4 className="text-danger txt-res">{error}</h4>}
+            {error && <h4 className="text-danger txt-res text-center">{error}</h4>}
           </div>
           <div className="d-flex justify-content-around mt-5">
             <button id="save-btn" type="submit">

@@ -156,7 +156,13 @@ const OtpInput = () => {
                   <p id="resend" onClick={handelResend}>
                     Resend it
                   </p>
-                  {loading && <div className="loader" id="loader-otp"></div>}
+                  {loading && (
+                      <div className="loader-overlay">
+                        <div className="loader-container">
+                          <div className="loader"></div>
+                        </div>
+                      </div>
+                    )}
 
                   <div className="buttons-otp">
                     <button id="btn-back" onClick={handelBackBtn}>

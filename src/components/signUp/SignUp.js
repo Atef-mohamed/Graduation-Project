@@ -133,13 +133,17 @@ const SignUp = () => {
                       />
                     </Form.Group>
                   </Row>
-                  {loading === true ? (
-                    <h3 className="loader" id="loader-up"></h3>
-                  ) : (
-                    <button className="button-submit" type="submit">
-                      Sign up
-                    </button>
+                  {loading && (
+                    <div className="loader-overlay">
+                      <div className="loader-container">
+                        <div className="loader"></div>
+                      </div>
+                    </div>
                   )}
+                  <button className="button-submit" type="submit">
+                    Sign up
+                  </button>
+
                   {userSignUpData && userSignUpData.data === true ? (
                     <h3 className="text-primary txt-res">
                       User Logged Succesffuly
@@ -177,7 +181,7 @@ const SignUp = () => {
                 src={logoIcon}
                 alt=""
                 onClick={() => navigate("/")}
-                style={{cursor:"pointer"}}
+                style={{ cursor: "pointer" }}
               />
             </div>
             {/* <p className="copyRight  col-sm-12 col-md-4">

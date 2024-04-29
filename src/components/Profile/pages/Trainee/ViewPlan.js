@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import "../css/viewPlan.css";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchGifList } from "../../../../rtk/TraineesSlice";
 const ViewPlan = () => {
+  const { error } = useSelector((state) => state.Trainees);
   const location = useLocation();
   const traineeId = location.pathname.split("/")[4];
   const dispatch = useDispatch();
@@ -53,8 +54,14 @@ const ViewPlan = () => {
           Next month
         </Link>
       </div>
+
       <div>
         <Outlet />
+        {error && (
+          <h4 className="text-danger txt-res text-center">
+            fffffffffffffffffffffffff
+          </h4>
+        )}
       </div>
     </>
   );

@@ -25,7 +25,7 @@ export const AddPlans = createAsyncThunk(
   "Trainees/AddPlans",
   async (plansData) => {
     const res = await axios.post(`${url.url}/plan/create`, plansData);
-    // console.log(res.data);
+    console.log("add PLans", res.data);
     return res.data;
   }
 );
@@ -34,7 +34,7 @@ export const fetchPlansData = createAsyncThunk(
   "Trainees/fetchPlansData",
   async (data) => {
     const res = await axios.post(`${url.url}/plan/show`, data);
-    console.log("show plans",res.data);
+    console.log("show plans", res.data);
     return res.data;
   }
 );
@@ -43,7 +43,16 @@ export const deleteExercise = createAsyncThunk(
   "Trainees/deleteExercise",
   async (data) => {
     const res = await axios.post(`${url.url}/exercise/delete`, data);
-    console.log("delete exercise",res.data);
+    console.log("delete exercise", res.data);
+    return res.data;
+  }
+);
+// Delete Plan
+export const deletePlan = createAsyncThunk(
+  "Trainees/deletePlan",
+  async (data) => {
+    const res = await axios.post(`${url.url}/plan/delete`, data);
+    console.log("delete plan", res.data);
     return res.data;
   }
 );
@@ -53,12 +62,13 @@ export const userSlice = createSlice({
   initialState: {
     TraineesList: null,
     GifLists: null,
-    plansData:null,
-    showPlansData:null,
-    exerciseDeleted:null,
+    plansData: null,
+    showPlansData: null,
+    exerciseDeleted: null,
+    PlanDeleted: null,
     day: "",
     trainingName: "",
-    exercise:"",
+    exercise: "",
     exercises: [],
     loading: false,
     success: false,
@@ -156,6 +166,20 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
+    // delete Plan
+    builder.addCase(deletePlan.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deletePlan.fulfilled, (state, action) => {
+      state.PlanDeleted = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(deletePlan.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
   },
 });
 export const {
@@ -164,6 +188,6 @@ export const {
   addExersize,
   removeExersize,
   removeAllPlans,
-  addexercise
+  addexercise,
 } = userSlice.actions;
 export default userSlice.reducer;

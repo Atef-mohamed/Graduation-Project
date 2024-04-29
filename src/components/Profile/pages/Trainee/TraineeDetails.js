@@ -10,6 +10,7 @@ import url from "../../../../url.json";
 import { useSelector } from "react-redux";
 // import ViewPlanIcon from "./pages/ViewPlanIcon";
 const TraineeDetails = () => {
+  const { loading, error } = useSelector((state) => state.Trainees);
   //   const [collapse, setCollapse] = useState(false);
   //   const {loading}=useSelector(state=>state.trainees);
   const [collapsePlan, setCollapsePlan] = useState(false);
@@ -63,32 +64,40 @@ const TraineeDetails = () => {
           <img src={backTo} alt="" />
         </Link>
       </header>
-      {trainee && trainee.msg && (
-        <div
-          id="trainee-data"
-          className="container p-4 d-flex justify-content-between"
-        >
-          <div className="content-left d-flex align-items-center">
-            <img
-              src={`https://above-elk-open.ngrok-free.app/api/img/${trainee.msg.img}`}
-              width={"100px"}
-              alt=""
-            />
-            <h5 className="p-3">{trainee.msg.fname}</h5>
-          </div>
-          <div className="content-right d-flex flex-column justify-content-between">
-            <div className="startDate d-flex gap-4 justify-content-between align-items-center">
-              <img src={startdate} alt="" className="mb-3" />
-              <p>Start date</p>
-              <p className="date">{trainee.msg.start_date?.split(" ")[0]}</p>
+      {error === true ? (
+        <h4 className="text-danger txt-res text-center">{"ggggggggggg"}</h4>
+      ) : (
+        <>
+          {trainee && trainee.msg && (
+            <div
+              id="trainee-data"
+              className="container p-4 d-flex justify-content-between"
+            >
+              <div className="content-left d-flex align-items-center">
+                <img
+                  src={`https://above-elk-open.ngrok-free.app/api/img/${trainee.msg.img}`}
+                  width={"100px"}
+                  alt=""
+                />
+                <h5 className="p-3">{trainee.msg.fname}</h5>
+              </div>
+              <div className="content-right d-flex flex-column justify-content-between">
+                <div className="startDate d-flex gap-4 justify-content-between align-items-center">
+                  <img src={startdate} alt="" className="mb-3" />
+                  <p>Start date</p>
+                  <p className="date">
+                    {trainee.msg.start_date?.split(" ")[0]}
+                  </p>
+                </div>
+                <div className="expiryDate d-flex justify-content-between align-items-center">
+                  <img src={exdate} alt="" className="mb-3" />
+                  <p>Expiry date</p>
+                  <p className="date">{trainee.msg.end_date?.split(" ")[0]}</p>
+                </div>
+              </div>
             </div>
-            <div className="expiryDate d-flex justify-content-between align-items-center">
-              <img src={exdate} alt="" className="mb-3" />
-              <p>Expiry date</p>
-              <p className="date">{trainee.msg.end_date?.split(" ")[0]}</p>
-            </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
       <main className="container">
         {!collapseInBody && !collapseviewSubscibe && (
@@ -153,6 +162,13 @@ const TraineeDetails = () => {
           </div>
         )}
       </main>
+      {loading && (
+        <div className="loader-overlay">
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        </div>
+      )}
       {collapsePlan && <Outlet />}
       {collapseInBody && <Outlet />}
       {collapseviewSubscibe && <Outlet />}

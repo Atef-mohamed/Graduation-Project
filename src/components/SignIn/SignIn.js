@@ -84,13 +84,17 @@ const SignIn = () => {
                       className="input"
                       pattern="[0-9]{11}"
                     />
-                    {loading === true ? (
-                      <div className="loader"></div>
-                    ) : (
-                      <Button type="submit" id="button-signIn">
-                        Sign In
-                      </Button>
+                    {loading && (
+                      <div className="loader-overlay">
+                        <div className="loader-container">
+                          <div className="loader"></div>
+                        </div>
+                      </div>
                     )}
+                    <Button type="submit" id="button-signIn">
+                      Sign In
+                    </Button>
+
                     {userLoginData && userLoginData.data === false ? (
                       <h2 className="text-danger txt-res phone">
                         {userLoginData.msg.phone && userLoginData.msg.phone[0]

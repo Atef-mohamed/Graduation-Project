@@ -15,7 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
-  const { CoachProfileData } = useSelector((state) => state.Profile);
+  const { CoachProfileData, loading } = useSelector((state) => state.Profile);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -31,26 +31,29 @@ const Profile = () => {
 
     const channel = pusher.subscribe("notify");
     const notifyCallback = (data) => {
-      toast.info(` ${data.title} 
-       ${data.msg}`, {
-        autoClose: 9000,
-        // style: {
-        //   backgroundColor: "#FFC300",
-        //   color: "#000814",
-        // },
-        // Render toast with custom HTML elements
-        render: ({ closeToast }) => (
-          <div
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              closeToast();
-            }}
-          >
-            <h1>{data.title}</h1>
-            <h5>{data.msg}</h5>
-          </div>
-        ),
-      });
+      toast.info(
+        ` ${data.title} 
+       ${data.msg}`,
+        {
+          autoClose: 9000,
+          // style: {
+          //   backgroundColor: "#FFC300",
+          //   color: "#000814",
+          // },
+          // Render toast with custom HTML elements
+          render: ({ closeToast }) => (
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                closeToast();
+              }}
+            >
+              <h1>{data.title}</h1>
+              <h5>{data.msg}</h5>
+            </div>
+          ),
+        }
+      );
     };
 
     channel.bind(`${CoachProfileData?.msg.id}notify`, notifyCallback);
@@ -194,6 +197,13 @@ const Profile = () => {
             </a>
           </div>
         </nav>
+        {loading && (
+          <div className="loader-overlay">
+            <div className="loader-container">
+              <div className="loader"></div>
+            </div>
+          </div>
+        )}
         <main>
           <Outlet />
         </main>

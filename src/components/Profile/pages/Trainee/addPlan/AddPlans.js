@@ -85,7 +85,11 @@ const AddPlans = () => {
             Friday
           </NavLink>
         </div>
-        {showChooseDay && <h4 id="choose">Please choose the day first</h4>}
+        {showChooseDay && (
+          <h4 id="choose" className="" style={{ marginTop: "-500px" }}>
+            Please choose the day first
+          </h4>
+        )}
         {!showChooseDay && (
           <div className="outLet">
             <Outlet />

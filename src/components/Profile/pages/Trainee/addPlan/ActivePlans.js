@@ -5,15 +5,17 @@ import editBtn from "../../../../../assets/edit.svg";
 import Pagination from "../../Pagination/Pagination";
 import {
   deleteExercise,
+  deletePlan,
   fetchPlansData,
 } from "../../../../../rtk/TraineesSlice";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
 const ActivePlans = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { day, showPlansData,exerciseDeleted } = useSelector((state) => state.Trainees);
+  const { day, showPlansData, exerciseDeleted, PlanDeleted } = useSelector(
+    (state) => state.Trainees
+  );
   const dispatch = useDispatch();
   const location = useLocation();
   const trainee_id = location.pathname.split("/")[4];
@@ -27,25 +29,81 @@ const ActivePlans = () => {
   // return trainees 6 for each page 1=>6
   const orderedPlanLists = sortedPlanLists?.slice(startIndex, finishIndex);
   const token = localStorage.getItem("token");
+  const plan_id = showPlansData?.msg?.id;
   const handleDeleteExercize = (exercise_id) => {
     Swal.fire({
-        title: "Are you sure to delete this exercise ?",
-        showCancelButton: true,
-        confirmButtonText: "yes",
-        denyButtonText: `No`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-            dispatch(deleteExercise({ exercise_id, token }));
-          Swal.fire("Deleted!", "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("plan not Delete", "", "info");
-        }
-      });
+      title: "Are you sure to delete this exercise ?",
+      showDenyButton: true,
+      confirmButtonText: "yes",
+      denyButtonText: `No`,
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-deny-button",
+        denyButton: " swal-confirm-button",
+        popup: "swal-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteExercise({ exercise_id, token }));
+        Swal.fire({
+          title: "Deleted!",
+          icon: "success",
+          showConfirmButton: false,
+          showDenyButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
+        //   } else if (result.isDenied) {
+        //     Swal.fire({
+        //       title: "plan not Deletemmmmmmmmmmmm",
+        //       icon: "success",
+        //       showConfirmButton: false,
+        //       showCancelButton: false,
+        //       showDenyButton: false,
+        //       timer: 1500,
+        //       customClass: {
+        //         title: "swal-title-green",
+        //         popup: "swal-popup",
+        //       },
+        //     });
+      }
+    });
   };
   useEffect(() => {
     dispatch(fetchPlansData({ trainee_id, day, token }));
-  }, [exerciseDeleted]);
-  const handleDeleteAllPlan = () => {};
+  }, [exerciseDeleted, PlanDeleted]);
+  const handleDeleteAllPlan = () => {
+    Swal.fire({
+      title: "Are you sure to delete this Plan ?",
+      showDenyButton: true,
+      confirmButtonText: "yes",
+      denyButtonText: `No`,
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-deny-button",
+        denyButton: " swal-confirm-button",
+        popup: "swal-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deletePlan({ token, plan_id }));
+        Swal.fire({
+          title: "Deleted!",
+          icon: "success",
+          showConfirmButton: false,
+          showDenyButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
+      }
+    });
+  };
   return (
     <>
       <div

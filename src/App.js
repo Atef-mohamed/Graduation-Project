@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import MainPage from "./components/MainPage/MainPage";
 import SignIn from "./components/SignIn/SignIn";
@@ -20,6 +20,7 @@ import CurrentMonth from "./components/Profile/pages/Trainee/CurrentMonth";
 import NextMonth from "./components/Profile/pages/Trainee/NextMonth";
 import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
 import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
+import { useEffect } from "react";
 
 function App() {
   return (
@@ -44,14 +45,14 @@ function App() {
               {/* <Route index element={<CurrentMonth />} /> */}
               <Route path="" element={<Navigate to="currentMonth" />} />
               <Route path="currentMonth" element={<CurrentMonth />} />
-              <Route path="currentMonth/addPlans" element={<AddPlans />} >
-                <Route path="satPlan" element={<AddPlan/>}/>
-                <Route path="sunPlan" element={<AddPlan/>}/>
-                <Route path="monPlan" element={<AddPlan/>}/>
-                <Route path="tuePlan" element={<AddPlan/>}/>
-                <Route path="wedPlan" element={<AddPlan/>}/>
-                <Route path="thuPlan" element={<AddPlan/>}/>
-                <Route path="friPlan" element={<AddPlan/>}/>
+              <Route path="currentMonth/addPlans" element={<AddPlans />}>
+                <Route path="satPlan" element={<AddPlan />} />
+                <Route path="sunPlan" element={<AddPlan />} />
+                <Route path="monPlan" element={<AddPlan />} />
+                <Route path="tuePlan" element={<AddPlan />} />
+                <Route path="wedPlan" element={<AddPlan />} />
+                <Route path="thuPlan" element={<AddPlan />} />
+                <Route path="friPlan" element={<AddPlan />} />
               </Route>
               <Route path="nextMonth" element={<NextMonth />} />
             </Route>
