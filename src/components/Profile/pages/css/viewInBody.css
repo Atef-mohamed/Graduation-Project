@@ -1,0 +1,17 @@
+label{
+    color: var(--blue1-color);
+    font-weight: bold;
+}
+
+.inp-inbody{
+    color: var(--bright-yellow-color);
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    border: none;
+    border: 1px solid var(--blue1-color);
+    border-radius: 15px;
+    padding: 6px 40px;
+    background-color: var(--main-white-color);
+    box-shadow: 0 0px 8px rgba(0, 0, 0, .2);
+}

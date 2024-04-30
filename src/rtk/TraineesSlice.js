@@ -56,6 +56,24 @@ export const deletePlan = createAsyncThunk(
     return res.data;
   }
 );
+// View InBody Data
+export const ViewInbodyData = createAsyncThunk(
+  "Trainees/ViewInbodyData",
+  async (data) => {
+    const res = await axios.post(`${url.url}/inbody/show`, data);
+    console.log("inbody", res.data);
+    return res.data;
+  }
+);
+// Edit Exercise
+export const updated_exercise = createAsyncThunk(
+  "Trainees/editExercise",
+  async (data) => {
+    const res = await axios.post(`${url.url}/exercise/update`, data);
+    console.log("update plan", res.data);
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "Trainees",
@@ -68,6 +86,8 @@ export const userSlice = createSlice({
     PlanDeleted: null,
     day: "",
     trainingName: "",
+    inBodyData: null,
+    updated_exercise: {},
     exercise: "",
     exercises: [],
     loading: false,
@@ -77,6 +97,9 @@ export const userSlice = createSlice({
   reducers: {
     addexercise: (state, action) => {
       state.exercise = action.payload;
+    },
+    updatedExercise: (state, action) => {
+      state.updated_exercise = action.payload;
     },
     activeDay: (state, action) => {
       state.day = action.payload;
@@ -180,12 +203,41 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
+    // View InBody Data
+    builder.addCase(ViewInbodyData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(ViewInbodyData.fulfilled, (state, action) => {
+      state.inBodyData = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(ViewInbodyData.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //Edit exercise
+    builder.addCase(updated_exercise.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updated_exercise.fulfilled, (state, action) => {
+      state.updated_exercise = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(updated_exercise.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
   },
 });
 export const {
   activeDay,
   trainName,
   addExersize,
+  updatedExercise,
   removeExersize,
   removeAllPlans,
   addexercise,

@@ -10,12 +10,21 @@ import {
 } from "../../../../../rtk/TraineesSlice";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import UpdateExercise from "./UpdateExercise";
 
 const ActivePlans = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { day, showPlansData, exerciseDeleted, PlanDeleted } = useSelector(
     (state) => state.Trainees
   );
+  const [exercise, setExercise] = useState(null);
+  const [exerciseName, setExerciseName] = useState(null);
+  const [exerciseRest, setExerciseRest] = useState(null);
+  const [exerciseTimes, setExerciseTimes] = useState(null);
+  const [exerciseId, setExerciseId] = useState(null);
+  const [exerciseDay, setExerciseDay] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   const dispatch = useDispatch();
   const location = useLocation();
   const trainee_id = location.pathname.split("/")[4];
@@ -72,6 +81,9 @@ const ActivePlans = () => {
       }
     });
   };
+  const handleCloseForm = () => {
+    setIsOpen(false); // Close the ExersizeForm
+  };
   useEffect(() => {
     dispatch(fetchPlansData({ trainee_id, day, token }));
   }, [exerciseDeleted, PlanDeleted]);
@@ -104,6 +116,22 @@ const ActivePlans = () => {
       }
     });
   };
+  const handleEdit = (
+    item_id,
+    item_exercise,
+    item_name,
+    item_times,
+    iten_rest,
+    day
+  ) => {
+    setIsOpen(true);
+    setExercise(item_exercise);
+    setExerciseName(item_name);
+    setExerciseRest(iten_rest);
+    setExerciseTimes(item_times);
+    setExerciseId(item_id);
+    setExerciseDay(day);
+  };
   return (
     <>
       <div
@@ -118,7 +146,20 @@ const ActivePlans = () => {
           >
             <div className="left-side d-flex flex-column ">
               <div className="buttons d-flex gap-2 mb-3">
-                <img src={editBtn} alt="edit" style={{ cursor: "pointer" }} />
+                <img
+                  src={editBtn}
+                  alt="edit"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    handleEdit(
+                      item.id,
+                      item.exercise,
+                      item.name,
+                      item.times,
+                      item.rest
+                    )
+                  }
+                />
                 <img
                   src={deleteBtn}
                   width={"50px"}
@@ -200,6 +241,21 @@ const ActivePlans = () => {
               setCurrentPage={setCurrentPage}
             />
           </div>
+        </div>
+      )}
+      {isOpen && (
+        <div id="exerSize-form">
+          <UpdateExercise
+            item_exercise={exercise}
+            item_name={exerciseName}
+            item_times={exerciseTimes}
+            item_rest={exerciseRest}
+            item_id={exerciseId}
+            item_day={exerciseDay}
+            trainee_id={trainee_id}
+            isOpen={isOpen}
+            handleCloseForm={handleCloseForm}
+          />
         </div>
       )}
     </>

@@ -14,7 +14,7 @@ const ViewPlan = () => {
   }, []);
   return (
     <>
-      <div className="d-flex justify-content-around">
+      <div className="d-flex justify-content-center">
         <Link
           to="currentMonth"
           className={
@@ -42,17 +42,7 @@ const ViewPlan = () => {
         >
           Current month
         </Link>
-        <Link
-          to="nextMonth"
-          className={
-            location.pathname ===
-            `/profile/home/trainee/${traineeId}/viewPlan/nextMonth`
-              ? "activeMonth linkMonth"
-              : "deActivate linkMonth"
-          }
-        >
-          Next month
-        </Link>
+       
       </div>
 
       <div>

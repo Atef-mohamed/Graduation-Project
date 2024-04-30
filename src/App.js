@@ -17,10 +17,8 @@ import ViewPlan from "./components/Profile/pages/Trainee/ViewPlan";
 import ViewInbody from "./components/Profile/pages/Trainee/ViewInbody";
 import ViewSubscibe from "./components/Profile/pages/Trainee/ViewSubscibe";
 import CurrentMonth from "./components/Profile/pages/Trainee/CurrentMonth";
-import NextMonth from "./components/Profile/pages/Trainee/NextMonth";
 import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
 import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
-import { useEffect } from "react";
 
 function App() {
   return (
@@ -54,7 +52,6 @@ function App() {
                 <Route path="thuPlan" element={<AddPlan />} />
                 <Route path="friPlan" element={<AddPlan />} />
               </Route>
-              <Route path="nextMonth" element={<NextMonth />} />
             </Route>
             <Route path="viewInbody" element={<ViewInbody />} />
             <Route path="viewReport" element={<ViewSubscibe />} />
