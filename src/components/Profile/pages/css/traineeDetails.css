@@ -113,7 +113,6 @@ body.expandInbody .expand-inBody-btn svg{
 
 body.expandviewSubscibe .expand-viewSubscibe-btn{
     background-color: var(--bright-yellow-color);
-
 }
 .expand-viewSubscibe-btn svg{
     transform: rotate(-360deg);
@@ -135,7 +134,12 @@ body.expandviewSubscibe .expand-viewSubscibe-btn svg{
 }  */
 
 
-
+#chat{
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 20px;
+    margin: 100px 100px 0 0;
+}
 
 
 

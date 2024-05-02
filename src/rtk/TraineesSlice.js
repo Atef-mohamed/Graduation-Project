@@ -75,6 +75,34 @@ export const updated_exercise = createAsyncThunk(
   }
 );
 
+// show Requests
+export const fetchRequests = createAsyncThunk(
+  "Trainees/fetchRequests",
+  async (data) => {
+    const res = await axios.post(`${url.url}/coach/requests`, data);
+    console.log("Requests data", res.data);
+    return res.data;
+  }
+);
+// Accept Request
+export const acceptRequest = createAsyncThunk(
+  "Trainees/acceptRequest",
+  async (data) => {
+    const res = await axios.post(`${url.url}/coach/request/accept`, data);
+    console.log("accept", res.data);
+    return res.data;
+  }
+);
+// Reject Request
+export const rejectRequest = createAsyncThunk(
+  "Trainees/rejectRequest",
+  async (data) => {
+    const res = await axios.post(`${url.url}/coach/request/reject`, data);
+    console.log("reject", res.data);
+    return res.data;
+  }
+);
+
 export const userSlice = createSlice({
   name: "Trainees",
   initialState: {
@@ -90,6 +118,9 @@ export const userSlice = createSlice({
     updated_exercise: {},
     exercise: "",
     exercises: [],
+    requestsData: [],
+    acceptRequestData: null,
+    rejectRequestData: null,
     loading: false,
     success: false,
     error: null,
@@ -227,6 +258,48 @@ export const userSlice = createSlice({
       state.success = true;
     });
     builder.addCase(updated_exercise.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //Show Requests
+    builder.addCase(fetchRequests.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchRequests.fulfilled, (state, action) => {
+      state.requestsData = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(fetchRequests.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //accept Requests
+    builder.addCase(acceptRequest.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(acceptRequest.fulfilled, (state, action) => {
+      state.acceptRequestData = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(acceptRequest.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //reject Requests
+    builder.addCase(rejectRequest.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(rejectRequest.fulfilled, (state, action) => {
+      state.rejectRequestData = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(rejectRequest.rejected, (state, action) => {
       state.loading = false;
       state.success = false;
       state.error = action.error.message;

@@ -65,19 +65,6 @@ const ActivePlans = () => {
             popup: "swal-popup",
           },
         });
-        //   } else if (result.isDenied) {
-        //     Swal.fire({
-        //       title: "plan not Deletemmmmmmmmmmmm",
-        //       icon: "success",
-        //       showConfirmButton: false,
-        //       showCancelButton: false,
-        //       showDenyButton: false,
-        //       timer: 1500,
-        //       customClass: {
-        //         title: "swal-title-green",
-        //         popup: "swal-popup",
-        //       },
-        //     });
       }
     });
   };

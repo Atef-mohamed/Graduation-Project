@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import "../css/viewInBody.css";
 import downloadLogo from "../../../../assets/downLoadInBody.svg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ViewInbodyData } from "../../../../rtk/TraineesSlice";
 const ViewInbody = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const trainee_id = location.pathname.split("/")[4];
+  // const trainee_id = location.pathname.split("/")[4];
+  const params = useParams();
+
   const token = localStorage.getItem("token");
   const { inBodyData, error } = useSelector((state) => state.Trainees);
   useEffect(() => {
-    dispatch(ViewInbodyData({ token, trainee_id }));
+    dispatch(ViewInbodyData({ token, trainee_id: params.id }));
   }, []);
   return (
     <>

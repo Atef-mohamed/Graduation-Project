@@ -6,7 +6,7 @@ import logo from "../../assets/logoBlack.png";
 import logoSmall from "../../assets/halfLlogo.svg";
 import avatar from "../../assets/skill2.jpg";
 import "./css/profile.css";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Footer from "../footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfileData } from "../../rtk/Protfolio";
@@ -18,6 +18,7 @@ const Profile = () => {
   const { CoachProfileData, loading } = useSelector((state) => state.Profile);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+  const navigate= useNavigate();
   useEffect(() => {
     dispatch(fetchProfileData({ token }));
   }, []);
@@ -85,7 +86,6 @@ const Profile = () => {
       path: "home",
       name: "Home",
       icon: <img src={Home} alt="home" />,
-      // icon: <GoHomeFill/>,
     },
     {
       path: "requests",
@@ -164,6 +164,7 @@ const Profile = () => {
                 // src={`${https://above-elk-open.ngrok-free.app/api/img/CoachProfileData?.msg?.personal_img}`}
                 src={`https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.personal_img}`}
                 alt="..."
+                onClick={()=>navigate("editProfile")}
               />
               <div className="online__status"></div>
             </div>

@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import "../css/traineeDetails.css";
 import backTo from "../../../../assets/BackTo.svg";
-import av from "../../../../assets/skill2.jpg";
 import startdate from "../../../../assets/startDate.svg";
 import exdate from "../../../../assets/expiryDate.svg";
+import chatIcon from "../../../../assets/chat.svg";
 import axios from "axios";
 import url from "../../../../url.json";
 import { useSelector } from "react-redux";
-// import ViewPlanIcon from "./pages/ViewPlanIcon";
+import Chat from "./Chat";
+
 const TraineeDetails = () => {
   const { loading, error } = useSelector((state) => state.Trainees);
-  //   const [collapse, setCollapse] = useState(false);
-  //   const {loading}=useSelector(state=>state.trainees);
-  const [collapsePlan, setCollapsePlan] = useState(false);
-  const [collapseInBody, setCollapseInBody] = useState(false);
-  const [collapseviewSubscibe, setCollapseviewSubscibe] = useState(false);
+  const [collapsePlan, setCollapsePlan] = useState(null);
+  const [collapseInBody, setCollapseInBody] = useState(null);
+  const [collapseviewSubscibe, setCollapseviewSubscibe] = useState(null);
   const navigate = useNavigate();
   const params = useParams();
   const token = localStorage.getItem("token");
-
   const [trainee, setTrainee] = useState();
-  // console.log(trainee && trainee.msg.id);
+  const location = useLocation();
+  // const trainee_id = location.pathname.split("/")[4];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,22 +45,25 @@ const TraineeDetails = () => {
 
   const handelExpand = () => {
     setCollapsePlan(!collapsePlan);
-    setCollapseInBody(false);
-    navigate(`/profile/home/trainee/${trainee.msg.id}/viewPlan`);
+    // setCollapseInBody(false);
+    navigate("viewPlan");
 
-    document.body.classList.toggle("expand");
+    document.body.classList.toggle("expand",!collapsePlan);
   };
   const handelExpandInbody = () => {
     setCollapseInBody(!collapseInBody);
-    setCollapsePlan(false);
-    navigate(`/profile/home/trainee/${trainee.msg.id}/viewInbody`);
-    document.body.classList.toggle("expandInbody");
+    // setCollapsePlan(false);
+    navigate("viewInbody");
+    document.body.classList.toggle("expandInbody",!collapseInBody);
   };
   const handelExpandviewSubscibe = () => {
     setCollapseviewSubscibe(!collapseviewSubscibe);
-    setCollapsePlan(false);
-    navigate(`/profile/home/trainee/${trainee.msg.id}/viewReport`);
-    document.body.classList.toggle("expandviewSubscibe");
+    // setCollapsePlan(false);
+    navigate("viewReport");
+    document.body.classList.toggle("expandviewSubscibe",!collapseviewSubscibe);
+  };
+  const handelExpandChat = () => {
+    navigate("chat");
   };
   return (
     <>
@@ -100,7 +108,7 @@ const TraineeDetails = () => {
         </>
       )}
       <main className="container">
-        {!collapseInBody && !collapseviewSubscibe && (
+        {!collapseInBody && !collapseviewSubscibe &&(
           <div
             className="viewPlan d-flex justify-content-between align-items-center mb-4"
             style={{ cursor: "pointer" }}
@@ -121,7 +129,7 @@ const TraineeDetails = () => {
           </div>
         )}
 
-        {!collapsePlan && !collapseviewSubscibe && (
+        {!collapsePlan && !collapseviewSubscibe &&(
           <div
             className="viewInbody d-flex justify-content-between align-items-center mb-4"
             style={{ cursor: "pointer" }}
@@ -161,6 +169,8 @@ const TraineeDetails = () => {
             </div>
           </div>
         )}
+        
+        
       </main>
       {loading && (
         <div className="loader-overlay">
@@ -172,6 +182,10 @@ const TraineeDetails = () => {
       {collapsePlan && <Outlet />}
       {collapseInBody && <Outlet />}
       {collapseviewSubscibe && <Outlet />}
+      {/* {!collapseInBody&&!collapsePlan&&!collapseviewSubscibe&& <Chat />} */}
+      <div id="chat">
+        <img src={chatIcon} alt="chat-icon" style={{cursor:"pointer"}}  onClick={handelExpandChat}/>
+      </div>
     </>
   );
 };

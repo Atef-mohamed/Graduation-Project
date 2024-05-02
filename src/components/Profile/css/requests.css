@@ -1,0 +1,73 @@
+.req-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--blue1-color);
+    border-radius: 15px;
+    padding: 20px 50px;
+    margin-top: 40px !important;
+    height: 180px; 
+}
+
+@media screen and (max-width: 767px) {
+    .req-card {
+        flex-direction: column;
+        height: auto; 
+    }
+}
+
+#trainee-img {
+    width: 120px !important; 
+    height: 120px !important; 
+    border-radius: 50% !important;
+}
+
+.trainee-name,
+.p-Req {
+    color: var(--main-white-color);
+    font-weight: 500;
+}
+
+.yellow-color {
+    color: var(--bright-yellow-color);
+}
+
+#btn-view{
+    border: none;
+    padding: 5px 10px;
+    border-radius: 18px;
+    color: var(--blue2-color) !important;
+    font-weight: 600;
+    background-color: var(--main-white-color);
+    transition: .7s;
+}
+
+#btn-view:hover{
+    /* opacity: 0.8; */
+    color: var(--main-white-color) !important;
+    background-color: var(--blue2-color);
+}
+
+.filter-buttons{
+ display: flex;
+ justify-content: center;
+ gap: 10px;
+}
+
+.filter-buttons .filter-btn{
+    margin-top: 10px;
+    border: none;
+    border-bottom: 2px solid var(--blue2-color);
+    background-color: var(--main-white-color);
+    padding: 2px 10px;
+    color: var(--gray2-color);
+    font-weight: bold;
+    transition: .6;
+}
+
+.active-req{
+    border: 2px solid var(--bright-yellow-color) !important;
+    color: var(--main-white-color) !important;
+    background-color: var(--blue1-color) !important;
+    border-radius: 18px;
+}

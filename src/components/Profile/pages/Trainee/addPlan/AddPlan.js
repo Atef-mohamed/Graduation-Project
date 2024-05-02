@@ -11,19 +11,12 @@ import ActivePlans from "./ActivePlans";
 
 const AddPlan = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { GifLists, loading, showPlansData, day, error } = useSelector(
+  const { GifLists, loading, showPlansData,  error } = useSelector(
     (state) => state.Trainees
   );
   const [trainingName, setTrainingName] = useState("");
   const dispatch = useDispatch();
-  const location = useLocation();
-  // const coach_id = 6;
-  const trainee_id = location.pathname.split("/")[4];
-  const token = localStorage.getItem("token");
-  // useEffect(() => {
-  //   dispatch(fetchPlansData({ trainee_id, day, token }));
-  //   console.log(showPlansData?.msg?.day);
-  // }, []);
+  
   const handleTrainingNameChange = (event) => {
     setTrainingName(event.target.value);
   };

@@ -15,10 +15,12 @@ import Requstes from "./components/Profile/pages/Requstes";
 import TraineeDetails from "./components/Profile/pages/Trainee/TraineeDetails";
 import ViewPlan from "./components/Profile/pages/Trainee/ViewPlan";
 import ViewInbody from "./components/Profile/pages/Trainee/ViewInbody";
-import ViewSubscibe from "./components/Profile/pages/Trainee/ViewSubscibe";
 import CurrentMonth from "./components/Profile/pages/Trainee/CurrentMonth";
 import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
 import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
+import ViewReport from "./components/Profile/pages/Trainee/ViewReport";
+import Chat from "./components/Profile/pages/Trainee/Chat";
+import EditProfile from "./components/Profile/EditProfile";
 
 function App() {
   return (
@@ -38,7 +40,8 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="requests" element={<Requstes />} />
           <Route path="myProtfolio" element={<MyProtfoilo />} />
-          <Route path="home/trainee/:id" element={<TraineeDetails />}>
+          <Route path="editProfile" element={<EditProfile />} />
+          <Route path="/profile/home/trainee/:id" element={<TraineeDetails />}>
             <Route path="viewPlan" element={<ViewPlan />}>
               {/* <Route index element={<CurrentMonth />} /> */}
               <Route path="" element={<Navigate to="currentMonth" />} />
@@ -54,8 +57,9 @@ function App() {
               </Route>
             </Route>
             <Route path="viewInbody" element={<ViewInbody />} />
-            <Route path="viewReport" element={<ViewSubscibe />} />
+            <Route path="viewReport" element={<ViewReport />} />
           </Route>
+            <Route path="home/trainee/:id/chat" element={<Chat />} />
         </Route>
       </Routes>
     </div>
