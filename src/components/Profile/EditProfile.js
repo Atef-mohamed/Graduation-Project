@@ -6,25 +6,36 @@ import emaillogo from "../../assets/email.svg";
 import clocklogo from "../../assets/clock.svg";
 import uploadlogo from "../../assets/Upload.svg";
 import profilelogo from "../../assets/myprofile.svg";
+import editProfilelogo from "../../assets/editProfile.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { submitProfileData } from "../../rtk/Protfolio";
+import { editProfileData, submitProfileData } from "../../rtk/Protfolio";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./css/Editprofile.css";
 const EditProfile = () => {
   const [validated, setValidated] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [BOD, setBOD] = useState("");
   const [exp, setExp] = useState("");
   const [personal_img, setPersonalImg] = useState(null);
+  const [paybal_code, setPaybalCode] = useState(null);
   const [ssn_img, setSsnImg] = useState(null);
   const dayRef = useRef();
   const srcRef = useRef();
   const dispatch = useDispatch();
-  const { loading, success, error } = useSelector((state) => state.Profile);
+  const { CoachProfileData, editProfiledata, loading, success, error } =
+    useSelector((state) => state.Profile);
   const { userProfileData } = useSelector((state) => state.Profile);
   const navigate = useNavigate();
+  const fnameInput = useRef();
+  const lnameInput = useRef();
+  const emailInput = useRef();
+  const expInput = useRef();
+  const persolanimgInput = useRef();
+  const ss_imgInput = useRef();
   // useEffect(() => {
   //   if (userProfileData && userProfileData.status) {
   //     navigate("/signin"); // Redirect to the sign-in page
@@ -138,58 +149,110 @@ const EditProfile = () => {
       setValidated(true);
       // Gather form data
       const formData = new FormData(form);
-      formData.append("fname", fname);
-      formData.append("lname", lname);
-      formData.append("email", email);
-      formData.append("BOD", BOD);
-      formData.append("exp", exp);
-      formData.append("personal_img", personal_img);
-      formData.append("ssn_img", ssn_img);
+      formData.append("fname", fnameInput.current.value);
+      formData.append("lname", lnameInput.current.value);
+      formData.append("email", emailInput.current.value);
+      formData.append("BOD", dayRef.current.value);
+      formData.append("exp", expInput.current.value);
+      if (personal_img) {
+        formData.append("personal_img", personal_img);
+      } else {
+        formData.append("personal_img", CoachProfileData?.msg?.personal_img);
+      }
+
+      // Check if ssn_img has been modified, if not, use the default value
+      if (ssn_img) {
+        formData.append("ssn_img", ssn_img);
+      } else {
+        formData.append("ssn_img", CoachProfileData?.msg?.ssn_img);
+      }
       formData.append("token", token);
       // Dispatch form data
-      dispatch(submitProfileData(formData)).then((response) => {
-        if (response.payload && response.payload.status === true) {
-          // Redirect to the next step if data is successfully submitted
-          if (response.payload.error_msg) {
-            Swal.fire({
-              title: "The Internet?",
-              text: "That thing is still around?",
-              icon: "question",
-            });
-          } else {
-            // onNextStep();
-          }
-        } else {
-          // Handle error case if needed
-
+      Swal.fire({
+        title: "Are you sure to save edit?",
+        showDenyButton: true,
+        confirmButtonText: "yes",
+        denyButtonText: `No`,
+        customClass: {
+          title: "swal-title",
+          confirmButton: "swal-deny-button",
+          denyButton: " swal-confirm-button",
+          popup: "swal-popup",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(editProfileData(formData));
           Swal.fire({
+            title: "The edit not saved",
             icon: "error",
-            title: "Oops...",
-            text: "Please select Personal Img as JPG,JPEG,PNG file",
+            showConfirmButton: false,
+            showDenyButton: false,
+            timer: 1500,
+            customClass: {
+              title: "swal-title-green",
+              popup: "swal-popup",
+            },
           });
         }
       });
     }
   };
-
+  const handleFocus = () => {
+    const fileInput = document.getElementById("id-file");
+    if (fileInput) {
+      fileInput.focus();
+    }
+  };
+  const handleEditModeToggle = () => {
+    setEditMode(!editMode);
+  };
+  useEffect(() => {
+    // Focus the input when editMode becomes true
+    if (editMode && fnameInput.current) {
+      fnameInput.current.focus();
+    }
+  }, [editMode]);
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 1500,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [editProfiledata]);
+  console.log(editProfiledata?.msg?.phone[0]);
   return (
     <>
-    <img src={profilelogo} alt="MyProfile"/>
+      <img src={profilelogo} alt="MyProfile" />
+      {/* {editProfiledata && editProfiledata.status === false && (
+        <h2 className="text-danger text-center txt-res phone">
+          {Object.keys(editProfiledata.msg).map((key) => (
+            <div key={key}>
+              {editProfiledata.msg[key].map((msg, index) => (
+                <div key={index}>{msg}</div>
+              ))}
+            </div>
+          ))}
+        </h2>
+      )} */}
       <div
         className="container d-flex flex-column justify-content-center align-items-center"
-        id="line-form"
+        id="line-formm"
       >
-        <div
-          id="personal-txt"
-          className="d-flex justify-content-center flex-column align-items-center mt-3 text-center"
-        > 
-          <h3>Personal information</h3>
-          <p>Please fill the form below to complete the account creation</p>
-        </div>
         <div className="container mb-3 d-flex justify-content-center align-items-center flex-column">
           <label htmlFor="file" className="custum-file-upload">
             <img src={camera} alt="" id="camera" />
-            <img id="output" />
+            <img
+              id="output"
+              src={`https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.personal_img}`}
+            />
             <input
               required
               id="file"
@@ -197,8 +260,17 @@ const EditProfile = () => {
               name="personal-file"
               accept="image/png, image/jpg, image/jpeg"
               onChange={handelFile}
+              // defaultValue={files[0]}
+              ref={persolanimgInput}
             />
           </label>
+        </div>
+        <div className="editProfile" onClick={handleEditModeToggle}>
+          <img
+            src={editProfilelogo}
+            alt="Edit Pofile"
+            style={{ cursor: "pointer" }}
+          />
         </div>
         <div id="form-acc" className="">
           <form className="p-5" validated={validated} onSubmit={handelSubmit}>
@@ -211,8 +283,10 @@ const EditProfile = () => {
                     type="text"
                     placeholder="Enter first name "
                     required
-                    value={fname}
+                    defaultValue={CoachProfileData?.msg?.fname}
                     onChange={handleFnameChange}
+                    disabled={!editMode} // Disable input based on edit mode
+                    ref={fnameInput}
                   />
                   <img src={namelogo} alt="" />
                 </div>
@@ -225,8 +299,10 @@ const EditProfile = () => {
                     type="text"
                     placeholder="Enter last name "
                     required
-                    value={lname}
+                    defaultValue={CoachProfileData?.msg?.lname}
                     onChange={handleLnameChange}
+                    disabled={!editMode}
+                    ref={lnameInput}
                   />
                   <img src={namelogo} alt="" />
                 </div>
@@ -241,9 +317,12 @@ const EditProfile = () => {
                     id="email"
                     type="email"
                     placeholder="Email address"
+                    defaultValue={CoachProfileData?.msg?.email}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
+                    disabled={!editMode}
+                    ref={emailInput}
                   />
                   <img src={emaillogo} alt="" id="email-logo" />
                 </div>
@@ -256,7 +335,10 @@ const EditProfile = () => {
                     type="text"
                     placeholder="Number of years"
                     required
+                    defaultValue={CoachProfileData?.msg?.exp}
+                    disabled={!editMode}
                     onChange={handleExpChange}
+                    ref={expInput}
                   />
                   <img src={clocklogo} alt="" id="email-logo" />
                 </div>
@@ -272,33 +354,29 @@ const EditProfile = () => {
                     id="day"
                     maxLength="2"
                     placeholder="DD"
+                    defaultValue={CoachProfileData?.msg?.BirhOfDate}
+                    disabled={!editMode}
                     onChange={(e) => {
                       setBOD(e.target.value);
                     }}
                     ref={dayRef}
                   />
-                  {/* <input
+                </div>
+              </div>
+              <div className="col-12 col-md-6">
+                <label htmlFor="paypal">Paypal account email</label>
+                <div className="paybal-input">
+                  <input
+                    required
                     type="text"
-                    id="month"
-                    maxLength="2"
-                    placeholder="MM"
-                    ref={monthRef}
-                    className="text-center"
+                    id="paypal"
+                    // maxLength="2"
+                    defaultValue={CoachProfileData?.msg?.paypal}
+                    disabled={!editMode}
                     onChange={(e) => {
-                      setMonth(e.target.value);
+                      setPaybalCode(e.target.value);
                     }}
                   />
-
-                  <input
-                    type="text"
-                    id="year"
-                    maxLength="4"
-                    placeholder="YYYY"
-                    ref={yearRef}
-                    onChange={(e) => {
-                      setYear(e.target.value);
-                    }} */}
-                  {/* /> */}
                 </div>
               </div>
             </div>
@@ -307,46 +385,55 @@ const EditProfile = () => {
                 <label htmlFor="national-id">Upload your national id</label>
                 <label htmlFor="id-file" className="">
                   <div className="input-logo" id="natoinal-id">
-                    <input
-                      required
-                      id="id-file"
-                      name="id-file"
-                      type="file"
-                      onChange={handelNationalFile}
-                    />
+                    <div>
+                      <input
+                        id="id-file"
+                        // name="id- file"
+                        type="file"
+                        onChange={handelNationalFile}
+                      />
+                    </div>
+
                     <img src={uploadlogo} alt="" id="id-logo" />
-                    <p ref={srcRef}></p>
+                    <p ref={srcRef} id="nationalColor">
+                      {CoachProfileData?.msg?.ssn_img}
+                    </p>
                   </div>
                 </label>
               </div>
             </div>
             <div className="row mt-5 ">
-              <div className="col-12 d-flex justify-content-center ">
-                {loading === true ? <h3 className="loader"></h3> : null}
-              </div>
-              {userProfileData && userProfileData.status === false ? (
+              {loading && (
+                <div className="loader-overlay">
+                  <div className="loader-container">
+                    <div className="loader"></div>
+                  </div>
+                </div>
+              )}
+
+              {editProfiledata && editProfiledata.status === false && (
                 <h2 className="text-danger text-center txt-res phone">
-                  {Object.keys(userProfileData.msg).map((key) => (
+                  {Object.keys(editProfiledata.msg).map((key) => (
                     <div key={key}>
-                      {userProfileData.msg[key].map((msg, index) => (
+                      {editProfiledata.msg[key].map((msg, index) => (
                         <div key={index}>{msg}</div>
                       ))}
-                      {userProfileData.error_msg}
                     </div>
                   ))}
                 </h2>
-              ) : null}
-
-              {error && <h4 className="text-danger txt-res">{error}</h4>}
+              )}
+              {/* {error && <h4 className="text-danger txt-res">{error}</h4>} */}
             </div>
-            <button
-              className="button-submit"
-              id="btn-nextStepper"
-              type="submit"
-              // onClick={handelSubmit}
-            >
-              Submit
-            </button>
+            {editMode && (
+              <button
+                className="button-submit"
+                id="btn-nextStepper"
+                type="submit"
+                // onClick={handelSubmit}
+              >
+                Save Edit
+              </button>
+            )}
           </form>
         </div>
         <div className="container"></div>

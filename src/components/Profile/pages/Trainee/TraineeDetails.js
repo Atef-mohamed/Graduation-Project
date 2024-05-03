@@ -14,7 +14,7 @@ import chatIcon from "../../../../assets/chat.svg";
 import axios from "axios";
 import url from "../../../../url.json";
 import { useSelector } from "react-redux";
-import Chat from "./Chat";
+
 
 const TraineeDetails = () => {
   const { loading, error } = useSelector((state) => state.Trainees);

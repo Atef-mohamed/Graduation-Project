@@ -19,8 +19,10 @@ import CurrentMonth from "./components/Profile/pages/Trainee/CurrentMonth";
 import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
 import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
 import ViewReport from "./components/Profile/pages/Trainee/ViewReport";
-import Chat from "./components/Profile/pages/Trainee/Chat";
 import EditProfile from "./components/Profile/EditProfile";
+import EditPlan from "./components/Profile/pages/Trainee/addPlan/EditPlan";
+import ProtfolioAdd from "./components/Protfolio/ProtfoliAdd";
+import ChatTrainee from "./components/Profile/pages/Trainee/chat/ChatTrainee";
 
 function App() {
   return (
@@ -40,6 +42,7 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="requests" element={<Requstes />} />
           <Route path="myProtfolio" element={<MyProtfoilo />} />
+          <Route path="myProtfolio/protfolioAdd" element={<ProtfolioAdd />} />
           <Route path="editProfile" element={<EditProfile />} />
           <Route path="/profile/home/trainee/:id" element={<TraineeDetails />}>
             <Route path="viewPlan" element={<ViewPlan />}>
@@ -54,12 +57,13 @@ function App() {
                 <Route path="wedPlan" element={<AddPlan />} />
                 <Route path="thuPlan" element={<AddPlan />} />
                 <Route path="friPlan" element={<AddPlan />} />
+                <Route path="editPlan" element={<EditPlan />} />
               </Route>
             </Route>
             <Route path="viewInbody" element={<ViewInbody />} />
             <Route path="viewReport" element={<ViewReport />} />
           </Route>
-            <Route path="home/trainee/:id/chat" element={<Chat />} />
+            <Route path="home/trainee/:id/chat" element={<ChatTrainee />} />
         </Route>
       </Routes>
     </div>

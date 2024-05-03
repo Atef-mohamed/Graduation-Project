@@ -47,11 +47,11 @@ const ViewPlan = () => {
 
       <div>
         <Outlet />
-        {error && (
+        {/* {error && (
           <h4 className="text-danger txt-res text-center">
             fffffffffffffffffffffffff
           </h4>
-        )}
+        )} */}
       </div>
     </>
   );

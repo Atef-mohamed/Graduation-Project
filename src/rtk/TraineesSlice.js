@@ -56,6 +56,15 @@ export const deletePlan = createAsyncThunk(
     return res.data;
   }
 );
+// Update all plan
+export const UpdatePlans = createAsyncThunk(
+  "Trainees/UpdatePlan",
+  async (plansData) => {
+    const res = await axios.post(`${url.url}/plan/update`, plansData);
+    console.log("update plan",res.data)
+    return res.data;
+  }
+);
 // View InBody Data
 export const ViewInbodyData = createAsyncThunk(
   "Trainees/ViewInbodyData",
@@ -102,6 +111,21 @@ export const rejectRequest = createAsyncThunk(
     return res.data;
   }
 );
+// start
+export const fetchChatList = createAsyncThunk(
+  "Trainees/fetchChatList",
+  async (data) => {
+    const res = await axios.post(`${url.url}/chat`, data);
+    return res.data;
+  }
+);
+export const addMessage = createAsyncThunk(
+  "Trainees/addMessage",
+  async (data) => {
+    const res = await axios.post(`${url.url}/coach/chat`, data);
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "Trainees",
@@ -118,6 +142,7 @@ export const userSlice = createSlice({
     updated_exercise: {},
     exercise: "",
     exercises: [],
+    chat:[],
     requestsData: [],
     acceptRequestData: null,
     rejectRequestData: null,
@@ -148,6 +173,11 @@ export const userSlice = createSlice({
     removeAllPlans: (state) => {
       state.exercises = [];
     },
+     //start
+     getMessage: (state,action) => {
+      state.chat.push(action.payload);
+    },
+    //end
   },
   extraReducers: (builder) => {
     // Trainees List
@@ -304,6 +334,48 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
+      // Update all plan
+      builder.addCase(UpdatePlans.pending, (state) => {
+        state.loading = true;
+      });
+      builder.addCase(UpdatePlans.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+      });
+      builder.addCase(UpdatePlans.rejected, (state, action) => {
+        state.loading = false;
+        state.success = false;
+        state.error = action.error.message;
+      });
+    //start Chat
+    builder.addCase(fetchChatList.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchChatList.fulfilled, (state, action) => {
+      state.chat = action.payload.msg;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(fetchChatList.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    builder.addCase(addMessage.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(addMessage.fulfilled, (state, action) => {
+      state.chat.push({sender:action.payload.msg.sender,content:action.payload.msg.message});
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(addMessage.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+  
+    //end
   },
 });
 export const {
@@ -314,5 +386,6 @@ export const {
   removeExersize,
   removeAllPlans,
   addexercise,
+  getMessage,
 } = userSlice.actions;
 export default userSlice.reducer;

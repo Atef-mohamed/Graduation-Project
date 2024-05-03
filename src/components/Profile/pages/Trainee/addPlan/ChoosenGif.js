@@ -105,6 +105,7 @@ const ChoosenGif = ({ exercise }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(AddPlans({ plan_name, day, exercises, trainee_id, token }));
+        // kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
         dispatch(fetchPlansData({ coach_id, trainee_id, token }));
       } else if (result.isDenied) {
         Swal.fire({

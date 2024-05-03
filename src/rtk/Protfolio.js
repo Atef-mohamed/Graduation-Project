@@ -54,11 +54,30 @@ export const fetchProfileData = createAsyncThunk(
   "profile/fetchProfileData",
   async (token) => {
     const res = await axios.post(`${url.url}/coach/profile/show`, token);
+    console.log("profile data", res.data);
+    return res.data;
+  }
+);
+// Edit Profile
+export const editProfileData = createAsyncThunk(
+  "profile/edtitProfileData",
+  async (data) => {
+    const res = await axios.post(`${url.url}/coach/profile/update`, data);
+    console.log("profile edit ", res.data);
+
     return res.data;
   }
 );
 
-
+//start
+export const updatePortfolio = createAsyncThunk(
+  "portfolio/updatePortfolio",
+  async (data) => {
+    const res = await axios.post(`${url.url}/coach/portfolio/update`, data);
+    return res.data;
+  }
+);
+//end
 export const userSlice = createSlice({
   name: "profile",
   initialState: {
@@ -67,6 +86,7 @@ export const userSlice = createSlice({
     clientProtfolioData: null,
     packagePriceData: null,
     CoachProfileData: null,
+    editProfiledata: null,
     TraineesList: null,
     loading: false,
     success: false,
@@ -158,7 +178,34 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
- 
+    // Show Profile
+    builder.addCase(editProfileData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(editProfileData.fulfilled, (state, action) => {
+      state.editProfiledata = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(editProfileData.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //start
+    builder.addCase(updatePortfolio.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updatePortfolio.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(updatePortfolio.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //end
   },
 });
 export const {} = userSlice.actions;

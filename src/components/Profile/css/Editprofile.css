@@ -1,5 +1,4 @@
-#line-form{
-    border-top: 1px solid var(--gray3-color);
+#line-formm{
     width: 50%;
    
 }
@@ -70,7 +69,7 @@
     position: absolute;
     top: 10px;
     /* transform: translateY(50px); */
-    right: 55px;
+    right: 35px;
 }
 #email-logo{
     top: 15px;
@@ -164,7 +163,7 @@ bottom:50%;
 }
 #day{
     text-align: center;
-    width: 150px;
+    width: 180px;
 
 }
 #month{
@@ -176,3 +175,20 @@ bottom:50%;
     text-align: center;
 }
   
+.paybal-input input,
+.birthday-input input,
+.input-logo input{
+    padding: 12px 24px !important;
+    color: var( --bright-yellow-color);
+    font-weight: bold;
+}
+
+.editProfile{
+    position: relative;
+    right: 240px;
+    margin-bottom: 10px;
+}
+
+#nationalColor{
+    color: var( --bright-yellow-color);
+}
