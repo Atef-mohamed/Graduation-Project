@@ -48,7 +48,6 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
       e.stopPropagation();
     } else {
       setValidated(true);
-      //   dispatch(signUp({ fname, lname, phone }));
       Swal.fire({
         title: "Are you sure to Save Gif?",
         showDenyButton: true,
@@ -108,6 +107,7 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
+      
         Swal.fire({
           title: "Deleted!",
           icon: "success",

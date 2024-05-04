@@ -116,6 +116,7 @@ export const fetchChatList = createAsyncThunk(
   "Trainees/fetchChatList",
   async (data) => {
     const res = await axios.post(`${url.url}/chat`, data);
+    console.log("chat",res.data);
     return res.data;
   }
 );
@@ -123,6 +124,7 @@ export const addMessage = createAsyncThunk(
   "Trainees/addMessage",
   async (data) => {
     const res = await axios.post(`${url.url}/coach/chat`, data);
+    console.log("chat coach",res.data);
     return res.data;
   }
 );
@@ -162,6 +164,7 @@ export const userSlice = createSlice({
     },
     trainName: (state, action) => {
       state.trainingName = action.payload;
+
     },
     addExersize: (state, action) => {
       state.exercises.push(action.payload);
@@ -352,7 +355,7 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchChatList.fulfilled, (state, action) => {
-      state.chat = action.payload.msg;
+      state.chat = action.payload?.msg || [];
       state.loading = false;
       state.success = true;
     });
@@ -365,7 +368,7 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addMessage.fulfilled, (state, action) => {
-      state.chat.push({sender:action.payload.msg.sender,content:action.payload.msg.message});
+      state.chat.push(action.payload);
       state.loading = false;
       state.success = true;
     });

@@ -7,6 +7,7 @@ import { deleteProtfolio, getProtfolio } from "../../../../rtk/Protfolio";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import editIcon from "../../../../assets/edit.svg";
+import deleteIcon from "../../../../assets/delete.svg";
 import Swal from "sweetalert2";
 import url from "../../../../url.json";
 import { Alert } from "react-bootstrap";
@@ -67,83 +68,89 @@ const CardProtfolio = () => {
       >
         {clientProtfolioData &&
           clientProtfolioData.msg.map((portfolio) => (
-            <Card
-              id="card-protfolio"
-              key={portfolio.id}
-              style={{
-                width: "50rem",
-                borderRadius: "20px",
-                boxShadow: "0 0 7px rgba(0, 0, 0, 0.5)",
-                marginTop: "20px",
-                flex: "auto",
-              }}
-            >
-              <Card.Body
+            <>
+              <Card
+                id="card-protfolio"
+                key={portfolio.id}
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  position: "relative",
+                  width: "50rem",
+                  borderRadius: "20px",
+                  boxShadow: "0 0 7px rgba(0, 0, 0, 0.5)",
+                  marginTop: "20px",
+                  flex: "auto",
                 }}
               >
-                <div
-                  style={{ flex: "1", marginRight: "10px", overflow: "hidden" }}
+                <Card.Body
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
                 >
                   <div
                     style={{
+                      flex: "1",
+                      marginRight: "10px",
                       overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "wrap",
                     }}
                   >
-                    <Card.Text id="card-txt" className="">
-                      {portfolio.description}
-                    </Card.Text>
+                    <div
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "wrap",
+                      }}
+                    >
+                      <Card.Text id="card-txt" className="">
+                        {portfolio.description}
+                      </Card.Text>
+                    </div>
                   </div>
-                </div>
-                <div className="d-flex flex-row gap-2">
-                  <Card.Img
-                    variant="top"
-                    src={`${url.url}/img/${portfolio.img_before}`}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "20px",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <Card.Img
-                    variant="bottom"
-                    src={`${url.url}/img/${portfolio.img_after}`}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "20px",
-                    }}
-                  />
-                </div>
-                <div style={{ position: "absolute", top: "0", left: "0" }}>
-                  <Button
-                    variant="link"
-                    id="edit-card"
-                    onClick={() => handleEdit(portfolio)}
-                  >
-                    <img src={editIcon} alt="Edit" />
-                  </Button>
-                </div>
-                <div style={{ position: "absolute", top: "0", left: "60px" }}>
-                  <Button
-                    variant="link"
-                    id="del-card"
-                    className="text-danger"
-                    onClick={() => handeldelete(portfolio.id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
+                  <div className="d-flex flex-row gap-2">
+                    <Card.Img
+                      variant="top"
+                      src={`${url.url}/img/${portfolio.img_before}`}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "20px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <Card.Img
+                      variant="bottom"
+                      src={`${url.url}/img/${portfolio.img_after}`}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "20px",
+                      }}
+                    />
+                  </div>
+                  <div style={{ position: "absolute", top: "0", left: "0" }}>
+                    <Button
+                      variant="link"
+                      id="edit-card"
+                      onClick={() => handleEdit(portfolio)}
+                    >
+                      <img src={editIcon} alt="Edit" />
+                    </Button>
+                  </div>
+                  <div style={{ position: "absolute", top: "0", left: "60px" }}>
+                    <Button
+                      variant="link"
+                      id="del-card"
+                      className="text-danger"
+                      onClick={() => handeldelete(portfolio.id)}
+                    >
+                      <img src={deleteIcon} alt=""  width={"50px"}/>
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </>
           ))}
         {error && (
           <Alert variant="danger" dismissible>

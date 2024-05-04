@@ -11,6 +11,7 @@ import {
 } from "../../../rtk/TraineesSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Alert } from "react-bootstrap";
 
 const Requstes = () => {
   const { requestsData, acceptRequestData, rejectRequestData, loading, error } =
@@ -260,6 +261,12 @@ const Requstes = () => {
                     <div className="loader"></div>
                   </div>
                 </div>
+              )}
+              {error && (
+                <Alert variant="danger" dismissible>
+                  <Alert.Heading>Oh! You got an error!</Alert.Heading>
+                  <h3>{error}</h3>
+                </Alert>
               )}
             </>
           ))}

@@ -17,7 +17,7 @@ const MyProtfoilo = () => {
     <>
       <div
         className="container d-flex flex-column justify-content-center align-items-center"
-        id="line-form"
+        // style={{width:"70%"}}
       >
         <div
           id="personal-txt"

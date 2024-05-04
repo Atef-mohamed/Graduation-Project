@@ -87,6 +87,7 @@ const UpdateExercise = ({
               token: localStorage.getItem("token"),
             })
           );
+          console.log("succccccccc");
           dispatch(
             fetchPlansData({
               trainee_id,

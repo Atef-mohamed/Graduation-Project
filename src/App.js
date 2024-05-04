@@ -20,7 +20,7 @@ import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
 import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
 import ViewReport from "./components/Profile/pages/Trainee/ViewReport";
 import EditProfile from "./components/Profile/EditProfile";
-import EditPlan from "./components/Profile/pages/Trainee/addPlan/EditPlan";
+// import EditPlan from "./components/Profile/pages/Trainee/addPlan/EditPlan";
 import ProtfolioAdd from "./components/Protfolio/ProtfoliAdd";
 import ChatTrainee from "./components/Profile/pages/Trainee/chat/ChatTrainee";
 
@@ -57,7 +57,7 @@ function App() {
                 <Route path="wedPlan" element={<AddPlan />} />
                 <Route path="thuPlan" element={<AddPlan />} />
                 <Route path="friPlan" element={<AddPlan />} />
-                <Route path="editPlan" element={<EditPlan />} />
+                {/* <Route path="editPlan" element={<EditPlan />} /> */}
               </Route>
             </Route>
             <Route path="viewInbody" element={<ViewInbody />} />

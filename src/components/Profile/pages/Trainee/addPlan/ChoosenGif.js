@@ -33,7 +33,7 @@ const ChoosenGif = ({ exercise }) => {
     // Dispatch an action to remove the exercise at the specified index
     Swal.fire({
       title: "Are you sure to delete this plan ?",
-      showCancelButton: true,
+      showDenyButton: true,
       confirmButtonText: "yes",
       denyButtonText: `No`,
       customClass: {
@@ -80,15 +80,25 @@ const ChoosenGif = ({ exercise }) => {
         icon: "error",
         title: "Oops...",
         text: `${plansData.msg.plan_name[0]}`,
+        customClass: {
+          title: "swal-title-green",
+          confirmButton: "swal-confirm-button",
+          popup: "swal-popup",
+        },
       });
     } else if (plansData && plansData.status === false) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: `${plansData.error_msg}`,
+        customClass: {
+          title: "swal-title-green",
+          confirmButton: "swal-confirm-button",
+          popup: "swal-popup",
+        },
       });
     }
-  }, [plansData]);
+  }, [plansData,dispatch]);
   //   save all of plans and send it to api
   const handleSave = () => {
     Swal.fire({
@@ -106,7 +116,8 @@ const ChoosenGif = ({ exercise }) => {
       if (result.isConfirmed) {
         dispatch(AddPlans({ plan_name, day, exercises, trainee_id, token }));
         // kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-        dispatch(fetchPlansData({ coach_id, trainee_id, token }));
+        // dispatch(fetchPlansData({ coach_id, trainee_id, token }));
+        dispatch(fetchPlansData({ token, trainee_id, day }));
       } else if (result.isDenied) {
         Swal.fire({
           title: "Plan not saved",

@@ -8,7 +8,11 @@ import uploadlogo from "../../assets/Upload.svg";
 import profilelogo from "../../assets/myprofile.svg";
 import editProfilelogo from "../../assets/editProfile.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfileData, submitProfileData } from "../../rtk/Protfolio";
+import {
+  editProfileData,
+  fetchProfileData,
+  submitProfileData,
+} from "../../rtk/Protfolio";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./css/Editprofile.css";
@@ -36,6 +40,7 @@ const EditProfile = () => {
   const expInput = useRef();
   const persolanimgInput = useRef();
   const ss_imgInput = useRef();
+  const phone = localStorage.getItem("phone");
   // useEffect(() => {
   //   if (userProfileData && userProfileData.status) {
   //     navigate("/signin"); // Redirect to the sign-in page
@@ -74,12 +79,10 @@ const EditProfile = () => {
   const handelNationalFile = (e) => {
     const file = e.target.files[0];
     if (!file) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select a JPG, JPEG, or PNG file",
-      });
+      // User didn't choose a new image, use the default ssn_img
+      setSsnImg(null); // Reset the ssn_img state to null
     } else {
+      // User chose a new image
       const fileExtension = file.name.split(".").pop().toLowerCase();
       if (
         !(
@@ -96,7 +99,7 @@ const EditProfile = () => {
       } else {
         e.target.setCustomValidity("");
         srcRef.current.textContent = file.name;
-        setSsnImg(file);
+        setSsnImg(file); // Set the selected image to ssnImg state
       }
     }
   };
@@ -137,7 +140,7 @@ const EditProfile = () => {
 
     setExp(input);
   };
-
+  console.log(CoachProfileData?.msg?.ssn_img);
   const token = localStorage.getItem("token");
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -154,17 +157,38 @@ const EditProfile = () => {
       formData.append("email", emailInput.current.value);
       formData.append("BOD", dayRef.current.value);
       formData.append("exp", expInput.current.value);
+      formData.append("phone", phone);
       if (personal_img) {
         formData.append("personal_img", personal_img);
       } else {
-        formData.append("personal_img", CoachProfileData?.msg?.personal_img);
+        // Fetch the image file associated with the image name
+        fetch(
+          `https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.personal_img}`
+        )
+          .then((response) => response.blob())
+          .then((blob) => {
+            // Create a new File object from the Blob
+            const file = new File([blob], CoachProfileData?.msg?.personal_img);
+            // Append the File object to the formData
+            formData.append("personal_img", file);
+          });
       }
 
       // Check if ssn_img has been modified, if not, use the default value
       if (ssn_img) {
         formData.append("ssn_img", ssn_img);
       } else {
-        formData.append("ssn_img", CoachProfileData?.msg?.ssn_img);
+        // Fetch the image file associated with the image name
+        fetch(
+          `https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.ssn_img}`
+        )
+          .then((response) => response.blob())
+          .then((blob) => {
+            // Create a new File object from the Blob
+            const file = new File([blob], CoachProfileData?.msg?.ssn_img);
+            // Append the File object to the formData
+            formData.append("ssn_img", file);
+          });
       }
       formData.append("token", token);
       // Dispatch form data
@@ -182,6 +206,8 @@ const EditProfile = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(editProfileData(formData));
+          dispatch(fetchProfileData({ token }));
+        } else if (result.isDenied) {
           Swal.fire({
             title: "The edit not saved",
             icon: "error",
@@ -227,21 +253,9 @@ const EditProfile = () => {
       });
     }
   }, [editProfiledata]);
-  console.log(editProfiledata?.msg?.phone[0]);
   return (
     <>
       <img src={profilelogo} alt="MyProfile" />
-      {/* {editProfiledata && editProfiledata.status === false && (
-        <h2 className="text-danger text-center txt-res phone">
-          {Object.keys(editProfiledata.msg).map((key) => (
-            <div key={key}>
-              {editProfiledata.msg[key].map((msg, index) => (
-                <div key={index}>{msg}</div>
-              ))}
-            </div>
-          ))}
-        </h2>
-      )} */}
       <div
         className="container d-flex flex-column justify-content-center align-items-center"
         id="line-formm"
@@ -380,7 +394,7 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="row mt-4">
+            {/* <div className="row mt-4">
               <div className="col-12 d-flex flex-column">
                 <label htmlFor="national-id">Upload your national id</label>
                 <label htmlFor="id-file" className="">
@@ -388,8 +402,9 @@ const EditProfile = () => {
                     <div>
                       <input
                         id="id-file"
-                        // name="id- file"
+                        name="id-file"
                         type="file"
+                        accept="image/png, image/jpg, image/jpeg"
                         onChange={handelNationalFile}
                       />
                     </div>
@@ -401,7 +416,7 @@ const EditProfile = () => {
                   </div>
                 </label>
               </div>
-            </div>
+            </div> */}
             <div className="row mt-5 ">
               {loading && (
                 <div className="loader-overlay">
@@ -411,17 +426,19 @@ const EditProfile = () => {
                 </div>
               )}
 
-              {editProfiledata && editProfiledata.status === false && (
-                <h2 className="text-danger text-center txt-res phone">
-                  {Object.keys(editProfiledata.msg).map((key) => (
-                    <div key={key}>
-                      {editProfiledata.msg[key].map((msg, index) => (
-                        <div key={index}>{msg}</div>
-                      ))}
-                    </div>
-                  ))}
-                </h2>
-              )}
+              {editProfiledata &&
+                editProfiledata?.msg &&
+                editProfiledata.status === false && (
+                  <h2 className="text-danger text-center txt-res phone">
+                    {Object.keys(editProfiledata.msg).map((key) => (
+                      <div key={key}>
+                        {editProfiledata.msg[key].map((msg, index) => (
+                          <div key={index}>{msg}</div>
+                        ))}
+                      </div>
+                    ))}
+                  </h2>
+                )}
               {/* {error && <h4 className="text-danger txt-res">{error}</h4>} */}
             </div>
             {editMode && (
@@ -435,6 +452,29 @@ const EditProfile = () => {
               </button>
             )}
           </form>
+          <div className="row mt-4">
+            <div className="col-12 d-flex flex-column">
+              <label htmlFor="national-id">Upload your national id</label>
+              <label htmlFor="id-file" className="">
+                <div className="input-logo" id="natoinal-id">
+                  <div>
+                    <input
+                      id="id-file"
+                      name="id-file"
+                      type="file"
+                      accept="image/png, image/jpg, image/jpeg"
+                      onChange={handelNationalFile}
+                    />
+                  </div>
+
+                  <img src={uploadlogo} alt="" id="id-logo" />
+                  <p ref={srcRef} id="nationalColor">
+                    {CoachProfileData?.msg?.ssn_img}
+                  </p>
+                </div>
+              </label>
+            </div>
+          </div>
         </div>
         <div className="container"></div>
       </div>

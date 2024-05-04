@@ -25,7 +25,7 @@ const ActivePlans = () => {
   const [exerciseId, setExerciseId] = useState(null);
   const [exerciseDay, setExerciseDay] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const trainee_id = location.pathname.split("/")[4];
@@ -69,9 +69,11 @@ const ActivePlans = () => {
       }
     });
   };
-  const handleEditAllPlan = ()=>{
-    navigate(`/profile/home/trainee/${param.id}/viewPlan/currentMonth/addPlans/editPlan`)
-  }
+  const handleEditAllPlan = () => {
+    navigate(
+      `/profile/home/trainee/${param.id}/viewPlan/currentMonth/addPlans/satplan`
+    );
+  };
   const handleCloseForm = () => {
     setIsOpen(false); // Close the ExersizeForm
   };
@@ -178,7 +180,7 @@ const ActivePlans = () => {
                   type="text"
                   className="inp-gif"
                   disabled
-                  value={item.name}
+                  defaultValue={item.name}
                 />
               </div>
 
