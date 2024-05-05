@@ -7,6 +7,7 @@ import {
   deleteExercise,
   deletePlan,
   fetchPlansData,
+  removeAllPlans,
 } from "../../../../../rtk/TraineesSlice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -105,6 +106,7 @@ const ActivePlans = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deletePlan({ token, plan_id }));
+        dispatch(removeAllPlans());
         Swal.fire({
           title: "Deleted!",
           icon: "success",

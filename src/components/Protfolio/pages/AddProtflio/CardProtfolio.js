@@ -27,13 +27,16 @@ const CardProtfolio = () => {
   //end
   const handeldelete = (id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      title: "Are you sure to delete this protfolio ?",
+      showDenyButton: true,
+      confirmButtonText: "yes",
+      denyButtonText: `No`,
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-deny-button",
+        denyButton: " swal-confirm-button",
+        popup: "swal-popup",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteProtfolio({ id, token }));
@@ -42,8 +45,27 @@ const CardProtfolio = () => {
         //end
         Swal.fire({
           title: "Deleted!",
-          text: "Your Protfolio has been deleted.",
           icon: "success",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "protfolio not deleted",
+          icon: "info",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            confirmButton: "swal-confirm-button",
+            popup: "swal-popup",
+          },
         });
       }
     });

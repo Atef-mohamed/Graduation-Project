@@ -81,6 +81,9 @@ const EditPlan = () => {
     //   dispatch(removeAllPlans());
     // }
   };
+  useEffect(() => {
+    dispatch(removeAllPlans());
+  }, []);
   // ----------------------------------------------
 
   //   fetch gif from api
