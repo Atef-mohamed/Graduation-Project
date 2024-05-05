@@ -155,12 +155,13 @@ animation: fadeIn 0.2s ease-in-out;
 
 .logout {
 animation: fadeIn 0.2s ease-in-out;
-margin-left: -10px;
+margin-left: -20px;
 margin-top: 20px;
 }
 
 .logout svg {
 color: var(--logout);
+margin-top: 50px;
 }
 
 body.collapsed .logout {

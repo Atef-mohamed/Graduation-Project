@@ -31,11 +31,11 @@ const TraineeDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       const id = params.id;
-      const res = await axios.post(`${url.url}/coach/trainee/${params.id}`, {
+      const res = await axios.post(`${url.url}/coach/trainee/${id}`, {
         token,
-        id,
       });
       setTrainee(res.data);
+      localStorage.setItem('chat_id',res.data.msg.chat_id);
       return res.data;
     };
 

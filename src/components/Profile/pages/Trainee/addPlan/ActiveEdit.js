@@ -1,3 +1,4 @@
+// src\components\Profile\pages\Trainee\addPlan\ActiveEdit.js
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import deleteBtn from "../../../../../assets/delete.svg";
@@ -7,30 +8,38 @@ import {
   deleteExercise,
   deletePlan,
   fetchPlansData,
+  removeAllPlans,
 } from "../../../../../rtk/TraineesSlice";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import UpdateExercise from "./UpdateExercise";
 
-const ActivePlans = () => {
+const ActiveEdit = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { day, showPlansData, exerciseDeleted, PlanDeleted } = useSelector(
-    (state) => state.Trainees
-  );
-  const param = useParams();
-  const [exercise, setExercise] = useState(null);
+  const {
+    day,
+    showPlansData,
+    exerciseDeleted,
+    PlanDeleted,
+    exercises: exxx,
+  } = useSelector((state) => state.Trainees);
+  //   const [exercise, setExercise] = useState(null);
+
   const [exerciseName, setExerciseName] = useState(null);
   const [exerciseRest, setExerciseRest] = useState(null);
   const [exerciseTimes, setExerciseTimes] = useState(null);
   const [exerciseId, setExerciseId] = useState(null);
   const [exerciseDay, setExerciseDay] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  const [edit, setEdit] = useState(false);
+
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const trainee_id = location.pathname.split("/")[4];
-  // console.log(showPlansData?.msg?.exercises);
-  const sortedPlanLists = showPlansData?.msg?.exercises;
+  const sortedPlanLists = showPlansData.msg.exercises?.concat(exxx).reverse();
+  console.log("ex edit", exxx);
   const sports_prePage = 2; // each page contain 6 client
   const pages = Math.ceil(sortedPlanLists?.length / sports_prePage);
   // const pages = 30;
@@ -40,101 +49,17 @@ const ActivePlans = () => {
   const orderedPlanLists = sortedPlanLists?.slice(startIndex, finishIndex);
   const token = localStorage.getItem("token");
   const plan_id = showPlansData?.msg?.id;
-  const handleDeleteExercize = (exercise_id) => {
-    Swal.fire({
-      title: "Are you sure to delete this exercise ?",
-      showDenyButton: true,
-      confirmButtonText: "yes",
-      denyButtonText: `No`,
-      customClass: {
-        title: "swal-title",
-        confirmButton: "swal-deny-button",
-        denyButton: " swal-confirm-button",
-        popup: "swal-popup",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteExercise({ exercise_id, token }));
-        Swal.fire({
-          title: "Deleted!",
-          icon: "success",
-          showConfirmButton: false,
-          showDenyButton: false,
-          timer: 1500,
-          customClass: {
-            title: "swal-title-green",
-            popup: "swal-popup",
-          },
-        });
-      }
-    });
-  };
-  // const handleEditAllPlan = () => {
-
-  // };
-  // --------------------------------------------------------
-  const handleEditAllPlan = () => {
-    // Dispatch an action to fetch data for active plans
-    dispatch(fetchPlansData({ trainee_id, day, token }));
-    // Navigate to AddPlan component
-    navigate(
-      `/profile/home/trainee/${param.id}/viewPlan/currentMonth/addPlans/editPlan`
-    );
-  };
-  // --------------------------------------------------------
 
   const handleCloseForm = () => {
     setIsOpen(false); // Close the ExersizeForm
   };
   useEffect(() => {
     dispatch(fetchPlansData({ trainee_id, day, token }));
-    window.scrollTo(0, 400);
+    dispatch(removeAllPlans());
   }, [exerciseDeleted, PlanDeleted]);
-  const handleDeleteAllPlan = () => {
-    Swal.fire({
-      title: "Are you sure to delete this Plan ?",
-      showDenyButton: true,
-      confirmButtonText: "yes",
-      denyButtonText: `No`,
-      customClass: {
-        title: "swal-title",
-        confirmButton: "swal-deny-button",
-        denyButton: " swal-confirm-button",
-        popup: "swal-popup",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deletePlan({ token, plan_id }));
-        Swal.fire({
-          title: "Deleted!",
-          icon: "success",
-          showConfirmButton: false,
-          showDenyButton: false,
-          timer: 1500,
-          customClass: {
-            title: "swal-title-green",
-            popup: "swal-popup",
-          },
-        });
-      }
-    });
-  };
-  const handleEdit = (
-    item_id,
-    item_exercise,
-    item_name,
-    item_times,
-    iten_rest,
-    day
-  ) => {
-    setIsOpen(true);
-    setExercise(item_exercise);
-    setExerciseName(item_name);
-    setExerciseRest(iten_rest);
-    setExerciseTimes(item_times);
-    setExerciseId(item_id);
-    setExerciseDay(day);
-  };
+  useEffect(() => {
+    window.scrollTo(0, 400);
+  }, []);
   return (
     <>
       <div
@@ -144,10 +69,10 @@ const ActivePlans = () => {
         {orderedPlanLists.map((item, index) => (
           <div
             id="card-gif"
-            className="d-flex align-items-center  mb-3"
+            className="d-flex align-items-center gap-2 justify-content-center"
             key={index}
           >
-            <div className="left-side d-flex flex-column ">
+            {/* <div className="left-side d-flex flex-column ">
               <div className="buttons d-flex gap-2 mb-3">
                 <img
                   src={editBtn}
@@ -171,9 +96,11 @@ const ActivePlans = () => {
                   onClick={() => handleDeleteExercize(item.id)}
                 />
               </div>
-              <div className="image-gif mt-5">
+            // </div> */}
+            <div className="left-side d-flex mt-5 mb-5  ">
+              <div className="image-gif mt-2">
                 <img
-                  src={`https://above-elk-open.ngrok-free.app/api/img/${item.exercise}`}
+                  src={`https://above-elk-open.ngrok-free.app/api/img/${item?.exercise}`}
                   alt=""
                   style={{
                     width: "80px",
@@ -190,7 +117,7 @@ const ActivePlans = () => {
                   type="text"
                   className="inp-gif"
                   disabled
-                  value={item.name}
+                  value={item?.name}
                 />
               </div>
 
@@ -200,7 +127,7 @@ const ActivePlans = () => {
                   className="inp-gif"
                   type="text"
                   disabled
-                  value={item.times}
+                  value={item?.times}
                 />
               </div>
               <div className="gif-txt d-flex flex-column">
@@ -209,48 +136,25 @@ const ActivePlans = () => {
                   className="inp-gif"
                   type="text"
                   disabled
-                  value={`${item.rest} s`}
+                  value={`${item?.rest} s`}
                 />
               </div>
             </div>
           </div>
         ))}
       </div>
-      {/* {sortedPlanLists?.length > 0 && (
-       
-      )} */}
-      {sortedPlanLists?.length > 0 && (
-        <div className="container d-flex justify-content-between align-items-end">
-          <div className="buttons d-flex gap-4 mb-4">
-            <img
-              src={editBtn}
-              alt="edit"
-              style={{ cursor: "pointer" }}
-              id="btn-edit-all"
-              onClick={handleEditAllPlan}
-            />
-            <img
-              src={deleteBtn}
-              width={"80px"}
-              alt="Delete"
-              style={{ cursor: "pointer" }}
-              onClick={() => handleDeleteAllPlan()}
-              id="btn-delete-all"
-            />
-          </div>
-          <div>
-            <Pagination
-              pages={pages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
-          </div>
-        </div>
-      )}
+      <div>
+        <Pagination
+          pages={pages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
+      {/* 
       {isOpen && (
         <div id="exerSize-form">
           <UpdateExercise
-            item_exercise={exercise}
+            item_exercise={exxx}
             item_name={exerciseName}
             item_times={exerciseTimes}
             item_rest={exerciseRest}
@@ -261,9 +165,11 @@ const ActivePlans = () => {
             handleCloseForm={handleCloseForm}
           />
         </div>
-      )}
+      )} */}
     </>
   );
 };
 
-export default ActivePlans;
+//end
+
+export default ActiveEdit;

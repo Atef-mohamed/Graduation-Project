@@ -20,7 +20,7 @@ import AddPlans from "./components/Profile/pages/Trainee/addPlan/AddPlans";
 import AddPlan from "./components/Profile/pages/Trainee/addPlan/AddPlan";
 import ViewReport from "./components/Profile/pages/Trainee/ViewReport";
 import EditProfile from "./components/Profile/EditProfile";
-// import EditPlan from "./components/Profile/pages/Trainee/addPlan/EditPlan";
+import EditPlan from "./components/Profile/pages/Trainee/addPlan/EditPlan";
 import ProtfolioAdd from "./components/Protfolio/ProtfoliAdd";
 import ChatTrainee from "./components/Profile/pages/Trainee/chat/ChatTrainee";
 
@@ -50,14 +50,14 @@ function App() {
               <Route path="" element={<Navigate to="currentMonth" />} />
               <Route path="currentMonth" element={<CurrentMonth />} />
               <Route path="currentMonth/addPlans" element={<AddPlans />}>
-                <Route path="satPlan" element={<AddPlan />} />
-                <Route path="sunPlan" element={<AddPlan />} />
-                <Route path="monPlan" element={<AddPlan />} />
-                <Route path="tuePlan" element={<AddPlan />} />
-                <Route path="wedPlan" element={<AddPlan />} />
-                <Route path="thuPlan" element={<AddPlan />} />
-                <Route path="friPlan" element={<AddPlan />} />
-                {/* <Route path="editPlan" element={<EditPlan />} /> */}
+                <Route path="saturday" element={<AddPlan />} />
+                <Route path="sunday" element={<AddPlan />} />
+                <Route path="monday" element={<AddPlan />} />
+                <Route path="tuesday" element={<AddPlan />} />
+                <Route path="wednesday" element={<AddPlan />} />
+                <Route path="thurday" element={<AddPlan />} />
+                <Route path="friday" element={<AddPlan />} />
+                <Route path="editPlan" element={<EditPlan />} />
               </Route>
             </Route>
             <Route path="viewInbody" element={<ViewInbody />} />

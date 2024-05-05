@@ -30,7 +30,7 @@ const Profile = () => {
       cluster: "eu",
     });
 
-    const channel = pusher.subscribe("notify");
+    const channel = pusher.subscribe(`${CoachProfileData?.msg.id}notify`);
     const notifyCallback = (data) => {
       toast.info(
         ` ${data.title} 

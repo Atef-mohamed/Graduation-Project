@@ -23,7 +23,8 @@ const ChatTrainee = () => {
 
   // Fetch chat list on component mount
   useEffect(() => {
-    dispatch(fetchChatList({ token, chat_id: param.id }));
+    let chat_id = localStorage.getItem('chat_id');
+    dispatch(fetchChatList({ token, chat_id: chat_id }));
     inp2.current.scrollTop = inp2.current.scrollHeight;
 
     Pusher.logToConsole = true;
@@ -31,17 +32,17 @@ const ChatTrainee = () => {
       cluster: "eu",
     });
 
-    const channel = pusher.subscribe("Chatting");
+    const channel = pusher.subscribe(`${chat_id}chatting`);
     const chatCallback = (data) => {
       dispatch(getMessage({ sender: data.sender, content: data.message }));
     };
 
-    channel.bind(`${param.id}send`, chatCallback);
+    channel.bind(`${chat_id}send`, chatCallback);
 
     return () => {
-      channel.unbind(`${param.id}send`, chatCallback);
+      channel.unbind(`${chat_id}send`, chatCallback);
     };
-  }, [dispatch, param.id, token]);
+  }, []);
 
   // Function to send a message
   const sendMsg = (e) => {

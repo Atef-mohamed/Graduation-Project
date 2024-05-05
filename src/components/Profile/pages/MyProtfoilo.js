@@ -2,6 +2,7 @@
 import React from "react";
 import CardProtfolio from "../../Protfolio/pages/AddProtflio/CardProtfolio";
 import add from "../../../assets/plus.svg";
+import myprotfolio from "../../../assets/myprotfolio.svg";
 
 //start
 import { useNavigate } from "react-router-dom";
@@ -15,8 +16,11 @@ const MyProtfoilo = () => {
 
   return (
     <>
+      <div className="ms-5">
+          <img src={myprotfolio} alt=""  />
+        </div>
       <div
-        className="container d-flex flex-column justify-content-center align-items-center"
+        className="container d-flex flex-column justify-content-center align-items-center mt-5"
         // style={{width:"70%"}}
       >
         <div

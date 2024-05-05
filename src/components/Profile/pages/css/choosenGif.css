@@ -62,4 +62,20 @@
     border-radius: 7px;
     border: 2px solid var(--bright-yellow-color);
 }
+
+
+#saveChanges{
+    outline: none;
+    border: none;
+    background-color: var(--blue1-color);
+    color: var(--main-white-color);
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-weight: 500;
+}
   
+#change-con{
+    margin-top: -200px;
+    display: flex;
+    justify-content: center;
+}

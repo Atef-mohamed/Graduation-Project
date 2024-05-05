@@ -58,6 +58,7 @@
     border: none;
     /* font-size: 18px; */
     font-weight: 500;
+    
 }
 #form-acc ::placeholder{
  color: var(--holder-profile-color);
@@ -120,12 +121,14 @@ bottom:50%;
     height: 100%;
     object-fit: cover; /* Cover the entire container */
     border-radius: 50%; /* Make the image circular */
-    z-index: 9999; /* Ensure the image is on top of the SVG */
+    z-index: 99; /* Ensure the image is on top of the SVG */
 }
 
 #camera{
     position: absolute;
-
+    top: 80%;
+    z-index: 9999;
+    left: 8%;
 }
   
 .custum-file-upload input {
@@ -157,13 +160,13 @@ bottom:50%;
     width: 50px;
     padding: 5px;
     margin-right: 5px;
-    border-radius: 18px !important;
+    border-radius: 25px !important;
     outline: none;
     /* border: none; */
 }
 #day{
     text-align: center;
-    width: 180px;
+    width: 300px;
 
 }
 #month{
@@ -191,4 +194,20 @@ bottom:50%;
 
 #nationalColor{
     color: var( --bright-yellow-color);
+}
+#nationalform{
+    margin-top: -100px;
+    display: flex;
+    justify-content: center;
+}
+
+#save-edit{
+    background-color: var(--bright-yellow-color);
+    color: var(--main-white-color);
+    border: none;
+    font-weight: bold;
+    padding: 10px 40px;
+    margin: 20px auto;
+    border-radius: 12px;
+
 }

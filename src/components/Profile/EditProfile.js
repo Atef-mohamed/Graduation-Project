@@ -70,7 +70,6 @@ const EditProfile = () => {
         const imga = URL.createObjectURL(file); // Create URL for preview
         const image = document.getElementById("output");
         image.src = imga;
-        console.log(file);
         setPersonalImg(file);
       }
     }
@@ -160,35 +159,11 @@ const EditProfile = () => {
       formData.append("phone", phone);
       if (personal_img) {
         formData.append("personal_img", personal_img);
-      } else {
-        // Fetch the image file associated with the image name
-        fetch(
-          `https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.personal_img}`
-        )
-          .then((response) => response.blob())
-          .then((blob) => {
-            // Create a new File object from the Blob
-            const file = new File([blob], CoachProfileData?.msg?.personal_img);
-            // Append the File object to the formData
-            formData.append("personal_img", file);
-          });
       }
 
       // Check if ssn_img has been modified, if not, use the default value
       if (ssn_img) {
         formData.append("ssn_img", ssn_img);
-      } else {
-        // Fetch the image file associated with the image name
-        fetch(
-          `https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.ssn_img}`
-        )
-          .then((response) => response.blob())
-          .then((blob) => {
-            // Create a new File object from the Blob
-            const file = new File([blob], CoachProfileData?.msg?.ssn_img);
-            // Append the File object to the formData
-            formData.append("ssn_img", file);
-          });
       }
       formData.append("token", token);
       // Dispatch form data
@@ -255,7 +230,9 @@ const EditProfile = () => {
   }, [editProfiledata]);
   return (
     <>
-      <img src={profilelogo} alt="MyProfile" />
+      <div className="ms-5">
+        <img src={profilelogo} alt="MyProfile" />
+      </div>
       <div
         className="container d-flex flex-column justify-content-center align-items-center"
         id="line-formm"
@@ -441,6 +418,29 @@ const EditProfile = () => {
                 )}
               {/* {error && <h4 className="text-danger txt-res">{error}</h4>} */}
             </div>
+            <div className="row mt-4">
+              <div className="col-12 d-flex flex-column">
+                <label htmlFor="national-id">Upload your national id</label>
+                <label htmlFor="id-file" className="">
+                  <div className="input-logo" id="natoinal-id">
+                    <div>
+                      <input
+                        id="id-file"
+                        name="id-file"
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg"
+                        onChange={handelNationalFile}
+                      />
+                    </div>
+
+                    <img src={uploadlogo} alt="" id="id-logo" />
+                    <p ref={srcRef} id="nationalColor">
+                      {CoachProfileData?.msg?.ssn_img}
+                    </p>
+                  </div>
+                </label>
+              </div>
+            </div>
             {editMode && (
               <button
                 className="button-submit"
@@ -452,29 +452,6 @@ const EditProfile = () => {
               </button>
             )}
           </form>
-          <div className="row mt-4">
-            <div className="col-12 d-flex flex-column">
-              <label htmlFor="national-id">Upload your national id</label>
-              <label htmlFor="id-file" className="">
-                <div className="input-logo" id="natoinal-id">
-                  <div>
-                    <input
-                      id="id-file"
-                      name="id-file"
-                      type="file"
-                      accept="image/png, image/jpg, image/jpeg"
-                      onChange={handelNationalFile}
-                    />
-                  </div>
-
-                  <img src={uploadlogo} alt="" id="id-logo" />
-                  <p ref={srcRef} id="nationalColor">
-                    {CoachProfileData?.msg?.ssn_img}
-                  </p>
-                </div>
-              </label>
-            </div>
-          </div>
         </div>
         <div className="container"></div>
       </div>

@@ -3,15 +3,25 @@ import "../../css/addPlan.css";
 import { useDispatch, useSelector } from "react-redux";
 import GifList from "./GifList";
 import Pagination from "../../Pagination/Pagination";
-import ExersizeForm from "./ExersizeForm";
-import { fetchPlansData, trainName } from "../../../../../rtk/TraineesSlice";
-import ChoosenGif from "./ChoosenGif";
-import { Route, Routes, Switch } from "react-router-dom";
-import ActivePlans from "./ActivePlans";
+import {
+  UpdatePlans,
+  fetchPlansData,
+  removeAllPlans,
+  trainName,
+} from "../../../../../rtk/TraineesSlice";
+import {
+  Route,
+  Routes,
+  Switch,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import ActiveEdit from "./ActiveEdit";
+import Swal from "sweetalert2";
 
-const AddPlan = () => {
+const EditPlan = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { GifLists, loading, showPlansData, error } = useSelector(
+  const { GifLists, loading, showPlansData, error, exercises } = useSelector(
     (state) => state.Trainees
   );
   const [trainingName, setTrainingName] = useState("");
@@ -23,10 +33,56 @@ const AddPlan = () => {
   if (trainingName) {
     dispatch(trainName(trainingName));
   }
+  const navigate = useNavigate();
   // ---------------------------------------------
-
-
+  const token = localStorage.getItem("token");
+  const param = useParams();
+  const handleSaveChange = () => {
+    Swal.fire({
+      title: "Are you sure to Save this plan?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-confirm-button",
+        denyButton: "swal-deny-button",
+        popup: "swal-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(
+          UpdatePlans({
+            token,
+            plan_name: trainingName,
+            plan_id: showPlansData.msg.id,
+            exercises: exercises,
+          })
+        );
+        navigate(
+          `/profile/home/trainee/${param.id}/viewPlan/currentMonth/addPlans/${showPlansData.msg.day}`
+        );
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "Plan not saved",
+          icon: "info",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            confirmButton: "swal-confirm-button",
+            popup: "swal-popup",
+          },
+        });
+      }
+    });
+    // if (showPlansData) {
+    //   dispatch(removeAllPlans());
+    // }
+  };
   // ----------------------------------------------
+
   //   fetch gif from api
   const sortedGifLists = GifLists;
   const sports_prePage = 8; // each page contain 6 client
@@ -51,7 +107,7 @@ const AddPlan = () => {
         <h4 className="text-danger txt-res text-center">{error}</h4>
       ) : (
         <>
-          {showPlansData && !showPlansData?.msg?.exercises?.length > 0 && (
+          {showPlansData && showPlansData?.msg?.exercises?.length > 0 && (
             <div className="container" id="gifs-container">
               <p className="red-lines">Training name</p>
               <div id="form-name" className="d-flex flex-column">
@@ -62,6 +118,7 @@ const AddPlan = () => {
                   type="text"
                   id="input-nameOftraining"
                   onChange={handleTrainingNameChange}
+                  defaultValue={showPlansData.msg.name}
                 />
               </div>
               <p id="please">
@@ -83,22 +140,29 @@ const AddPlan = () => {
               />
             </div>
           )}
-          {showPlansData && !showPlansData?.msg?.exercises?.length > 0 && (
-            <div className="container" id="gif-choose">
-              <p className="red-linee">The GIF you choose</p>
-              <ChoosenGif />
-            </div>
-          )}
           {showPlansData && showPlansData?.msg?.exercises?.length > 0 && (
+            <>
+              <div className="container" id="gif-choose">
+                <p className="red-linee">The GIF you choose</p>
+                <ActiveEdit />
+              </div>
+              <div id="change-con">
+                <button onClick={handleSaveChange} id="saveChanges">
+                  Save Changes
+                </button>
+              </div>
+            </>
+          )}
+          {/* {showPlansData && showPlansData?.msg?.exercises?.length > 0 && (
             <div className="container" id="gif-choose">
               <p className="red-linee">{showPlansData?.msg?.name}</p>
               <ActivePlans />
             </div>
-          )}
+          )} */}
         </>
       )}
     </>
   );
 };
 
-export default AddPlan;
+export default EditPlan;

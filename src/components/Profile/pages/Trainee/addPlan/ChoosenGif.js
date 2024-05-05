@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../css/choosenGif.css";
 import deleteBtn from "../../../../../assets/delete.svg";
-import editBtn from "../../../../../assets/edit.svg";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -182,7 +181,7 @@ const ChoosenGif = ({ exercise }) => {
           >
             <div className="left-side d-flex flex-column ">
               <div className="buttons d-flex gap-2 mb-3">
-                <img src={editBtn} alt="edit" style={{ cursor: "pointer" }} />
+                {/* <img src={editBtn} alt="edit" style={{ cursor: "pointer" }} /> */}
                 <img
                   src={deleteBtn}
                   width={"50px"}

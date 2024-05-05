@@ -36,7 +36,7 @@ const AddPlans = () => {
       <div className="container" id="add-Plans">
         <div id="plans-sideBar">
           <NavLink
-            to="satPlan"
+            to="saturday"
             // style={{navDayStyle}}
             className="link-sidePlans"
             onClick={() => handleLinkClick("saturday")}
@@ -44,42 +44,42 @@ const AddPlans = () => {
             Saturday
           </NavLink>
           <NavLink
-            to="sunPlan"
+            to="sunday"
             className="link-sidePlans"
             onClick={() => handleLinkClick("sunday")}
           >
             Sunday
           </NavLink>
           <NavLink
-            to="monPlan"
+            to="monday"
             className="link-sidePlans"
             onClick={() => handleLinkClick("monday")}
           >
             Monday
           </NavLink>
           <NavLink
-            to="tuePlan"
+            to="tuesday"
             className="link-sidePlans"
             onClick={() => handleLinkClick("tuesday")}
           >
             Tuesday
           </NavLink>
           <NavLink
-            to="wedPlan"
+            to="wednesday"
             className="link-sidePlans"
             onClick={() => handleLinkClick("wednesday")}
           >
             Wednesday
           </NavLink>
           <NavLink
-            to="thuPlan"
+            to="thurday"
             className="link-sidePlans"
             onClick={() => handleLinkClick("thurday")}
           >
             Thursday
           </NavLink>
           <NavLink
-            to="friPlan"
+            to="friday"
             className="link-sidePlans"
             onClick={() => handleLinkClick("friday")}
           >

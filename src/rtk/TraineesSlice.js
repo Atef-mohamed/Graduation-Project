@@ -61,7 +61,7 @@ export const UpdatePlans = createAsyncThunk(
   "Trainees/UpdatePlan",
   async (plansData) => {
     const res = await axios.post(`${url.url}/plan/update`, plansData);
-    console.log("update plan",res.data)
+    console.log("update plan", res.data);
     return res.data;
   }
 );
@@ -116,7 +116,6 @@ export const fetchChatList = createAsyncThunk(
   "Trainees/fetchChatList",
   async (data) => {
     const res = await axios.post(`${url.url}/chat`, data);
-    console.log("chat",res.data);
     return res.data;
   }
 );
@@ -124,7 +123,6 @@ export const addMessage = createAsyncThunk(
   "Trainees/addMessage",
   async (data) => {
     const res = await axios.post(`${url.url}/coach/chat`, data);
-    console.log("chat coach",res.data);
     return res.data;
   }
 );
@@ -142,12 +140,13 @@ export const userSlice = createSlice({
     trainingName: "",
     inBodyData: null,
     updated_exercise: {},
-    exercise: "",
+    exercise: null,
     exercises: [],
-    chat:[],
+    chat: [],
     requestsData: [],
     acceptRequestData: null,
     rejectRequestData: null,
+    updatedPlans: null,
     loading: false,
     success: false,
     error: null,
@@ -164,7 +163,6 @@ export const userSlice = createSlice({
     },
     trainName: (state, action) => {
       state.trainingName = action.payload;
-
     },
     addExersize: (state, action) => {
       state.exercises.push(action.payload);
@@ -176,8 +174,8 @@ export const userSlice = createSlice({
     removeAllPlans: (state) => {
       state.exercises = [];
     },
-     //start
-     getMessage: (state,action) => {
+    //start
+    getMessage: (state, action) => {
       state.chat.push(action.payload);
     },
     //end
@@ -337,25 +335,26 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
-      // Update all plan
-      builder.addCase(UpdatePlans.pending, (state) => {
-        state.loading = true;
-      });
-      builder.addCase(UpdatePlans.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-      });
-      builder.addCase(UpdatePlans.rejected, (state, action) => {
-        state.loading = false;
-        state.success = false;
-        state.error = action.error.message;
-      });
+    // Update all plan
+    builder.addCase(UpdatePlans.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(UpdatePlans.fulfilled, (state, action) => {
+      state.updatedPlans = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(UpdatePlans.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
     //start Chat
     builder.addCase(fetchChatList.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchChatList.fulfilled, (state, action) => {
-      state.chat = action.payload?.msg || [];
+      state.chat = action.payload.msg;
       state.loading = false;
       state.success = true;
     });
@@ -368,7 +367,6 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addMessage.fulfilled, (state, action) => {
-      state.chat.push(action.payload);
       state.loading = false;
       state.success = true;
     });
@@ -377,7 +375,7 @@ export const userSlice = createSlice({
       state.success = false;
       state.error = action.error.message;
     });
-  
+
     //end
   },
 });

@@ -8,6 +8,7 @@ import {
   updated_exercise,
   fetchPlansData,
 } from "../../../../../rtk/TraineesSlice";
+import { useNavigate } from "react-router-dom";
 
 const UpdateExercise = ({
   item_id,
@@ -17,7 +18,7 @@ const UpdateExercise = ({
   item_name,
   item_times,
   item_rest,
-  day,
+  item_day,
   trainee_id,
 }) => {
   const [validated, setValidated] = useState(false);
@@ -25,11 +26,12 @@ const UpdateExercise = ({
   const inp1 = useRef();
   const inp2 = useRef();
   const inp3 = useRef();
-  const handelClearForm = () => {
-    inp1.current.value = "";
-    inp2.current.value = "";
-    inp3.current.value = "";
-  };
+  const nav = useNavigate();
+  // const handelClearForm = () => {
+  //   inp1.current.value = "";
+  //   inp2.current.value = "";
+  //   inp3.current.value = "";
+  // };
 
   const handleExersizeNameChange = (e) => {
     const input = e.target.value;
@@ -75,9 +77,9 @@ const UpdateExercise = ({
           denyButton: "swal-deny-button",
           popup: "swal-popup",
         },
-      }).then((result) => {
+      }).then(async(result) => {
         if (result.isConfirmed) {
-          dispatch(
+         await dispatch(
             updated_exercise({
               exercise_id: item_id,
               name: inp1.current.value,
@@ -87,11 +89,10 @@ const UpdateExercise = ({
               token: localStorage.getItem("token"),
             })
           );
-          console.log("succccccccc");
-          dispatch(
+         await dispatch(
             fetchPlansData({
               trainee_id,
-              day,
+              day:item_day,
               token: localStorage.getItem("token"),
             })
           );
@@ -106,7 +107,7 @@ const UpdateExercise = ({
               popup: "swal-popup",
             },
           });
-          handelClearForm();
+          // handelClearForm();
           handleCloseForm();
         } else if (result.isDenied) {
           Swal.fire({
