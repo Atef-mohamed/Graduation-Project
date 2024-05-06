@@ -1,17 +1,19 @@
 /*  src\components\Profile\pages\Trainee\chat\chat.css */
 .chat{
-    width: 700px;
+    width: 800px;
     margin: auto;
-    margin-top: 30px;
+    margin-top: 10px;
     height: 500px;
     text-align: center;
-    border: 2px solid ;
+    border: 1px solid var(--blue3-color) !important;
+    border-radius: 18px;
     overflow-y: auto;
     border: none;
     padding-top: 40px;
     padding-bottom: 10px;
     margin-bottom: 10px;
     background-color: rgba(245, 232, 232, 0.482);
+    box-shadow: var(--main-box-shadow);
 }
 
 .chat-footer {
@@ -23,24 +25,47 @@
     width: 700px;
     height: 30px;
     font-size: 16px;
-    background-color: rgb(234, 234, 234);
-    border: 1px solid tan;
+    background-color: #ffff;
+    /* border: 1px solid tan; */
+    border-radius: 12px;
+    border: none;
 }
 
 .chat-footer button{
-    background-color: rgb(75, 214, 98);
+    /* background-color: rgb(75, 214, 98); */
+    background-color: var(--blue1-color);
     width: 100px;
     color: white;
     border: none;
+    border-radius: 12px;
 }
 .chat-footer input{
     background-color: rgb(255, 255, 255);
     border: none;
     width: 600px;
-    padding-left: 5px;
+    padding-left: 8px;
+    border-radius: 12px;
+    border: 1px solid var(--blue1-color);
+    margin-right: 3px;
+    font-weight: 500;
+    outline:none;
 }
 
 .mb{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.rce-mbox-text{
+
+}
+.rce-container-mbox {
+    margin-top: 8px;
+}
+.right{
+    border: 1px solid var(--bright-yellow-color) !important;
+    border-radius: 8px;
+    padding: 4px 8px;
+    color: var(--blue3-color);
+    font-weight: 500;
 }
