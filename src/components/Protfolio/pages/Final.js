@@ -22,7 +22,7 @@ const Final = () => {
   }, []); // Run this effect only once when the component mounts
 
   return (
-    <div className="container md-mt-5">
+    <div className="container mt-5">
       <div className="d-flex flex-column align-items-center">
         <div
           className="mt-3 text-xl-center text-capitalize text-success "

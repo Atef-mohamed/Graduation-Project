@@ -8,15 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import url from "../../url.json";
 
-const ProtfolioEdit = ({ portfolio, onClose }) => {
+const ProtfolioEdit = ({portfolio,onClose}) => {
   const [validated, setValidated] = useState(false);
   const [description, setDescription] = useState(portfolio.description);
-  const [img_before, setImg_before] = useState(
-    url.url + "/img/" + portfolio.img_before
-  );
-  const [img_after, setImg_after] = useState(
-    url.url + "/img/" + portfolio.img_after
-  );
+  const [img_before, setImg_before] = useState(url.url + '/img/' + portfolio.img_before);
+  const [img_after, setImg_after] = useState(url.url + '/img/' + portfolio.img_after);
+  const [img_before2, setImg_before2] = useState(false);
+  const [img_after2, setImg_after2] = useState(false);
   const { loading, error, userProtfolioData } = useSelector(
     (state) => state.Profile
   );
@@ -76,6 +74,7 @@ const ProtfolioEdit = ({ portfolio, onClose }) => {
         imgBefore.current.src = imga;
         console.log(file);
         setImg_before(imga);
+        setImg_before2(true);
       }
     }
   };
@@ -108,6 +107,7 @@ const ProtfolioEdit = ({ portfolio, onClose }) => {
         imgAfter.current.src = imga;
         console.log(file);
         setImg_after(imga);
+        setImg_after2(true);
       }
     }
   };
@@ -126,8 +126,14 @@ const ProtfolioEdit = ({ portfolio, onClose }) => {
       const formData = new FormData(form);
       formData.append("id", portfolio.id);
       formData.append("description", description);
-      formData.append("img_before", img_before);
-      formData.append("img_after", img_after);
+      if(img_before2)
+      {
+        formData.append("img_before", img_before);
+      }
+      if(img_after2)
+      {
+        formData.append("img_after", img_after);
+      }
       formData.append("token", token);
       // Dispatch form data
       dispatch(updatePortfolio(formData));
@@ -135,7 +141,7 @@ const ProtfolioEdit = ({ portfolio, onClose }) => {
       onClose();
     }
   };
-  return (
+  return(
     <>
       <div id="protfolio">
         <form validated={validated} onSubmit={handleSubmit}>
@@ -143,7 +149,7 @@ const ProtfolioEdit = ({ portfolio, onClose }) => {
             <div className="col-12 col-md-6">
               <label htmlFor="fileBefore" id="custom-file-upload">
                 <img src={uploadLlogo} alt="" id="upload-logo" />
-                <img id="output-before" ref={imgBefore} src={img_before} />
+                <img id="output-before" ref={imgBefore} src={img_before}/>
                 <input
                   id="fileBefore"
                   type="file"
@@ -197,9 +203,7 @@ const ProtfolioEdit = ({ portfolio, onClose }) => {
             ) : // </h2>
             null}
 
-            {error && (
-              <h4 className="text-danger txt-res text-center">{error}</h4>
-            )}
+            {error && <h4 className="text-danger txt-res text-center">{error}</h4>}
           </div>
           <div className="d-flex justify-content-around mt-5">
             <button id="save-btn" type="submit">

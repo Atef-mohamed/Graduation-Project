@@ -39,10 +39,10 @@ function App() {
           <Route path="addpackages" element={<Packages />} />
         </Route>
         <Route path="/profile" element={<Profile />}>
-          <Route path="home" element={<Home />} />
           <Route path="requests" element={<Requstes />} />
           <Route path="myProtfolio" element={<MyProtfoilo />} />
           <Route path="myProtfolio/protfolioAdd" element={<ProtfolioAdd />} />
+          <Route path="home" element={<Home />} />
           <Route path="editProfile" element={<EditProfile />} />
           <Route path="/profile/home/trainee/:id" element={<TraineeDetails />}>
             <Route path="viewPlan" element={<ViewPlan />}>
@@ -63,8 +63,9 @@ function App() {
             <Route path="viewInbody" element={<ViewInbody />} />
             <Route path="viewReport" element={<ViewReport />} />
           </Route>
-            <Route path="home/trainee/:id/chat" element={<ChatTrainee />} />
+          <Route path="home/trainee/:id/chat" element={<ChatTrainee />} />
         </Route>
+        <Route path="*" element={<h1>Page not found!!!</h1>} />
       </Routes>
     </div>
   );

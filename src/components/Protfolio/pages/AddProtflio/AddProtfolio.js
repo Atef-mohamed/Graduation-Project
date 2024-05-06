@@ -188,7 +188,13 @@ const AddProtfolio = ({ onSave }) => {
           </div>
           <div className="row mt-5 ">
             <div className="col-12 d-flex justify-content-center ">
-              {loading === true ? <h3 className="loader"></h3> : null}
+            {loading && (
+                      <div className="loader-overlay">
+                        <div className="loader-container">
+                          <div className="loader"></div>
+                        </div>
+                      </div>
+                    )}
             </div>
             {userProtfolioData && userProtfolioData.status === false ? (
               // <h2 className="text-danger text-center txt-res phone">

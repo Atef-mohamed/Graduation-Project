@@ -231,7 +231,8 @@
     border: none;
     font-weight: bold;
     color: var(--blue3-color);
-}
+    background-color: var(--main-white-color);
+}   
 .edit-btn{
     color: var(--bright-yellow-color);
     cursor: pointer;

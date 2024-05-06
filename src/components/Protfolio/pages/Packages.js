@@ -104,249 +104,274 @@ const Packages = ({ onNextStep, onBackStep }) => {
           <p>Please note that there is a 10% percentage in favor of the site</p>
         </div>
       </div>
-      <div id="packages" className="row container">
-        {/* <div className="row d-flex" id="pack"> */}
-        <div
-          className="card-package col-12 col-md-4 position-relative"
-          ref={cardPackage}
-        >
-          <h4 className="text-center">
-            One month <br /> subscription
-          </h4>
-          <span id="line-package" className="text-center"></span>
-          {/* Conditionally render input field based on editing mode */}
-          <h1 id="price-package" className="text-center">
-            {editingMode ? (
-              <input
-                onChange={(e) => {
-                  // Only update the state if the entered value is a number
-                  const value = e.target.value;
-                  if (!isNaN(value)) {
-                    setPrice1(value);
-                  }
-                }}
-                onKeyDown={(e) => {
-                  if (
-                    !/^\d+$/.test(e.key) && // Allow numeric characters
-                    e.key !== "Backspace" &&
-                    e.key !== "Delete" &&
-                    e.key !== "ArrowLeft" &&
-                    e.key !== "ArrowRight" &&
-                    e.key !== "ArrowUp" &&
-                    e.key !== "ArrowDown"
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
-                onBlur={handleInputBlur}
-                required
-                id="input-package"
-                type="text"
-                defaultValue="0"
-                ref={inputRef}
-                pattern="[0-9]*"
-                // Focus on input field when editing mode is active
-              />
-            ) : (
-              <input id="input-package" type="text" defaultValue="0" disabled />
-            )}
-            {/* Constant string "L.E" */}
-            <span style={{ marginLeft: "4px" }}>L.E</span>
-          </h1>
-          {/* Edit button to toggle editing mode */}
-          <h6
-            className="edit-btn"
-            onClick={() => {
-              toggleEditingMode1();
-            }}
-            style={{ position: "absolute", top: "10px", right: "10px" }}
+      <div id="packages" className=" container">
+        <div className="row d-flex gap-5 flex-column">
+          {/* <div className="row d-flex" id="pack"> */}
+          <div
+            className="card-package col-12  position-relative"
+            ref={cardPackage}
           >
-            Edit price
-            <img src={editPrice} alt="" />
-          </h6>
+            <h4 className="text-center">
+              One month <br /> subscription
+            </h4>
+            <span id="line-package" className="text-center"></span>
+            {/* Conditionally render input field based on editing mode */}
+            <h1 id="price-package" className="text-center">
+              {editingMode ? (
+                <input
+                  onChange={(e) => {
+                    // Only update the state if the entered value is a number
+                    const value = e.target.value;
+                    if (!isNaN(value)) {
+                      setPrice1(value);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      !/^\d+$/.test(e.key) && // Allow numeric characters
+                      e.key !== "Backspace" &&
+                      e.key !== "Delete" &&
+                      e.key !== "ArrowLeft" &&
+                      e.key !== "ArrowRight" &&
+                      e.key !== "ArrowUp" &&
+                      e.key !== "ArrowDown"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onBlur={handleInputBlur}
+                  required
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  ref={inputRef}
+                  pattern="[0-9]*"
+                  // Focus on input field when editing mode is active
+                />
+              ) : (
+                <input
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  disabled
+                />
+              )}
+              {/* Constant string "L.E" */}
+              <span style={{ marginLeft: "4px" }}>L.E</span>
+            </h1>
+            {/* Edit button to toggle editing mode */}
+            <h6
+              className="edit-btn"
+              onClick={() => {
+                toggleEditingMode1();
+              }}
+              style={{ position: "absolute", top: "10px", right: "10px" }}
+            >
+              Edit price
+              <img src={editPrice} alt="" />
+            </h6>
+          </div>
+          <div
+            className="card-package col-12 position-relative"
+            ref={cardPackage3}
+          >
+            <h4 className="text-center">
+              Six month <br /> subscription
+            </h4>
+            <span id="line-package" className="text-center"></span>
+            {/* Conditionally render input field based on editing mode */}
+            <h1 id="price-package" className="text-center">
+              {editingMode ? (
+                <input
+                  onChange={(e) => {
+                    // Only update the state if the entered value is a number
+                    const value = e.target.value;
+                    if (!isNaN(value)) {
+                      setPrice3(value);
+                    }
+                  }}
+                  onBlur={() => {
+                    cardPackage3.current.classList.remove("active-card");
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      !/^\d+$/.test(e.key) && // Allow numeric characters
+                      e.key !== "Backspace" &&
+                      e.key !== "Delete" &&
+                      e.key !== "ArrowLeft" &&
+                      e.key !== "ArrowRight" &&
+                      e.key !== "ArrowUp" &&
+                      e.key !== "ArrowDown"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                  required
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  ref={input3Ref}
+                  pattern="[0-9]*"
+                  // Focus on input field when editing mode is active
+                />
+              ) : (
+                <input
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  disabled
+                />
+              )}
+              {/* Constant string "L.E" */}
+              <span style={{ marginLeft: "4px" }}>L.E</span>
+            </h1>
+            {/* Edit button to toggle editing mode */}
+            <h6
+              className="edit-btn"
+              style={{ position: "absolute", top: "10px", right: "10px" }}
+              onClick={() => {
+                toggleEditingMode3();
+              }}
+            >
+              Edit price
+              <img src={editPrice} alt="" />
+            </h6>
+          </div>
         </div>
+        <div className="row d-flex gap-5 flex-column">
         <div
-          className="card-package col-12 col-md-4 position-relative"
-          ref={cardPackage2}
-        >
-          <h4 className="text-center">
-            Three month <br /> subscription
-          </h4>
-          <span id="line-package" className="text-center"></span>
-          {/* Conditionally render input field based on editing mode */}
-          <h1 id="price-package" className="text-center">
-            {editingMode ? (
-              <input
-                onChange={(e) => {
-                  // Only update the state if the entered value is a number
-                  const value = e.target.value;
-                  if (!isNaN(value)) {
-                    setPrice2(value);
-                  }
-                }}
-                onBlur={() => {
-                  cardPackage2.current.classList.remove("active-card");
-                }}
-                onKeyDown={(e) => {
-                  if (
-                    !/^\d+$/.test(e.key) && // Allow numeric characters
-                    e.key !== "Backspace" &&
-                    e.key !== "Delete" &&
-                    e.key !== "ArrowLeft" &&
-                    e.key !== "ArrowRight" &&
-                    e.key !== "ArrowUp" &&
-                    e.key !== "ArrowDown"
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
-                required
-                id="input-package"
-                type="text"
-                defaultValue="0"
-                ref={input2Ref}
-                pattern="[0-9]*"
-                // Focus on input field when editing mode is active
-              />
-            ) : (
-              <input id="input-package" type="text" defaultValue="0" disabled />
-            )}
-            {/* Constant string "L.E" */}
-            <span style={{ marginLeft: "4px" }}>L.E</span>
-          </h1>
-          {/* Edit button to toggle editing mode */}
-          <h6
-            className="edit-btn"
-            style={{ position: "absolute", top: "10px", right: "10px" }}
-            onClick={() => {
-              toggleEditingMode2();
-            }}
+            className="card-package col-12  position-relative"
+            ref={cardPackage2}
           >
-            Edit price
-            <img src={editPrice} alt="" />
-          </h6>
-        </div>
-        <div
-          className="card-package col-12 col-md-4 position-relative"
-          ref={cardPackage3}
-        >
-          <h4 className="text-center">
-            Six month <br /> subscription
-          </h4>
-          <span id="line-package" className="text-center"></span>
-          {/* Conditionally render input field based on editing mode */}
-          <h1 id="price-package" className="text-center">
-            {editingMode ? (
-              <input
-                onChange={(e) => {
-                  // Only update the state if the entered value is a number
-                  const value = e.target.value;
-                  if (!isNaN(value)) {
-                    setPrice3(value);
-                  }
-                }}
-                onBlur={() => {
-                  cardPackage3.current.classList.remove("active-card");
-                }}
-                onKeyDown={(e) => {
-                  if (
-                    !/^\d+$/.test(e.key) && // Allow numeric characters
-                    e.key !== "Backspace" &&
-                    e.key !== "Delete" &&
-                    e.key !== "ArrowLeft" &&
-                    e.key !== "ArrowRight" &&
-                    e.key !== "ArrowUp" &&
-                    e.key !== "ArrowDown"
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
-                required
-                id="input-package"
-                type="text"
-                defaultValue="0"
-                ref={input3Ref}
-                pattern="[0-9]*"
-                // Focus on input field when editing mode is active
-              />
-            ) : (
-              <input id="input-package" type="text" defaultValue="0" disabled />
-            )}
-            {/* Constant string "L.E" */}
-            <span style={{ marginLeft: "4px" }}>L.E</span>
-          </h1>
-          {/* Edit button to toggle editing mode */}
-          <h6
-            className="edit-btn"
-            style={{ position: "absolute", top: "10px", right: "10px" }}
-            onClick={() => {
-              toggleEditingMode3();
-            }}
+            <h4 className="text-center">
+              Three month <br /> subscription
+            </h4>
+            <span id="line-package" className="text-center"></span>
+            {/* Conditionally render input field based on editing mode */}
+            <h1 id="price-package" className="text-center">
+              {editingMode ? (
+                <input
+                  onChange={(e) => {
+                    // Only update the state if the entered value is a number
+                    const value = e.target.value;
+                    if (!isNaN(value)) {
+                      setPrice2(value);
+                    }
+                  }}
+                  onBlur={() => {
+                    cardPackage2.current.classList.remove("active-card");
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      !/^\d+$/.test(e.key) && // Allow numeric characters
+                      e.key !== "Backspace" &&
+                      e.key !== "Delete" &&
+                      e.key !== "ArrowLeft" &&
+                      e.key !== "ArrowRight" &&
+                      e.key !== "ArrowUp" &&
+                      e.key !== "ArrowDown"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                  required
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  ref={input2Ref}
+                  pattern="[0-9]*"
+                  // Focus on input field when editing mode is active
+                />
+              ) : (
+                <input
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  disabled
+                />
+              )}
+              {/* Constant string "L.E" */}
+              <span style={{ marginLeft: "4px" }}>L.E</span>
+            </h1>
+            {/* Edit button to toggle editing mode */}
+            <h6
+              className="edit-btn"
+              style={{ position: "absolute", top: "10px", right: "10px" }}
+              onClick={() => {
+                toggleEditingMode2();
+              }}
+            >
+              Edit price
+              <img src={editPrice} alt="" />
+            </h6>
+          </div>
+          <div
+            className="card-package col-12  position-relative"
+            ref={cardPackage4}
           >
-            Edit price
-            <img src={editPrice} alt="" />
-          </h6>
-        </div>
-        <div
-          className="card-package col-12 col-md-4 position-relative"
-          ref={cardPackage4}
-        >
-          <h4 className="text-center">
-            One year <br /> subscription
-          </h4>
-          <span id="line-package" className="text-center"></span>
-          {/* Conditionally render input field based on editing mode */}
-          <h1 id="price-package" className="text-center">
-            {editingMode ? (
-              <input
-                onChange={(e) => {
-                  // Only update the state if the entered value is a number
-                  const value = e.target.value;
-                  if (!isNaN(value)) {
-                    setPrice4(value);
-                  }
-                }}
-                onBlur={() => {
-                  cardPackage4.current.classList.remove("active-card");
-                }}
-                onKeyDown={(e) => {
-                  if (
-                    !/^\d+$/.test(e.key) && // Allow numeric characters
-                    e.key !== "Backspace" &&
-                    e.key !== "Delete" &&
-                    e.key !== "ArrowLeft" &&
-                    e.key !== "ArrowRight" &&
-                    e.key !== "ArrowUp" &&
-                    e.key !== "ArrowDown"
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
-                required
-                id="input-package"
-                type="text"
-                defaultValue="0"
-                ref={input4Ref}
-                pattern="[0-9]*"
-                // Focus on input field when editing mode is active
-              />
-            ) : (
-              <input id="input-package" type="text" defaultValue="0" disabled />
-            )}
-            {/* Constant string "L.E" */}
-            <span style={{ marginLeft: "4px" }}>L.E</span>
-          </h1>
-          {/* Edit button to toggle editing mode */}
-          <h6
-            className="edit-btn"
-            style={{ position: "absolute", top: "10px", right: "10px" }}
-            onClick={() => {
-              toggleEditingMode4();
-            }}
-          >
-            Edit price
-            <img src={editPrice} alt="" />
-          </h6>
+            <h4 className="text-center">
+              One year <br /> subscription
+            </h4>
+            <span id="line-package" className="text-center"></span>
+            {/* Conditionally render input field based on editing mode */}
+            <h1 id="price-package" className="text-center">
+              {editingMode ? (
+                <input
+                  onChange={(e) => {
+                    // Only update the state if the entered value is a number
+                    const value = e.target.value;
+                    if (!isNaN(value)) {
+                      setPrice4(value);
+                    }
+                  }}
+                  onBlur={() => {
+                    cardPackage4.current.classList.remove("active-card");
+                  }}
+                  onKeyDown={(e) => {
+                    if (
+                      !/^\d+$/.test(e.key) && // Allow numeric characters
+                      e.key !== "Backspace" &&
+                      e.key !== "Delete" &&
+                      e.key !== "ArrowLeft" &&
+                      e.key !== "ArrowRight" &&
+                      e.key !== "ArrowUp" &&
+                      e.key !== "ArrowDown"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                  required
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  ref={input4Ref}
+                  pattern="[0-9]*"
+                  // Focus on input field when editing mode is active
+                />
+              ) : (
+                <input
+                  id="input-package"
+                  type="text"
+                  defaultValue="0"
+                  disabled
+                />
+              )}
+              {/* Constant string "L.E" */}
+              <span style={{ marginLeft: "4px" }}>L.E</span>
+            </h1>
+            {/* Edit button to toggle editing mode */}
+            <h6
+              className="edit-btn"
+              style={{ position: "absolute", top: "10px", right: "10px" }}
+              onClick={() => {
+                toggleEditingMode4();
+              }}
+            >
+              Edit price
+              <img src={editPrice} alt="" />
+            </h6>
+          </div>
+          
         </div>
       </div>
 
