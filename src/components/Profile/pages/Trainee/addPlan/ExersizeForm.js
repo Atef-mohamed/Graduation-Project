@@ -94,48 +94,8 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
     }
   };
   const handleCancel = () => {
-    Swal.fire({
-      title: "Are you sure to delete this Gif ?",
-      showDenyButton: true,
-      confirmButtonText: "yes",
-      denyButtonText: `No`,
-      customClass: {
-        title: "swal-title",
-        confirmButton: "swal-deny-button",
-        denyButton: " swal-confirm-button",
-        popup: "swal-popup",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-      
-        Swal.fire({
-          title: "Deleted!",
-          icon: "success",
-          showConfirmButton: false,
-          showDenyButton: false,
-          timer: 1500,
-          customClass: {
-            title: "swal-title-green",
-            popup: "swal-popup",
-          },
-        });
-        handelClearForm();
-        handleCloseForm();
-      } else if (result.isDenied) {
-        Swal.fire({
-          title: "Plan not saved",
-          icon: "info",
-          showConfirmButton: false,
-          showDenyButton: false,
-          timer: 1500,
-          customClass: {
-            title: "swal-title-green",
-            confirmButton: "swal-confirm-button",
-            popup: "swal-popup",
-          },
-        });
-      }
-    });
+    handelClearForm();
+    handleCloseForm();
   };
   const handleExersizeNameChange = (e) => {
     const input = e.target.value;
@@ -171,7 +131,7 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
         <div className="exersize-form">
           {exercise && (
             <img
-              src={`https://above-elk-open.ngrok-free.app/api/img/${exercise}`}
+              src={`https://exersize.loophole.site/api/img/${exercise}`}
               alt="Selected GIF"
               className="selected-gif"
               style={{ width: "250px", height: "200px", borderRadius: "4px" }}

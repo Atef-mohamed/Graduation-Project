@@ -12,7 +12,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
     <div className="pagination">
       <button
         disabled={currentPage === 1}
-        onClick={() => setCurrentPage((prev) => prev - 1)}
+        onClick={() => setCurrentPage(currentPage - 1)}
         className="page previous"
       >
         <img src={leftArrow} alt=">" />
@@ -28,7 +28,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
       ))}
       <button
         disabled={currentPage === pages}
-        onClick={() => setCurrentPage((prev) => prev + 1)}
+        onClick={() => setCurrentPage(currentPage + 1)}
         className="page next"
       >
         <img src={rightArrow} alt="<" />

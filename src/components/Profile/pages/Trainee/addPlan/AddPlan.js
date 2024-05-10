@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import GifList from "./GifList";
 import Pagination from "../../Pagination/Pagination";
 import ExersizeForm from "./ExersizeForm";
-import { fetchPlansData, trainName } from "../../../../../rtk/TraineesSlice";
+import { fetchGifList, fetchPlansData, trainName } from "../../../../../rtk/TraineesSlice";
 import ChoosenGif from "./ChoosenGif";
-import { Route, Routes, Switch } from "react-router-dom";
+import { Route, Routes, Switch, useLocation, useNavigate } from "react-router-dom";
 import ActivePlans from "./ActivePlans";
 
 const AddPlan = () => {
@@ -24,18 +24,35 @@ const AddPlan = () => {
     dispatch(trainName(trainingName));
   }
   // ---------------------------------------------
+  const navigate= useNavigate();
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = parseInt(searchParams.get("page")) || 1;
+    setCurrentPage(page);
+    dispatch(fetchGifList({page,token}));
+  }, [dispatch, location.search, token]);
+  // console.log(GifLists.data);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    navigate(`?page=${page}`);
+    dispatch(fetchGifList({page,token}));
+  };
 
   // ----------------------------------------------
   //   fetch gif from api
-  const sortedGifLists = GifLists;
+  const sortedGifLists = GifLists.data;
+  // console.log(GifLists.data);
+
   const sports_prePage = 8; // each page contain 6 client
-  const pages = Math.ceil(GifLists?.length / sports_prePage);
-  // const pages = 30;
+  // const pages = Math.ceil(GifLists?.length / sports_prePage);
+  const pages = GifLists.last_page;
   const startIndex = (currentPage - 1) * sports_prePage;
   const finishIndex = currentPage * sports_prePage;
   // return trainees 6 for each page 1=>6
-  const orderedGifLists = sortedGifLists?.slice(startIndex, finishIndex);
+  // const orderedGifLists = sortedGifLists?.slice(startIndex, finishIndex);
   return (
     <>
       {loading === true ? (
@@ -74,12 +91,12 @@ const AddPlan = () => {
           ) : (
             ""
           )} */}
-                <GifList Sports={orderedGifLists} />
+                <GifList Sports={sortedGifLists} />
               </div>
               <Pagination
                 pages={pages}
                 currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                setCurrentPage={handlePageChange}
               />
             </div>
           )}

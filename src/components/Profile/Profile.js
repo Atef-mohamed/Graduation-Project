@@ -162,7 +162,7 @@ const Profile = () => {
               <img
                 className="avatar"
                 // src={`${https://above-elk-open.ngrok-free.app/api/img/CoachProfileData?.msg?.personal_img}`}
-                src={`https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.personal_img}`}
+                src={`https://exersize.loophole.site/api/img/${CoachProfileData?.msg?.personal_img}`}
                 alt="..."
                 onClick={()=>navigate("editProfile")}
               />

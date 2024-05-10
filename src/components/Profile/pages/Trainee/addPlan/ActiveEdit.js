@@ -100,7 +100,7 @@ const ActiveEdit = () => {
             <div className="left-side d-flex mt-5 mb-5  ">
               <div className="image-gif mt-2">
                 <img
-                  src={`https://above-elk-open.ngrok-free.app/api/img/${item?.exercise}`}
+                  src={`https://exersize.loophole.site/api/img/${item?.exercise}`}
                   alt=""
                   style={{
                     width: "80px",

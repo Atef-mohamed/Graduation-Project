@@ -10,9 +10,9 @@ const TraineesList = ({Trainees}) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    dispatch(fetchTraineesList({ token }));
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   dispatch(fetchTraineesList({ token }));
+  // }, [dispatch, token]);
  const params = useParams();
   // const handelcard = () => {
   //   navigate(`trainee/${params.id}`);

@@ -192,7 +192,7 @@ const ChoosenGif = ({ exercise }) => {
               </div>
               <div className="image-gif mt-5">
                 <img
-                  src={`https://above-elk-open.ngrok-free.app/api/img/${item.exercise}`}
+                  src={`https://exersize.loophole.site/api/img/${item.exercise}`}
                   alt=""
                   style={{
                     width: "80px",

@@ -5,18 +5,18 @@ import url from "../url.json";
 // Show trainees
 export const fetchTraineesList = createAsyncThunk(
   "Trainees/fetchTraineesList",
-  async (token) => {
-    const res = await axios.post(`${url.url}/coach/trainees`, token);
-    // console.log(res.data.msg.length);
+  async (token,page) => {
+    const res = await axios.post(`${url.url}/coach/trainees?page=${page}`, token);
+    // console.log("Trainees data",res.data.msg.data);
     return res.data;
   }
 );
 // Show sports
 export const fetchGifList = createAsyncThunk(
   "Trainees/fetchGifList",
-  async (token) => {
-    const res = await axios.post(`${url.url}/sports`, token);
-    // console.log(res.data);
+  async (token,page) => {
+    const res = await axios.post(`${url.url}/sports?page=${page}`, token);
+    console.log("gif",res.data);
     return res.data;
   }
 );

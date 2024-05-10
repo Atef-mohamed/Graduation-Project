@@ -133,7 +133,7 @@ const UpdateExercise = ({
         <div className="exersize-form">
           {
             <img
-              src={`https://above-elk-open.ngrok-free.app/api/img/${item_exercise}`}
+              src={`https://exersize.loophole.site/api/img/${item_exercise}`}
               alt="Selected GIF"
               className="selected-gif"
               style={{ width: "250px", height: "200px", borderRadius: "4px" }}

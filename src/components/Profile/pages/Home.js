@@ -5,8 +5,9 @@ import avatar from "../../../assets/skill2.jpg";
 import Pagination from "./Pagination/Pagination";
 import { fetchProfileData } from "../../../rtk/Protfolio";
 import { fetchTraineesList } from "../../../rtk/TraineesSlice";
-import { NavLink, Outlet, Link, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, Link, useNavigate, useLocation, useNavigation } from "react-router-dom";
 import TraineesList from "./Pagination/TraineesList";
+import { useAccordionButton } from "react-bootstrap";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,31 +18,45 @@ const Home = () => {
   );
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+  const navigate= useNavigate();
+  const location = useLocation();
   useEffect(() => {
     dispatch(fetchProfileData({ token }));
-    // dispatch(fetchTraineesList({ token }));
-  }, []);
+    const searchParams = new URLSearchParams(location.search);
+    const page = parseInt(searchParams.get("page")) || 1;
+    setCurrentPage(page);
+    dispatch(fetchTraineesList({page,token}));
+  }, [dispatch, location.search, token]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    navigate(`?page=${page}`);
+    dispatch(fetchTraineesList({page,token}));
+  };
  
   // // Function to handle changes in the search input
   // const handleSearchInputChange = (event) => {
   //   setSearchQuery(event.target.value);
   // };
-  const sortedTraineesLists = TraineeList?.msg ?? [];
+  const sortedTraineesLists = TraineeList?.msg?.data ?? [];
+  console.log(sortedTraineesLists)
   const trainees_prePage = 6; // each page contain 6 client
-  const pages = Math.ceil(TraineeList?.msg.length / trainees_prePage);
-  // const pages = 30;
-  const startIndex = (currentPage - 1) * trainees_prePage;
-  const finishIndex = currentPage * trainees_prePage;
+  // const pages = Math.ceil(TraineeList?.msg.length / trainees_prePage);
+
+   const pages = TraineeList?.msg?.last_page;
+  const startIndex = (TraineeList?.msg?.current_page - 1) * trainees_prePage;
+  const finishIndex = TraineeList?.msg?.current_page * trainees_prePage;
   // return trainees 6 for each page 1=>6
-  const orderedTraineesLists = sortedTraineesLists.slice(
-    startIndex,
-    finishIndex
-  );
+  // const orderedTraineesLists = sortedTraineesLists.slice(
+  //   startIndex,
+  //   finishIndex
+  // );
+  // console.log("order list",orderedTraineesLists);
   return (
     <>
       <div className="container d-flex justify-content-between">
         <h1 id="helloName">Hello {CoachProfileData?.msg?.fname ?? ""}👋🏼,</h1>
-        <div className="search__wrapper">
+        {/* <div className="search__wrapper">
           <svg
             width="18"
             height="18"
@@ -63,7 +78,7 @@ const Home = () => {
             //  onChange={handleSearchInputChange}
             placeholder="Search for anything..."
           />
-        </div>
+        </div> */}
       </div>
       <div className="container client-card-pagination">
         <h4 className="client-title">All Clients</h4>
@@ -77,7 +92,7 @@ const Home = () => {
           ) : (
             ""
           )}
-          <TraineesList Trainees={orderedTraineesLists} />
+          <TraineesList Trainees={sortedTraineesLists} />
 
           {/* <ClientList clietns={orderedClients}/> */}
           {/* Filter client cards based on search query */}
@@ -96,7 +111,7 @@ const Home = () => {
         <Pagination
           pages={pages}
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={handlePageChange}
         />
       </div>
     </>

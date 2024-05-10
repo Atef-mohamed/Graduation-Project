@@ -29,7 +29,7 @@ const ActivePlans = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const trainee_id = location.pathname.split("/")[4];
+  // const trainee_id = location.pathname.split("/")[4];
   // console.log(showPlansData?.msg?.exercises);
   const sortedPlanLists = showPlansData?.msg?.exercises;
   const sports_prePage = 2; // each page contain 6 client
@@ -76,7 +76,7 @@ const ActivePlans = () => {
   // --------------------------------------------------------
   const handleEditAllPlan = () => {
     // Dispatch an action to fetch data for active plans
-    dispatch(fetchPlansData({ trainee_id, day, token }));
+    dispatch(fetchPlansData({ trainee_id: param.id, day, token }));
     // Navigate to AddPlan component
     navigate(
       `/profile/home/trainee/${param.id}/viewPlan/currentMonth/addPlans/editPlan`
@@ -88,7 +88,7 @@ const ActivePlans = () => {
     setIsOpen(false); // Close the ExersizeForm
   };
   useEffect(() => {
-    dispatch(fetchPlansData({ trainee_id, day, token }));
+    dispatch(fetchPlansData({ trainee_id: param.id, day, token }));
     window.scrollTo(0, 400);
   }, [exerciseDeleted, PlanDeleted]);
   const handleDeleteAllPlan = () => {
@@ -175,7 +175,7 @@ const ActivePlans = () => {
               </div>
               <div className="image-gif mt-5">
                 <img
-                  src={`https://above-elk-open.ngrok-free.app/api/img/${item.exercise}`}
+                  src={`https://exersize.loophole.site/api/img/${item.exercise}`}
                   alt=""
                   style={{
                     width: "80px",
@@ -218,9 +218,6 @@ const ActivePlans = () => {
           </div>
         ))}
       </div>
-      {/* {sortedPlanLists?.length > 0 && (
-       
-      )} */}
       {sortedPlanLists?.length > 0 && (
         <div className="container d-flex justify-content-between align-items-end">
           <div className="buttons d-flex gap-4 mb-4">
@@ -258,7 +255,7 @@ const ActivePlans = () => {
             item_rest={exerciseRest}
             item_id={exerciseId}
             item_day={exerciseDay}
-            trainee_id={trainee_id}
+            trainee_id={param.id}
             isOpen={isOpen}
             handleCloseForm={handleCloseForm}
           />

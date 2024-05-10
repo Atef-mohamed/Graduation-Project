@@ -5,6 +5,7 @@ import GifList from "./GifList";
 import Pagination from "../../Pagination/Pagination";
 import {
   UpdatePlans,
+  fetchGifList,
   fetchPlansData,
   removeAllPlans,
   trainName,
@@ -13,6 +14,7 @@ import {
   Route,
   Routes,
   Switch,
+  useLocation,
   useNavigate,
   useParams,
 } from "react-router-dom";
@@ -21,10 +23,10 @@ import Swal from "sweetalert2";
 
 const EditPlan = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { GifLists, loading, showPlansData, error, exercises } = useSelector(
+  const { GifLists, loading, showPlansData, error, exercises,trainingName:planName } = useSelector(
     (state) => state.Trainees
   );
-  const [trainingName, setTrainingName] = useState("");
+  const [trainingName, setTrainingName] = useState(planName);
   const dispatch = useDispatch();
 
   const handleTrainingNameChange = (event) => {
@@ -85,16 +87,31 @@ const EditPlan = () => {
     dispatch(removeAllPlans());
   }, []);
   // ----------------------------------------------
+  const location = useLocation();
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = parseInt(searchParams.get("page")) || 1;
+    setCurrentPage(page);
+    dispatch(fetchGifList({page,token}));
+  }, [dispatch, location.search, token]);
+  // console.log(GifLists.data);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    navigate(`?page=${page}`);
+    dispatch(fetchGifList({page,token}));
+  };
+
+  // ----------------------------------------------
   //   fetch gif from api
-  const sortedGifLists = GifLists;
+  const sortedGifLists = GifLists.data;
   const sports_prePage = 8; // each page contain 6 client
-  const pages = Math.ceil(GifLists?.length / sports_prePage);
-  // const pages = 30;
+  // const pages = Math.ceil(GifLists?.length / sports_prePage);
+  const pages = GifLists.last_page;
   const startIndex = (currentPage - 1) * sports_prePage;
   const finishIndex = currentPage * sports_prePage;
   // return trainees 6 for each page 1=>6
-  const orderedGifLists = sortedGifLists?.slice(startIndex, finishIndex);
+  // const orderedGifLists = sortedGifLists?.slice(startIndex, finishIndex);
   return (
     <>
       {loading === true ? (
@@ -134,12 +151,12 @@ const EditPlan = () => {
           ) : (
             ""
           )} */}
-                <GifList Sports={orderedGifLists} />
+                <GifList Sports={sortedGifLists} />
               </div>
               <Pagination
                 pages={pages}
                 currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                setCurrentPage={handlePageChange}
               />
             </div>
           )}

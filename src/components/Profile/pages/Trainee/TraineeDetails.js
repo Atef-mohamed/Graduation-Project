@@ -83,7 +83,7 @@ const TraineeDetails = () => {
             >
               <div className="content-left d-flex align-items-center">
                 <img
-                  src={`https://above-elk-open.ngrok-free.app/api/img/${trainee.msg.img}`}
+                  src={`https://exersize.loophole.site/api/img/${trainee.msg.img}`}
                   width={"100px"}
                   alt=""
                 />

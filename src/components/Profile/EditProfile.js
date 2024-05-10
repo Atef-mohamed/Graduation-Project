@@ -242,7 +242,7 @@ const EditProfile = () => {
             <img src={camera} alt="" id="camera" />
             <img
               id="output"
-              src={`https://above-elk-open.ngrok-free.app/api/img/${CoachProfileData?.msg?.personal_img}`}
+              src={`https://exersize.loophole.site/api/img/${CoachProfileData?.msg?.personal_img}`}
             />
             <input
               required

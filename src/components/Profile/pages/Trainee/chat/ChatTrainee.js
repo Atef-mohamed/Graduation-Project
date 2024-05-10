@@ -22,8 +22,8 @@ const ChatTrainee = () => {
   const token = localStorage.getItem("token");
 
   // Fetch chat list on component mount
+  let chat_id = localStorage.getItem('chat_id');
   useEffect(() => {
-    let chat_id = localStorage.getItem('chat_id');
     dispatch(fetchChatList({ token, chat_id: chat_id }));
     inp2.current.scrollTop = inp2.current.scrollHeight;
 
@@ -32,7 +32,7 @@ const ChatTrainee = () => {
       cluster: "eu",
     });
 
-    const channel = pusher.subscribe(`${chat_id}chatting`);
+    const channel = pusher.subscribe(`${chat_id}Chatting`);
     const chatCallback = (data) => {
       dispatch(getMessage({ sender: data.sender, content: data.message }));
     };
@@ -50,7 +50,7 @@ const ChatTrainee = () => {
     dispatch(
       addMessage({
         token: token,
-        chat_id: param.id,
+        chat_id: chat_id ,
         message: inp1.current.value,
       })
     );

@@ -12,10 +12,10 @@ const GifList = ({ Sports }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    dispatch(fetchGifList({ token }));
-    // console.log(Sports);
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   dispatch(fetchGifList({ token }));
+  //   // console.log(Sports);
+  // }, [dispatch, token]);
 
   const handleGifClick = (gif) => {
     setSelectedGif(gif);
@@ -36,7 +36,7 @@ const GifList = ({ Sports }) => {
           onClick={() => handleGifClick(item)}
         >
           <img
-            src={`https://above-elk-open.ngrok-free.app/api/img/${item}`}
+            src={`https://exersize.loophole.site/api/img/${item}`}
             alt="gif Photo"
           />
         </div>

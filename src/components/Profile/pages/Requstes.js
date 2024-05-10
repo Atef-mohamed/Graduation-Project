@@ -142,9 +142,9 @@ const Requstes = () => {
           filteredRequests.map((item, index) => (
             <>
               <div className="req-card" key={item.trainee_id}>
-                <div className="Lhs d-flex align-items-center gap-3">
+                <div className="Lhs d-flex align-items-center gap-3" key={index}>
                   <img
-                    src={`https://above-elk-open.ngrok-free.app/api/img/${item.img}`}
+                    src={`https://exersize.loophole.site/api/img/${item.img}`}
                     // style={{ borderRadius: "50%" }}
                     // width={"100px"}
                     alt="trainee img"

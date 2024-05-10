@@ -58,7 +58,7 @@ const ViewInbody = () => {
             /> */}
               <a
                 donload="download InBody"
-                href={`https://above-elk-open.ngrok-free.app/api/download/${inBodyData?.msg?.inbody}`}
+                href={`https://exersize.loophole.site/api/download/${inBodyData?.msg?.inbody}`}
               >
                 <img
                   src={downloadLogo}
