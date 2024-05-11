@@ -23,7 +23,7 @@ const TraineesList = ({Trainees}) => {
       {Trainees.map((trainee) => (
           <Link to={`trainee/${trainee.id}`} key={trainee.id} className="card-client" >
             <img
-              src={`https://above-elk-open.ngrok-free.app/api/img/${trainee.img}`}
+              src={`https://exersize.loophole.site/api/img/${trainee.img}`}
               alt="Profile Photo"
             />
             <h3 className="client-name">{trainee.fname}</h3>
