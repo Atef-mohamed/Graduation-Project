@@ -23,6 +23,8 @@ import EditProfile from "./components/Profile/EditProfile";
 import EditPlan from "./components/Profile/pages/Trainee/addPlan/EditPlan";
 import ProtfolioAdd from "./components/Protfolio/ProtfoliAdd";
 import ChatTrainee from "./components/Profile/pages/Trainee/chat/ChatTrainee";
+import CurrentReport from "./components/Profile/pages/Trainee/CurrentReport";
+import NextReport from "./components/Profile/pages/Trainee/NextReport";
 
 function App() {
   return (
@@ -61,8 +63,12 @@ function App() {
               </Route>
             </Route>
             <Route path="viewInbody" element={<ViewInbody />} />
-            <Route path="viewReport" element={<ViewReport />} />
+            <Route path="viewReport" element={<ViewReport />}>
+              <Route path="currentMonth" element={<CurrentReport />} />
+              <Route path="nextMonth" element={<NextReport />} />
+            </Route>
           </Route>
+
           <Route path="home/trainee/:id/chat" element={<ChatTrainee />} />
         </Route>
         <Route path="*" element={<h1>Page not found!!!</h1>} />

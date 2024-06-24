@@ -14,6 +14,7 @@ const AccountInformation = ({ onNextStep }) => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
+  const [paypal, setPaypal] = useState("");
   const [BOD, setBOD] = useState("");
   const [exp, setExp] = useState("");
   const [personal_img, setPersonalImg] = useState(null);
@@ -140,6 +141,7 @@ const AccountInformation = ({ onNextStep }) => {
       formData.append("fname", fname);
       formData.append("lname", lname);
       formData.append("email", email);
+      formData.append("paypal", paypal);
       formData.append("BOD", BOD);
       formData.append("exp", exp);
       formData.append("personal_img", personal_img);
@@ -275,28 +277,21 @@ const AccountInformation = ({ onNextStep }) => {
                     }}
                     ref={dayRef}
                   />
-                  {/* <input
-                    type="text"
-                    id="month"
-                    maxLength="2"
-                    placeholder="MM"
-                    ref={monthRef}
-                    className="text-center"
+                </div>
+              </div>
+              <div className="col-sm-12 col-md-6">
+                <label htmlFor="exp">Paypal account email</label>
+                <div className="input-logo">
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Paypal account email"
+                    required
                     onChange={(e) => {
-                      setMonth(e.target.value);
+                      setPaypal(e.target.value);
                     }}
                   />
-
-                  <input
-                    type="text"
-                    id="year"
-                    maxLength="4"
-                    placeholder="YYYY"
-                    ref={yearRef}
-                    onChange={(e) => {
-                      setYear(e.target.value);
-                    }} */}
-                  {/* /> */}
+                  {/* <img src={clocklogo} alt="" id="email-logo" /> */}
                 </div>
               </div>
             </div>
@@ -320,13 +315,13 @@ const AccountInformation = ({ onNextStep }) => {
             </div>
             <div className="row mt-5 ">
               <div className="col-12 d-flex justify-content-center ">
-              {loading && (
-                      <div className="loader-overlay">
-                        <div className="loader-container">
-                          <div className="loader"></div>
-                        </div>
-                      </div>
-                    )}
+                {loading && (
+                  <div className="loader-overlay">
+                    <div className="loader-container">
+                      <div className="loader"></div>
+                    </div>
+                  </div>
+                )}
               </div>
               {userProfileData && userProfileData.status === false ? (
                 <h2 className="text-danger text-center txt-res phone">

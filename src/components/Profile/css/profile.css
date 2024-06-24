@@ -20,12 +20,7 @@
 --text: #303651;
 --text-lighter: #697089;
 }
-/* body {
-background: var(--full-bg);
-font-size: 16px;
-padding: 1rem;
- height: 100%; 
-} */
+
 .sidebar {
 position: sticky;
 top: 0;
@@ -157,6 +152,8 @@ animation: fadeIn 0.2s ease-in-out;
 animation: fadeIn 0.2s ease-in-out;
 margin-left: -20px;
 margin-top: 20px;
+border: none;
+background-color: transparent;
 }
 
 .logout svg {
@@ -211,3 +208,26 @@ to {
 }
 }
 
+
+
+@media screen and (max-width: 767px) {
+body {
+    overflow-x: hidden;
+}
+
+.sidebar {
+    max-width: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hide {
+    display: none;
+}
+}

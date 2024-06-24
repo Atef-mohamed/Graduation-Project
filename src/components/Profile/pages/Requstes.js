@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Alert } from "react-bootstrap";
-
+import url from "../../../url.json";
 const Requstes = () => {
   const { requestsData, acceptRequestData, rejectRequestData, loading, error } =
     useSelector((state) => state.Trainees);
@@ -87,8 +87,8 @@ const Requstes = () => {
   });
   return (
     <>
-      <div className="container d-flex flex-column  ">
-        <div className="filter-buttons">
+      <div className="container d-flex flex-column justify-content-center flex-wrap  ">
+        <div className="filter-buttons d-flex flex-wrap">
           {/* Filter buttons */}
           <button
             className={`filter-btn ${filter === "all" ? "active-req" : ""}`}
@@ -135,16 +135,23 @@ const Requstes = () => {
             Unsubscribed
           </button>
         </div>
-
+        {requestsData?.msg?.length === 0 && (
+          <div id="warning-trainee" className="mt-5">
+            There is No Requstes For you!
+          </div>
+        )}
         {requestsData &&
           requestsData?.msg?.length > 0 &&
           requestsData?.status === true &&
           filteredRequests.map((item, index) => (
             <>
               <div className="req-card" key={item.trainee_id}>
-                <div className="Lhs d-flex align-items-center gap-3" key={index}>
+                <div
+                  className="Lhs d-flex align-items-center gap-3"
+                  key={index}
+                >
                   <img
-                    src={`https://exersize.loophole.site/api/img/${item.img}`}
+                    src={`${url.url}/img/${item.img}`}
                     // style={{ borderRadius: "50%" }}
                     // width={"100px"}
                     alt="trainee img"
@@ -255,13 +262,7 @@ const Requstes = () => {
                   )}
                 </div>
               </div>
-              {loading && (
-                <div className="loader-overlay">
-                  <div className="loader-container">
-                    <div className="loader"></div>
-                  </div>
-                </div>
-              )}
+
               {error && (
                 <Alert variant="danger" dismissible>
                   <Alert.Heading>Oh! You got an error!</Alert.Heading>
@@ -271,6 +272,13 @@ const Requstes = () => {
             </>
           ))}
       </div>
+      {loading && (
+        <div className="loader-overlay">
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

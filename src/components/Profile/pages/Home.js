@@ -1,49 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../css/Home.css";
-import avatar from "../../../assets/skill2.jpg";
 import Pagination from "./Pagination/Pagination";
 import { fetchProfileData } from "../../../rtk/Protfolio";
 import { fetchTraineesList } from "../../../rtk/TraineesSlice";
-import { NavLink, Outlet, Link, useNavigate, useLocation, useNavigation } from "react-router-dom";
+
+
+import { useNavigate, useLocation } from "react-router-dom";
 import TraineesList from "./Pagination/TraineesList";
-import { useAccordionButton } from "react-bootstrap";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  // const [searchQuery, setSearchQuery] = useState("");
   const { CoachProfileData } = useSelector((state) => state.Profile);
   const { TraineesList: TraineeList, loading } = useSelector(
     (state) => state.Trainees
   );
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
     dispatch(fetchProfileData({ token }));
     const searchParams = new URLSearchParams(location.search);
     const page = parseInt(searchParams.get("page")) || 1;
     setCurrentPage(page);
-    dispatch(fetchTraineesList({page,token}));
+    dispatch(fetchTraineesList({ page, token }));
   }, [dispatch, location.search, token]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     navigate(`?page=${page}`);
-    dispatch(fetchTraineesList({page,token}));
+    dispatch(fetchTraineesList({ page, token }));
   };
- 
+
   // // Function to handle changes in the search input
   // const handleSearchInputChange = (event) => {
   //   setSearchQuery(event.target.value);
   // };
   const sortedTraineesLists = TraineeList?.msg?.data ?? [];
-  console.log(sortedTraineesLists)
+  console.log(sortedTraineesLists);
   const trainees_prePage = 6; // each page contain 6 client
   // const pages = Math.ceil(TraineeList?.msg.length / trainees_prePage);
 
-   const pages = TraineeList?.msg?.last_page;
+  const pages = TraineeList?.msg?.last_page;
   const startIndex = (TraineeList?.msg?.current_page - 1) * trainees_prePage;
   const finishIndex = TraineeList?.msg?.current_page * trainees_prePage;
   // return trainees 6 for each page 1=>6
@@ -85,29 +84,19 @@ const Home = () => {
         <div className="client-cards ">
           {loading === true ? (
             <div className="loader-overlay">
-            <div className="loader-container">
-              <div className="loader"></div>
+              <div className="loader-container">
+                <div className="loader"></div>
+              </div>
             </div>
-          </div>
           ) : (
             ""
           )}
           <TraineesList Trainees={sortedTraineesLists} />
-
-          {/* <ClientList clietns={orderedClients}/> */}
-          {/* Filter client cards based on search query */}
-          {/* {clientData
-            .filter((client) =>
-              client.name.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((client, index) => (
-              <div className="card-client" key={index}>
-                <img src={avatar} alt="Profile Photo" />
-                <h3>{client.name}</h3>
-              </div>
-            ))} */}
         </div>
 
+        {sortedTraineesLists.length === 0 && (
+          <div id="warning-trainee">There is No Trainee For you</div>
+        )}
         <Pagination
           pages={pages}
           currentPage={currentPage}

@@ -5,18 +5,31 @@ import url from "../url.json";
 // Show trainees
 export const fetchTraineesList = createAsyncThunk(
   "Trainees/fetchTraineesList",
-  async (token,page) => {
-    const res = await axios.post(`${url.url}/coach/trainees?page=${page}`, token);
+  async (token, page) => {
+    const res = await axios.post(
+      `${url.url}/coach/trainees?page=${page}`,
+      token
+    );
     // console.log("Trainees data",res.data.msg.data);
     return res.data;
+  }
+);
+// Async thunk to fetch trainee data
+export const fetchTraineeData = createAsyncThunk(
+  "trainees/fetchTraineeData",
+  async ({ id, token }) => {
+    const response = await axios.post(`${url.url}/coach/trainee/${id}`, {
+      token,
+    });
+    return response.data;
   }
 );
 // Show sports
 export const fetchGifList = createAsyncThunk(
   "Trainees/fetchGifList",
-  async (token,page) => {
+  async (token, page) => {
     const res = await axios.post(`${url.url}/sports?page=${page}`, token);
-    console.log("gif",res.data);
+    console.log("gif", res.data);
     return res.data;
   }
 );
@@ -127,10 +140,30 @@ export const addMessage = createAsyncThunk(
   }
 );
 
+// view chart in Report
+export const fetchReportData = createAsyncThunk(
+  "Trainees/fetchReportData",
+  async (data) => {
+    const res = await axios.post(`${url.url}/reports/chart`, data);
+    console.log("Report::", res.data);
+    return res.data;
+  }
+);
+// UPDATE inbody in Report
+export const updateInbodyReport = createAsyncThunk(
+  "Trainees/updateInbodyReport",
+  async (data) => {
+    const res = await axios.post(`${url.url}/inbody/data`, data);
+    console.log("InbodyReport::", res.data);
+    return res.data;
+  }
+);
+
 export const userSlice = createSlice({
   name: "Trainees",
   initialState: {
     TraineesList: null,
+    trainee: null,
     GifLists: null,
     plansData: null,
     showPlansData: null,
@@ -147,6 +180,9 @@ export const userSlice = createSlice({
     acceptRequestData: null,
     rejectRequestData: null,
     updatedPlans: null,
+    traineedata: null,
+    reportChartData: null,
+    reportInbodyData: null,
     loading: false,
     success: false,
     error: null,
@@ -154,6 +190,9 @@ export const userSlice = createSlice({
   reducers: {
     addexercise: (state, action) => {
       state.exercise = action.payload;
+    },
+    traineeData: (state, action) => {
+      state.traineedata = action.payload;
     },
     updatedExercise: (state, action) => {
       state.updated_exercise = action.payload;
@@ -191,6 +230,20 @@ export const userSlice = createSlice({
       state.success = true;
     });
     builder.addCase(fetchTraineesList.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    // Trainee Data
+    builder.addCase(fetchTraineeData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchTraineeData.fulfilled, (state, action) => {
+      state.trainee = action.payload;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(fetchTraineeData.rejected, (state, action) => {
       state.loading = false;
       state.success = false;
       state.error = action.error.message;
@@ -377,6 +430,34 @@ export const userSlice = createSlice({
     });
 
     //end
+    //fetch Report Data
+    builder.addCase(fetchReportData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchReportData.fulfilled, (state, action) => {
+      state.reportChartData = action.payload.msg;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(fetchReportData.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
+    //Update Inbody Report Data
+    builder.addCase(updateInbodyReport.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateInbodyReport.fulfilled, (state, action) => {
+      state.reportInbodyData = action.payload.msg;
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(updateInbodyReport.rejected, (state, action) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.error.message;
+    });
   },
 });
 export const {
@@ -388,5 +469,6 @@ export const {
   removeAllPlans,
   addexercise,
   getMessage,
+  traineeData,
 } = userSlice.actions;
 export default userSlice.reducer;

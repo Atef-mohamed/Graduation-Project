@@ -1,0 +1,110 @@
+.inbody-line p{
+    color: var( --bright-yellow-color);
+    font-weight: bold;
+    display: inline-block;
+    border-bottom: 2px solid var(--bright-yellow-color);
+    margin: 0 10px 25px 25px;
+}
+
+.textReport{
+    color: var(--blue3-color) !important;
+    font-weight: bold;
+    border-bottom: 3px solid var(--blue3-color);
+    display: inline-block;
+    padding: 2px 30px;
+
+}
+.activereport {
+    color: var( --bright-yellow-color) !important;
+    border-bottom: 3px solid var( --bright-yellow-color);
+}
+
+.ph{
+    color: var(--blue3-color) !important;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.spanViewInBody{
+    color: var(--blue3-color) !important;
+    font-weight: bold;
+    border: 1px solid var(--bright-yellow-color);
+    border-radius: 20px;
+    background-color: #ffff;
+    padding: 3px 8px !important;
+    margin-top: 22px;
+    cursor: pointer;
+}
+.formReport{
+  /* display: flex;
+  justify-content: center !important;
+  flex-direction: column; */
+  /* margin-left: 60px; */
+  /* margin: 0 30px; */
+}
+/* .rowReportForm{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    flex-wrap: wrap;
+} */
+
+.formreport-l{
+    color: var(--blue3-color);
+}
+
+label span {
+    color: var(--bright-yellow-color);
+}
+small{
+    color: var(--small-color);
+    font-size: 9px !important;
+}
+
+#ecw,
+#pbf,
+#smm,
+#weight{
+    border: none;
+    border: 1px solid var(--blue1-color);
+    border-radius: 24px;
+    box-shadow: var(--main-box-shadow);
+}
+#ecw::placeholder,
+#pbf::placeholder,
+#smm::placeholder,
+#weight::placeholder
+{
+    color: var(--bright-yellow-color);
+    font-weight: 400 ;
+}
+
+#btn-save-report{
+ color: var(--main-white-color);
+ font-weight: bold;
+ border: none;
+ background-color: var(--blue1-color);
+ border-radius: 24px;
+ padding: 8px 20px;
+}
+
+#cancel-report{
+    color: var(--blue1-color);
+    font-weight: bold;
+    border: none;
+    background-color: var(--main-white-color);
+    border-radius: 24px;
+    padding: 8px 30px;
+    border: 1px solid var(--bright-yellow-color);
+}
+
+#repo1{
+    font-weight: bold;
+    color:var(--bright-yellow-color);
+    font-size: 22px;
+}
+#repo2{
+    font-weight: bold;
+    color:var(--blue1-color);
+    font-size: 24px;
+}

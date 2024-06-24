@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Main.css";
 import { Link } from "react-router-dom";
@@ -29,18 +29,10 @@ const MainPage = () => {
       behavior: "smooth",
     });
   };
-  // // Notifcation
-  // Pusher.logToConsole = true;
-  // var pusher = new Pusher("f2ab4244dfa2cd3140ce", {
-  //   cluster: "eu",
-  // });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
-  // let coach_id = 2;
-
-  // var channel = pusher.subscribe("notify");
-  // channel.bind(`${coach_id}notify`, function (data) {
-  //   alert("the title is => " + data.title + "  the msg is " + data.msg);
-  // });
   return (
     <>
       <NavBar />

@@ -4,6 +4,7 @@ import downloadLogo from "../../../../assets/downLoadInBody.svg";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ViewInbodyData } from "../../../../rtk/TraineesSlice";
+import url from "../../../../url.json";
 const ViewInbody = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -58,7 +59,7 @@ const ViewInbody = () => {
             /> */}
               <a
                 donload="download InBody"
-                href={`https://exersize.loophole.site/api/download/${inBodyData?.msg?.inbody}`}
+                href={`${url.url}/download/${inBodyData?.msg?.inbody}`}
               >
                 <img
                   src={downloadLogo}

@@ -4,7 +4,6 @@ import Request from "../../assets/Request Feedback.svg";
 import myPortfolio from "../../assets/Portfolio.svg";
 import logo from "../../assets/logoBlack.png";
 import logoSmall from "../../assets/halfLlogo.svg";
-import avatar from "../../assets/skill2.jpg";
 import "./css/profile.css";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Footer from "../footer/Footer";
@@ -13,12 +12,13 @@ import { fetchProfileData } from "../../rtk/Protfolio";
 import Pusher from "pusher-js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Swal from "sweetalert2";
+import url from "../../url.json";
 const Profile = () => {
   const { CoachProfileData, loading } = useSelector((state) => state.Profile);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchProfileData({ token }));
   }, []);
@@ -80,6 +80,49 @@ const Profile = () => {
   // pusher.unsubscribe("notify");
 
   // ___________________________________________________________________________
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure to Logout?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No",
+      customClass: {
+        title: "swal-title",
+        confirmButton: "swal-confirm-button",
+        denyButton: "swal-deny-button",
+        popup: "swal-popup",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        navigate("/");
+        Swal.fire({
+          title: "logout!",
+          icon: "success",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            popup: "swal-popup",
+          },
+        });
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "Logout not completed",
+          icon: "info",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+          customClass: {
+            title: "swal-title-green",
+            confirmButton: "swal-confirm-button",
+            popup: "swal-popup",
+          },
+        });
+      }
+    });
+  };
   const [collapsed, setCollapsed] = useState(false);
   const menuItem = [
     {
@@ -102,6 +145,7 @@ const Profile = () => {
     setCollapsed(!collapsed);
     document.body.classList.toggle("collapsed");
   };
+
   return (
     <>
       <div className="containerr">
@@ -162,9 +206,9 @@ const Profile = () => {
               <img
                 className="avatar"
                 // src={`${https://above-elk-open.ngrok-free.app/api/img/CoachProfileData?.msg?.personal_img}`}
-                src={`https://exersize.loophole.site/api/img/${CoachProfileData?.msg?.personal_img}`}
+                src={`${url.url}/img/${CoachProfileData?.msg?.personal_img}`}
                 alt="..."
-                onClick={()=>navigate("editProfile")}
+                onClick={() => navigate("editProfile")}
               />
               <div className="online__status"></div>
             </div>
@@ -177,7 +221,7 @@ const Profile = () => {
                 {CoachProfileData?.msg?.email ?? "user @gmail.com"}
               </div>
             </section>
-            <a href="#logout" className="logout">
+            <button className="logout" onClick={handleLogout}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-logout"
@@ -195,7 +239,7 @@ const Profile = () => {
                 <path d="M9 12h12l-3 -3"></path>
                 <path d="M18 15l3 -3"></path>
               </svg>
-            </a>
+            </button>
           </div>
         </nav>
         {loading && (

@@ -239,7 +239,7 @@ const Packages = ({ onNextStep, onBackStep }) => {
           </div>
         </div>
         <div className="row d-flex gap-5 flex-column">
-        <div
+          <div
             className="card-package col-12  position-relative"
             ref={cardPackage2}
           >
@@ -371,13 +371,18 @@ const Packages = ({ onNextStep, onBackStep }) => {
               <img src={editPrice} alt="" />
             </h6>
           </div>
-          
         </div>
       </div>
 
       <div className="row mt-5 ">
         <div className="col-12 d-flex justify-content-center ">
-          {loading === true ? <h3 className="loader"></h3> : null}
+          {loading && (
+            <div className="loader-overlay">
+              <div className="loader-container">
+                <div className="loader"></div>
+              </div>
+            </div>
+          )}
         </div>
         {packagePriceData && packagePriceData.status === false ? (
           <Alert variant="danger" dismissible>

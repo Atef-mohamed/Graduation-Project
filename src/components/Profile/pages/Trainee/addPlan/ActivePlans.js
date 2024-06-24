@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import deleteBtn from "../../../../../assets/delete.svg";
 import editBtn from "../../../../../assets/edit.svg";
 import Pagination from "../../Pagination/Pagination";
+import url from "../../../../../url.json";
 import {
   deleteExercise,
   deletePlan,
@@ -175,7 +176,7 @@ const ActivePlans = () => {
               </div>
               <div className="image-gif mt-5">
                 <img
-                  src={`https://exersize.loophole.site/api/img/${item.exercise}`}
+                  src={`${url.url}/img/${item.exercise}`}
                   alt=""
                   style={{
                     width: "80px",

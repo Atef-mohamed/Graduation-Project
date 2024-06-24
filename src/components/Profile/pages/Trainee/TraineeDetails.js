@@ -11,56 +11,61 @@ import backTo from "../../../../assets/BackTo.svg";
 import startdate from "../../../../assets/startDate.svg";
 import exdate from "../../../../assets/expiryDate.svg";
 import chatIcon from "../../../../assets/chat.svg";
-import axios from "axios";
 import url from "../../../../url.json";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTraineeData, traineeData } from "../../../../rtk/TraineesSlice";
 
 const TraineeDetails = () => {
-  const { loading, error } = useSelector((state) => state.Trainees);
+  console.log("url",url.url);
+  const { loading, error, trainee } = useSelector((state) => state.Trainees);
   const [collapsePlan, setCollapsePlan] = useState(null);
   const [collapseInBody, setCollapseInBody] = useState(null);
   const [collapseviewSubscibe, setCollapseviewSubscibe] = useState(null);
   const navigate = useNavigate();
   const params = useParams();
   const token = localStorage.getItem("token");
-  const [trainee, setTrainee] = useState();
+  // const [trainee, setTrainee] = useState();
   const location = useLocation();
   // const trainee_id = location.pathname.split("/")[4];
-
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const id = params.id;
+  //     const res = await axios.post(`${url.url}/coach/trainee/${id}`, {
+  //       token,
+  //     });
+  //     setTrainee(res.data);
+  localStorage.setItem("chat_id", trainee?.data?.msg?.chat_id);
+  //     // dispatch(traineeData({ traineedata: res.data }));
+  //     return res.data;
+  //   };
+  //   fetchData();
+  //   window.scrollTo(0, 0);
+  // }, []);
   useEffect(() => {
-    const fetchData = async () => {
-      const id = params.id;
-      const res = await axios.post(`${url.url}/coach/trainee/${id}`, {
-        token,
-      });
-      setTrainee(res.data);
-      localStorage.setItem('chat_id',res.data.msg.chat_id);
-      return res.data;
-    };
-
-    fetchData();
+    const id = params.id;
+    dispatch(fetchTraineeData({ id, token }));
     window.scrollTo(0, 0);
-  }, []);
+  }, [dispatch, params.id, token]);
 
   const handelExpand = () => {
     setCollapsePlan(!collapsePlan);
     // setCollapseInBody(false);
     navigate("viewPlan");
 
-    document.body.classList.toggle("expand",!collapsePlan);
+    document.body.classList.toggle("expand", !collapsePlan);
   };
   const handelExpandInbody = () => {
     setCollapseInBody(!collapseInBody);
     // setCollapsePlan(false);
     navigate("viewInbody");
-    document.body.classList.toggle("expandInbody",!collapseInBody);
+    document.body.classList.toggle("expandInbody", !collapseInBody);
   };
   const handelExpandviewSubscibe = () => {
     setCollapseviewSubscibe(!collapseviewSubscibe);
     // setCollapsePlan(false);
     navigate("viewReport");
-    document.body.classList.toggle("expandviewSubscibe",!collapseviewSubscibe);
+    document.body.classList.toggle("expandviewSubscibe", !collapseviewSubscibe);
   };
   const handelExpandChat = () => {
     navigate("chat");
@@ -72,8 +77,15 @@ const TraineeDetails = () => {
           <img src={backTo} alt="" />
         </Link>
       </header>
+      {loading && (
+        <div className="loader-overlay">
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        </div>
+      )}
       {error === true ? (
-        <h4 className="text-danger txt-res text-center">{"ggggggggggg"}</h4>
+        <h4 className="text-danger txt-res text-center">{error}</h4>
       ) : (
         <>
           {trainee && trainee.msg && (
@@ -83,7 +95,7 @@ const TraineeDetails = () => {
             >
               <div className="content-left d-flex align-items-center">
                 <img
-                  src={`https://exersize.loophole.site/api/img/${trainee.msg.img}`}
+                  src={`${url.url}/img/${trainee.msg.img}`}
                   width={"100px"}
                   alt=""
                 />
@@ -108,7 +120,7 @@ const TraineeDetails = () => {
         </>
       )}
       <main className="container">
-        {!collapseInBody && !collapseviewSubscibe &&(
+        {!collapseInBody && !collapseviewSubscibe && (
           <div
             className="viewPlan d-flex justify-content-between align-items-center mb-4"
             style={{ cursor: "pointer" }}
@@ -129,7 +141,7 @@ const TraineeDetails = () => {
           </div>
         )}
 
-        {!collapsePlan && !collapseviewSubscibe &&(
+        {!collapsePlan && !collapseviewSubscibe && (
           <div
             className="viewInbody d-flex justify-content-between align-items-center mb-4"
             style={{ cursor: "pointer" }}
@@ -169,22 +181,19 @@ const TraineeDetails = () => {
             </div>
           </div>
         )}
-        
-        
       </main>
-      {loading && (
-        <div className="loader-overlay">
-          <div className="loader-container">
-            <div className="loader"></div>
-          </div>
-        </div>
-      )}
+
       {collapsePlan && <Outlet />}
       {collapseInBody && <Outlet />}
       {collapseviewSubscibe && <Outlet />}
       {/* {!collapseInBody&&!collapsePlan&&!collapseviewSubscibe&& <Chat />} */}
       <div id="chat">
-        <img src={chatIcon} alt="chat-icon" style={{cursor:"pointer"}}  onClick={handelExpandChat}/>
+        <img
+          src={chatIcon}
+          alt="chat-icon"
+          style={{ cursor: "pointer" }}
+          onClick={handelExpandChat}
+        />
       </div>
     </>
   );

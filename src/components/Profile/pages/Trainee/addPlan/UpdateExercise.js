@@ -9,7 +9,7 @@ import {
   fetchPlansData,
 } from "../../../../../rtk/TraineesSlice";
 import { useNavigate } from "react-router-dom";
-
+import url from "../../../../../url.json";
 const UpdateExercise = ({
   item_id,
   item_exercise,
@@ -77,9 +77,9 @@ const UpdateExercise = ({
           denyButton: "swal-deny-button",
           popup: "swal-popup",
         },
-      }).then(async(result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
-         await dispatch(
+          await dispatch(
             updated_exercise({
               exercise_id: item_id,
               name: inp1.current.value,
@@ -89,10 +89,10 @@ const UpdateExercise = ({
               token: localStorage.getItem("token"),
             })
           );
-         await dispatch(
+          await dispatch(
             fetchPlansData({
               trainee_id,
-              day:item_day,
+              day: item_day,
               token: localStorage.getItem("token"),
             })
           );
@@ -133,7 +133,7 @@ const UpdateExercise = ({
         <div className="exersize-form">
           {
             <img
-              src={`https://exersize.loophole.site/api/img/${item_exercise}`}
+              src={`${url.url}/img/${item_exercise}`}
               alt="Selected GIF"
               className="selected-gif"
               style={{ width: "250px", height: "200px", borderRadius: "4px" }}

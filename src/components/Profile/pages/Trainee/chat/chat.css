@@ -1,18 +1,32 @@
-/*  src\components\Profile\pages\Trainee\chat\chat.css */
+.body-chat{
+    background-color: var(--blue2-color);
+    height: 100vh;
+    border-radius: 18px;
+    padding-bottom: 120px !important;
+}
+.content-trainee{
+    padding: 30px;
+}
+.content-trainee .status{
+    font-weight: bold;
+    color:  var(--bright-yellow-color);
+    font-size: 12px;
+}
 .chat{
-    width: 800px;
+    width: 100%;
     margin: auto;
     margin-top: 10px;
-    height: 500px;
+    height: 90vh;
     text-align: center;
-    border: 1px solid var(--blue3-color) !important;
-    border-radius: 18px;
+    /* border: 1px solid var(--blue3-color) !important; */
+    border-radius: 30px;
     overflow-y: auto;
+    flex-grow: 1;
     border: none;
     padding-top: 40px;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    background-color: rgba(245, 232, 232, 0.482);
+    background-color: var(--main-white-color);
     box-shadow: var(--main-box-shadow);
 }
 
@@ -37,15 +51,18 @@
     width: 100px;
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 30px;
+    padding: 5px 20px;
 }
 .chat-footer input{
     background-color: rgb(255, 255, 255);
     border: none;
     width: 600px;
     padding-left: 8px;
-    border-radius: 12px;
-    border: 1px solid var(--blue1-color);
+    padding: 10px;
+    margin-top: 3px;
+    border-radius: 30px;
+    border: 1px solid #E5E6E9;
     margin-right: 3px;
     font-weight: 500;
     outline:none;
@@ -56,16 +73,70 @@
     margin-bottom: 10px;
 }
 
-.rce-mbox-text{
-
-}
 .rce-container-mbox {
     margin-top: 8px;
 }
-.right{
-    border: 1px solid var(--bright-yellow-color) !important;
-    border-radius: 8px;
-    padding: 4px 8px;
-    color: var(--blue3-color);
-    font-weight: 500;
+
+.chat-component{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:767px) {
+    .chat{
+        width: 320px !important;
+    }
+    .chat-footer input{
+        width: 230px;
+     margin-left: 50px !important;
+
+    }
+    .body-chat{
+        background-color: var(--main-white-color);
+    }
+}
+@media screen and (min-width:768px) and (max-width:1023px) {
+    .chat{
+        width: 400px;
+    }
+}
+
+
+
+.rce-mbox {
+    background-color: #BFCDD9 !important; /* Light grey for left messages */
+    border-radius: 30px;
+    padding: 15px;
+    margin: 15px;
+    margin-left: 80px !important;
+
+}
+  
+.rce-mbox-right {
+    background-color: rgba(255, 195, 0, 50%)!important; /* Light grey for left messages */
+    border-radius: 30px !important;
+    padding: 15px;
+    margin: 15px;
+    margin-right: 80px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+}
+.rce-mbox-right-notch,
+.rce-mbox-left-notch{
+    display: none;
+}
+.rce-mbox-text{
+    border: none !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }

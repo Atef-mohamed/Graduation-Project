@@ -164,9 +164,15 @@
     border: 1px solid var(--bright-yellow-color);
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
-    width: 240px;
+    width: 280px !important;
     height: 220px;
     padding: 10px;
+}
+
+@media screen and (max-width:767px) {
+    .card-package{
+        width: 200px !important;
+    }
 }
 .card-package h4{
     color: var(--blue2-color);

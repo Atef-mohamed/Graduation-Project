@@ -85,7 +85,11 @@ const OtpInput = () => {
       inputRefs.current[index - 1].focus();
     }
   };
-
+  const preventEnterSubmit = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
   //   submit form and convert otp to string
   const phone = localStorage.getItem("phone");
   const handleSubmit = (e) => {
@@ -150,6 +154,7 @@ const OtpInput = () => {
                         onChange={(e) => handelChange(index, e)}
                         onClick={() => handelClick(index)}
                         onKeyDown={(e) => hanelKeyDown(index, e)}
+                        onKeyPress={preventEnterSubmit}
                       />
                     );
                   })}
@@ -157,12 +162,12 @@ const OtpInput = () => {
                     Resend it
                   </p>
                   {loading && (
-                      <div className="loader-overlay">
-                        <div className="loader-container">
-                          <div className="loader"></div>
-                        </div>
+                    <div className="loader-overlay">
+                      <div className="loader-container">
+                        <div className="loader"></div>
                       </div>
-                    )}
+                    </div>
+                  )}
 
                   <div className="buttons-otp">
                     <button id="btn-back" onClick={handelBackBtn}>

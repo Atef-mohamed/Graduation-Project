@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchGifList } from "../../../../../rtk/TraineesSlice";
 import ExersizeForm from "./ExersizeForm";
-
+import url from "../../../../../url.json";
 const GifList = ({ Sports }) => {
   const [selectedGif, setSelectedGif] = useState(null);
   const [showExierSizeForm, setShowExierSizeForm] = useState(false);
@@ -35,10 +35,7 @@ const GifList = ({ Sports }) => {
           className="card-gif"
           onClick={() => handleGifClick(item)}
         >
-          <img
-            src={`https://exersize.loophole.site/api/img/${item}`}
-            alt="gif Photo"
-          />
+          <img src={`${url.url}/img/${item}`} alt="gif Photo" />
         </div>
       ))}
       {showExierSizeForm && (

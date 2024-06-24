@@ -53,12 +53,6 @@ const CurrentMonth = () => {
           </Link>
         </div>
       )}
-      {/* {addPlan && (
-        <div id="add-plan">
-        {addPlan && navigate(`/profile/home/trainee/${trainee_id}/viewPlan/currentMonth/addPlans `)}
-
-        </div>
-      )} */}
     </>
   );
 };

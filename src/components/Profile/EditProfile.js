@@ -8,6 +8,7 @@ import uploadlogo from "../../assets/Upload.svg";
 import profilelogo from "../../assets/myprofile.svg";
 import editProfilelogo from "../../assets/editProfile.svg";
 import { useDispatch, useSelector } from "react-redux";
+import url from "../../url.json";
 import {
   editProfileData,
   fetchProfileData,
@@ -25,7 +26,7 @@ const EditProfile = () => {
   const [BOD, setBOD] = useState("");
   const [exp, setExp] = useState("");
   const [personal_img, setPersonalImg] = useState(null);
-  const [paybal_code, setPaybalCode] = useState(null);
+  const [paybal, setPaybal] = useState(null);
   const [ssn_img, setSsnImg] = useState(null);
   const dayRef = useRef();
   const srcRef = useRef();
@@ -39,6 +40,7 @@ const EditProfile = () => {
   const emailInput = useRef();
   const expInput = useRef();
   const persolanimgInput = useRef();
+  const paypalCode = useRef();
   const ss_imgInput = useRef();
   const phone = localStorage.getItem("phone");
   // useEffect(() => {
@@ -156,6 +158,7 @@ const EditProfile = () => {
       formData.append("email", emailInput.current.value);
       formData.append("BOD", dayRef.current.value);
       formData.append("exp", expInput.current.value);
+      formData.append("paypal", paypalCode.current.value);
       formData.append("phone", phone);
       if (personal_img) {
         formData.append("personal_img", personal_img);
@@ -242,7 +245,7 @@ const EditProfile = () => {
             <img src={camera} alt="" id="camera" />
             <img
               id="output"
-              src={`https://exersize.loophole.site/api/img/${CoachProfileData?.msg?.personal_img}`}
+              src={`${url.url}/img/${CoachProfileData?.msg?.personal_img}`}
             />
             <input
               required
@@ -359,14 +362,15 @@ const EditProfile = () => {
                 <div className="paybal-input">
                   <input
                     required
-                    type="text"
+                    type="email"
                     id="paypal"
                     // maxLength="2"
                     defaultValue={CoachProfileData?.msg?.paypal}
                     disabled={!editMode}
                     onChange={(e) => {
-                      setPaybalCode(e.target.value);
+                      setPaybal(e.target.value);
                     }}
+                    ref={paypalCode}
                   />
                 </div>
               </div>

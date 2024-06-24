@@ -12,6 +12,7 @@ import {
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../Pagination/Pagination";
+import url from "../../../../../url.json";
 
 const ChoosenGif = ({ exercise }) => {
   const location = useLocation();
@@ -97,7 +98,7 @@ const ChoosenGif = ({ exercise }) => {
         },
       });
     }
-  }, [plansData,dispatch]);
+  }, [plansData, dispatch]);
   //   save all of plans and send it to api
   const handleSave = () => {
     Swal.fire({
@@ -192,7 +193,7 @@ const ChoosenGif = ({ exercise }) => {
               </div>
               <div className="image-gif mt-5">
                 <img
-                  src={`https://exersize.loophole.site/api/img/${item.exercise}`}
+                  src={`${url.url}/img/${item.exercise}`}
                   alt=""
                   style={{
                     width: "80px",

@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { addExersize, addexercise } from "../../../../../rtk/TraineesSlice";
 import Swal from "sweetalert2";
-import ChoosenGif from "./ChoosenGif";
-
+import url from "../../../../../url.json";
 const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
   const {
     day,
@@ -131,7 +130,7 @@ const ExersizeForm = ({ selectedGif: exercise, isOpen, handleCloseForm }) => {
         <div className="exersize-form">
           {exercise && (
             <img
-              src={`https://exersize.loophole.site/api/img/${exercise}`}
+              src={`${url.url}/img/${exercise}`}
               alt="Selected GIF"
               className="selected-gif"
               style={{ width: "250px", height: "200px", borderRadius: "4px" }}
