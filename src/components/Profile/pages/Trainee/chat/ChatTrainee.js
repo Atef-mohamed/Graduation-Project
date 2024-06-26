@@ -13,6 +13,7 @@ import {
 import Pusher from "pusher-js";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const ChatTrainee = () => {
@@ -22,7 +23,7 @@ const ChatTrainee = () => {
   const dispatch = useDispatch();
   const param = useParams();
   const [trainee, setTrainee] = useState();
-  const { chat, loading } = useSelector((state) => state.Trainees);
+  const { chat, loading ,error} = useSelector((state) => state.Trainees);
   const token = localStorage.getItem("token");
 
   // Fetch chat list on component mount
@@ -39,7 +40,22 @@ const ChatTrainee = () => {
     fetchData();
     window.scrollTo(0, 0);
   }, []);
-
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   let chat_id = localStorage.getItem("chat_id");
 
   useEffect(() => {

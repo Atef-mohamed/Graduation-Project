@@ -14,16 +14,32 @@ import chatIcon from "../../../../assets/chat.svg";
 import url from "../../../../url.json";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTraineeData, traineeData } from "../../../../rtk/TraineesSlice";
-
+import Swal from "sweetalert2";
 const TraineeDetails = () => {
-  console.log("url",url.url);
+  console.log("url", url.url);
   const { loading, error, trainee } = useSelector((state) => state.Trainees);
   const [collapsePlan, setCollapsePlan] = useState(null);
   const [collapseInBody, setCollapseInBody] = useState(null);
   const [collapseviewSubscibe, setCollapseviewSubscibe] = useState(null);
   const navigate = useNavigate();
-  const params = useParams();
+  const param = useParams();
   const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   // const [trainee, setTrainee] = useState();
   const location = useLocation();
   // const trainee_id = location.pathname.split("/")[4];
@@ -43,10 +59,10 @@ const TraineeDetails = () => {
   //   window.scrollTo(0, 0);
   // }, []);
   useEffect(() => {
-    const id = params.id;
+    const id = param.id;
     dispatch(fetchTraineeData({ id, token }));
     window.scrollTo(0, 0);
-  }, [dispatch, params.id, token]);
+  }, [dispatch, param.id, token]);
 
   const handelExpand = () => {
     setCollapsePlan(!collapsePlan);

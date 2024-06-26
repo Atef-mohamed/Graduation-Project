@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import "../css/viewReport.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchReportData } from "../../../../rtk/TraineesSlice";
-
+import { BarChart } from "@mui/x-charts/BarChart";
+import trueIcon from "../../../../assets/true.svg";
+import Swal from "sweetalert2";
 const ViewReport = () => {
+  const { reportChartData, error } = useSelector((state) => state.Trainees);
   const [activeLink, setActiveLink] = useState("");
   const dispatch = useDispatch();
   const handleLinkClick = (link) => {
@@ -17,6 +20,22 @@ const ViewReport = () => {
   useEffect(() => {
     dispatch(fetchReportData({ trainee_id, token }));
   }, []);
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   return (
     <>
       <div className="inbody-line">
@@ -32,7 +51,12 @@ const ViewReport = () => {
           }
           onClick={() => handleLinkClick("currentMonth")}
         >
-          Current month (04 . 03 . 2024)
+          Current month {reportChartData?.first_month?.created_at.split(" ")[0]}
+          {reportChartData?.first_month?.SMM ? (
+            <img src={trueIcon} alt="" width="40px" height="40px" />
+          ) : (
+            <></>
+          )}
         </Link>
         <Link
           to="nextMonth"
@@ -43,7 +67,12 @@ const ViewReport = () => {
           }
           onClick={() => handleLinkClick("nextMonth")}
         >
-          Next month (04 . 03 . 2024)
+          Next month {reportChartData?.second_month?.created_at.split(" ")[0]}
+          {reportChartData?.second_month?.SMM ? (
+            <img src={trueIcon} alt="" width="40px" height="40px" />
+          ) : (
+            <></>
+          )}
         </Link>
       </div>
       <Outlet />
@@ -52,11 +81,23 @@ const ViewReport = () => {
           <p>Report</p>
         </div>
         <div className="d-flex flex-column align-items-center">
-          <p id="repo1">There is no reports yet.</p>
-          <p id="repo2">Please enter data above</p>
+          {reportChartData?.first_month == null ? (
+            <>
+              <p id="repo1">There is no reports yet.</p>
+              <p id="repo2">Please enter data above</p>
+            </>
+          ) : (
+            <BarChart
+              series={reportChartData.dataset}
+              height={290}
+              xAxis={[
+                { data: reportChartData.data_variables, scaleType: "band" },
+              ]}
+              margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+            />
+          )}
         </div>
-    {/* chart heeeeeeeeeeeeeeeeeeerrrrrrrrrrreeeeeeeeee */}
-        <div className="chart"></div>
+        {/* chart heeeeeeeeeeeeeeeeeeerrrrrrrrrrreeeeeeeeee */}
       </div>
     </>
   );

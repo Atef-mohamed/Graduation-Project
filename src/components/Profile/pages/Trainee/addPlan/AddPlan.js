@@ -4,10 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import GifList from "./GifList";
 import Pagination from "../../Pagination/Pagination";
 import ExersizeForm from "./ExersizeForm";
-import { fetchGifList, fetchPlansData, trainName } from "../../../../../rtk/TraineesSlice";
+import {
+  fetchGifList,
+  fetchPlansData,
+  trainName,
+} from "../../../../../rtk/TraineesSlice";
 import ChoosenGif from "./ChoosenGif";
-import { Route, Routes, Switch, useLocation, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Switch,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import ActivePlans from "./ActivePlans";
+import Swal from "sweetalert2";
 
 const AddPlan = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +27,22 @@ const AddPlan = () => {
   );
   const [trainingName, setTrainingName] = useState("");
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   const handleTrainingNameChange = (event) => {
     setTrainingName(event.target.value);
   };
@@ -24,21 +50,21 @@ const AddPlan = () => {
     dispatch(trainName(trainingName));
   }
   // ---------------------------------------------
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem("token");
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const page = parseInt(searchParams.get("page")) || 1;
     setCurrentPage(page);
-    dispatch(fetchGifList({page,token}));
+    dispatch(fetchGifList({ page, token }));
   }, [dispatch, location.search, token]);
   // console.log(GifLists.data);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     navigate(`?page=${page}`);
-    dispatch(fetchGifList({page,token}));
+    dispatch(fetchGifList({ page, token }));
   };
 
   // ----------------------------------------------

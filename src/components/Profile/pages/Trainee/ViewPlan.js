@@ -3,6 +3,7 @@ import "../css/viewPlan.css";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGifList } from "../../../../rtk/TraineesSlice";
+import Swal from "sweetalert2";
 const ViewPlan = () => {
   const { error } = useSelector((state) => state.Trainees);
   const location = useLocation();
@@ -12,6 +13,22 @@ const ViewPlan = () => {
   useEffect(() => {
     dispatch(fetchGifList({ token }));
   }, []);
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -42,16 +59,11 @@ const ViewPlan = () => {
         >
           Current month
         </Link>
-       
       </div>
 
       <div>
         <Outlet />
-        {/* {error && (
-          <h4 className="text-danger txt-res text-center">
-            fffffffffffffffffffffffff
-          </h4>
-        )} */}
+        {error && <h4 className="text-danger txt-res text-center">{error}</h4>}
       </div>
     </>
   );

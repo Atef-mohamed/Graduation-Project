@@ -1,5 +1,5 @@
 // src\components\Protfolio\ProtfolioEdit.js
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import uploadLlogo from "../../assets/Upload-pro.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getProtfolio, updatePortfolio } from "../../rtk/Protfolio";
@@ -141,6 +141,22 @@ const ProtfolioEdit = ({portfolio,onClose}) => {
       onClose();
     }
   };
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   return(
     <>
       <div id="protfolio">

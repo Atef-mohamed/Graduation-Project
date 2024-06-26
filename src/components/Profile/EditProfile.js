@@ -233,7 +233,7 @@ const EditProfile = () => {
   }, [editProfiledata]);
   return (
     <>
-      <div className="ms-5">
+      <div className="ms-5 ">
         <img src={profilelogo} alt="MyProfile" />
       </div>
       <div
@@ -259,7 +259,7 @@ const EditProfile = () => {
             />
           </label>
         </div>
-        <div className="editProfile" onClick={handleEditModeToggle}>
+        <div className="editProfile " onClick={handleEditModeToggle}>
           <img
             src={editProfilelogo}
             alt="Edit Pofile"
@@ -445,16 +445,17 @@ const EditProfile = () => {
                 </label>
               </div>
             </div>
-            {editMode && (
-              <button
-                className="button-submit"
-                id="btn-nextStepper"
-                type="submit"
-                // onClick={handelSubmit}
-              >
-                Save Edit
-              </button>
-            )}
+            <div className="d-flex justify-content-center align-items-center">
+              {editMode && (
+                <button
+                  className="button-submit-editProfile "
+                  type="submit"
+                  // onClick={handelSubmit}
+                >
+                  Save Edit
+                </button>
+              )}
+            </div>
           </form>
         </div>
         <div className="container"></div>

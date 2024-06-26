@@ -1,12 +1,11 @@
 // src\components\Protfolio\ProtfoliAdd.js
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import uploadLlogo from "../../assets/Upload-pro.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { addProtfolio } from "../../rtk/Protfolio";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
-
 
 const ProtfolioAdd = () => {
   const [validated, setValidated] = useState(false);
@@ -128,19 +127,35 @@ const ProtfolioAdd = () => {
       // Dispatch form data
       dispatch(addProtfolio(formData)).then((response) => {
         if (response.payload && response.payload.status === true) {
-            navigate('/profile/myProtfolio')
+          navigate("/profile/myProtfolio");
           if (response.payload.error_msg) {
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "Please select image as JPG,JPEG,PNG file",
             });
-          } 
+          }
         }
       });
     }
   };
-  return(
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
+  return (
     <>
       <div id="protfolio">
         <form validated={validated} onSubmit={handleSubmit}>
@@ -202,7 +217,9 @@ const ProtfolioAdd = () => {
             ) : // </h2>
             null}
 
-            {error && <h4 className="text-danger txt-res text-center">{error}</h4>}
+            {error && (
+              <h4 className="text-danger txt-res text-center">{error}</h4>
+            )}
           </div>
           <div className="d-flex justify-content-around mt-5">
             <button id="save-btn" type="submit">

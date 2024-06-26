@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logIn } from "../../rtk/UserSlice";
 import { Button, Row } from "react-bootstrap";
+import Swal from "sweetalert2";
 import "./signIn.css";
 const SignIn = () => {
   const navigate = useNavigate();
@@ -24,7 +25,22 @@ const SignIn = () => {
       navigate("/otpInput");
     }
   }, [userLoginData]);
-
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   const handleForm = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -102,7 +118,7 @@ const SignIn = () => {
                           : userLoginData.msg}
                       </h2>
                     ) : null}
-                    {error && <h4 className="text-danger txt-res">{error}</h4>}
+                    {/* {error && <h4 className="text-danger txt-res">{error}</h4>} */}
                   </form>
                 </div>
                 <Row className="mt-2">

@@ -35,7 +35,7 @@ const TraineesList = ({ Trainees }) => {
       });
     }
   }, [error]);
-
+  // console.log("urlllllll"`${url.url}/img/${trainee.img}`);
   return (
     <>
       {Trainees.map((trainee) => (

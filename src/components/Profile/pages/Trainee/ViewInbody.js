@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ViewInbodyData } from "../../../../rtk/TraineesSlice";
 import url from "../../../../url.json";
+import Swal from "sweetalert2";
 const ViewInbody = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -16,11 +17,27 @@ const ViewInbody = () => {
   useEffect(() => {
     dispatch(ViewInbodyData({ token, trainee_id: params.id }));
   }, []);
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Oops..",
+        text: `${error}`,
+        icon: "error",
+        showConfirmButton: false,
+        showDenyButton: false,
+        timer: 2000,
+        customClass: {
+          title: "swal-title-green",
+          popup: "swal-popup",
+        },
+      });
+    }
+  }, [error]);
   return (
     <>
       {inBodyData && inBodyData.status === true && (
-        <div className="container d-flex justify-content-around flex-row">
-          <div className="d-flex flex-column justify-content-around gap-5">
+        <div className="container d-flex justify-content-around flex-row flex-wrap flex-grow-1">
+          <div className="d-flex flex-column justify-content-around gap-lg-5 gap-sm-2">
             <div className="d-flex flex-column">
               <label>Age</label>
               <input
@@ -46,7 +63,11 @@ const ViewInbody = () => {
               <input
                 className="inp-inbody"
                 type="text"
-                value={`${inBodyData?.msg?.weight} KG`}
+                value={`${
+                  inBodyData?.msg?.weight == null
+                    ? "0"
+                    : inBodyData?.msg?.weight
+                } KG`}
                 disabled
               />
             </div>

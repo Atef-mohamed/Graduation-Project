@@ -262,13 +262,6 @@ const Requstes = () => {
                   )}
                 </div>
               </div>
-
-              {error && (
-                <Alert variant="danger" dismissible>
-                  <Alert.Heading>Oh! You got an error!</Alert.Heading>
-                  <h3>{error}</h3>
-                </Alert>
-              )}
             </>
           ))}
       </div>
@@ -279,6 +272,15 @@ const Requstes = () => {
           </div>
         </div>
       )}
+      <div className="d-flex justify-content-center align-items-center mt-5">
+
+      {error && (
+        <Alert variant="danger" dismissible>
+          <Alert.Heading>Oh! You got an error!</Alert.Heading>
+          <h3>{error}</h3>
+        </Alert>
+      )}
+      </div>
     </>
   );
 };

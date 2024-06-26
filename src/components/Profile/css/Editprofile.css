@@ -192,6 +192,12 @@ bottom:50%;
     margin-bottom: 10px;
 }
 
+@media screen and (max-width:767px) {
+    .editProfile{
+        margin-left: 230px;
+    }
+}
+
 #nationalColor{
     color: var( --bright-yellow-color);
 }
@@ -210,4 +216,14 @@ bottom:50%;
     margin: 20px auto;
     border-radius: 12px;
 
+}
+
+.button-submit-editProfile{
+    color: var(--main-white-color);
+    background-color: var(--bright-yellow-color);
+    border: none;
+    padding: 5px 30px;
+    border-radius: 14px;
+    font-weight: bold;
+    
 }
